@@ -48,7 +48,7 @@ copyright: © 2026 cargo.green · CLI licensed AGPL-3.0
 cta: Start free | #pricing
 links:
   - Why | #problem
-  - Install | #install
+  - Install | #use-install
   - How it works | #how
   - Configuration | #config
   - Enterprise | #enterprise
@@ -57,7 +57,7 @@ links:
 ## hero
 badge: Crate-level caching, powered by BuildKit or Nix | #how
 headline: Rust builds that never start {cold}
-cta_primary: Install the CLI | #install
+cta_primary: Install the CLI | #use-install
 cta_secondary: Talk to sales | #enterprise
 repo_label: acme/payments-api — main
 registry_label: ghcr.io
@@ -486,7 +486,7 @@ than per developer.
 blurb: Individuals, side projects, open source.
 price: $0
 period: free forever
-cta: Install the CLI | #install
+cta: Install the CLI | #use-install
 features:
   - Unlimited local & remote builds
   - Bring your own registry — no limits
@@ -645,7 +645,7 @@ legal:
 ### Product
 links:
   - Why cargo-green | #problem
-  - Install | #install
+  - Install | #use-install
   - How it works | #how
   - Pricing | #pricing
 

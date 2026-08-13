@@ -181,9 +181,9 @@ tailwind.config = {
           <path d="M4.6 9.6 16 16m0 0 11.4-6.4M16 16v12.8" stroke="#34D399" stroke-width="1.6" stroke-opacity=".45" stroke-linejoin="round"/>
           <circle cx="16" cy="16" r="2.6" fill="#34D399"/>
         </svg>
-        <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400">.green</span></span>
+        <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400"> green</span></span>
       </a>
-      <div class="hidden items-center gap-8 lg:flex"><a href="#problem" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Why</a><a href="#install" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Install</a><a href="#how" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">How it works</a><a href="#config" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Configuration</a><a href="#enterprise" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Enterprise</a><a href="#pricing" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Pricing</a></div>
+      <div class="hidden items-center gap-8 lg:flex"><a href="#problem" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Why</a><a href="#use-install" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Install</a><a href="#how" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">How it works</a><a href="#config" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Configuration</a><a href="#enterprise" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Enterprise</a><a href="#pricing" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Pricing</a></div>
       <div class="flex items-center gap-2">
         <a href="https://github.com/fenollp/supergreen" class="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-[13px] font-medium text-slate-300 transition hover:border-white/20 hover:text-white sm:flex">
           <i data-lucide="github" class="h-4 w-4"></i> GitHub
@@ -210,7 +210,7 @@ tailwind.config = {
         <h1 class="mt-6 font-display text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-white sm:text-6xl">Rust builds that never start <span class="hl">cold</span></h1>
         <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-slate-400"><code class="code">cargo green</code> sends every <code class="code">rustc</code> call to a real build engine — BuildKit or Nix — so each crate becomes its own individually cached build step. Compile a dependency once, on a laptop or a big remote box or CI, and every other machine pulls the result instead of rebuilding it.</p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a href="#install" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+          <a href="#use-install" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
           <a href="#enterprise" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white backdrop-blur transition hover:border-moss-400/40 hover:bg-white/[.06]">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         </div>
         <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/[0.08] pt-7"><div><dt class="eyebrow text-slate-600">Cache granularity</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Per crate</dd></div><div><dt class="eyebrow text-slate-600">Build engine</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">BuildKit or Nix</dd></div><div><dt class="eyebrow text-slate-600">Cache store</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Any OCI registry</dd></div></dl>
@@ -321,19 +321,19 @@ tailwind.config = {
   </div>
 </section>
 
-<section id="install" class="py-24 sm:py-32">
+<section id="use" class="scroll-mt-24 py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="eyebrow text-moss-400">Install &amp; use</p>
 <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">One install. One extra word.</h2>
 <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green is a cargo plugin, not a replacement. Your commands, your <code class="code">Cargo.toml</code>, your CI — unchanged.</p></div><a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl">
-        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist"><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" data-tab="t-build" role="tab" aria-selected="true">build</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-install" role="tab" aria-selected="false">install</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-remote" role="tab" aria-selected="false">remote</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-share-cache" role="tab" aria-selected="false">share cache</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-ci" role="tab" aria-selected="false">CI</button></div>
+        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green"><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" id="use-build" data-panel="panel-use-build" role="tab" aria-controls="panel-use-build" aria-selected="true" tabindex="0">build</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-install" data-panel="panel-use-install" role="tab" aria-controls="panel-use-install" aria-selected="false" tabindex="-1">install</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-remote" data-panel="panel-use-remote" role="tab" aria-controls="panel-use-remote" aria-selected="false" tabindex="-1">remote</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-share-cache" data-panel="panel-use-share-cache" role="tab" aria-controls="panel-use-share-cache" aria-selected="false" tabindex="-1">share cache</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-ci" data-panel="panel-use-ci" role="tab" aria-controls="panel-use-ci" aria-selected="false" tabindex="-1">CI</button></div>
         <div class="relative">
           <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
             <i data-lucide="copy" class="h-3.5 w-3.5"></i><span>Copy</span>
           </button>
-          <pre id="t-build" class="panel overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Once: start from a clean slate</span>
+          <pre id="panel-use-build" class="panel overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-build"><code><span class="c-dim"># Once: start from a clean slate</span>
 <span class="c-cmd">cargo</span> clean
 
 <span class="c-dim"># Then use cargo, with one extra word</span>
@@ -347,7 +347,7 @@ tailwind.config = {
 <span class="c-dim"># Pick your engine: docker (default), podman, or nix</span>
 <span class="c-cmd">export</span> <span class="c-var">CARGOGREEN_RUNNER</span>=nix
 
-<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="t-install" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># From crates.io</span>
+<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="panel-use-install" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-install"><code><span class="c-dim"># From crates.io</span>
 <span class="c-cmd">cargo</span> install cargo-green
 
 <span class="c-dim"># …or track the latest from git</span>
@@ -358,14 +358,14 @@ tailwind.config = {
 <span class="c-cmd">which</span> cargo-green
 
 <span class="c-dim"># Needs one build engine on the machine:</span>
-<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="t-remote" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
+<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
 <span class="c-var">DOCKER_HOST</span>=ssh://build-farm-01 cargo green test
 
 <span class="c-dim"># Same idea with the Nix engine</span>
 <span class="c-var">CARGOGREEN_RUNNER</span>=nix <span class="c-var">NIX_SSHOPTS</span>=<span class="c-str">"-A"</span> \
   <span class="c-cmd">cargo</span> green build --release
 
-<span class="c-dim"># Laptops stay quiet. Fans stay off.</span></code></pre><pre id="t-share-cache" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Cargo.toml</span>
+<span class="c-dim"># Laptops stay quiet. Fans stay off.</span></code></pre><pre id="panel-use-share-cache" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-share-cache"><code><span class="c-dim"># Cargo.toml</span>
 <span class="c-cmd">[package.metadata.green]</span>
 <span class="c-var">cache-images</span> = [
   <span class="c-str">"docker-image://ghcr.io/acme/payments-api"</span>,
@@ -375,7 +375,7 @@ tailwind.config = {
 ]
 
 <span class="c-dim"># Push the cache for everyone else</span>
-cargo green supergreen push</code></pre><pre id="t-ci" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># .github/workflows/ci.yml</span>
+cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-ci"><code><span class="c-dim"># .github/workflows/ci.yml</span>
 - <span class="c-var">run</span>: cargo install cargo-green
 - <span class="c-var">run</span>: cargo green test
   <span class="c-var">env</span>:
@@ -608,7 +608,7 @@ cargo green supergreen push</code></pre><pre id="t-ci" class="panel hidden overf
           <span class="text-[13.5px] text-slate-500">free forever</span>
         </div>
         
-        <a href="#install" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
+        <a href="#use-install" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         <div class="mt-7 rule-glow"></div>
         <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited local &amp; remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Bring your own registry — no limits</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">500K</span> cache requests / month</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">20 GB</span> cache storage</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>50 core-hours of remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>1 project, 7-day retention</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Community support on GitHub</li></ul>
       </div><div class="reveal glass edge-lit relative flex flex-col rounded-2xl p-7 shadow-[0_0_80px_-30px_rgba(16,185,129,.45)]">
@@ -751,13 +751,13 @@ cargo green supergreen push</code></pre><pre id="t-ci" class="panel hidden overf
             <path d="M16 3.2 27.4 9.6v12.8L16 28.8 4.6 22.4V9.6L16 3.2Z" stroke="#34D399" stroke-width="1.6" stroke-linejoin="round"/>
             <circle cx="16" cy="16" r="2.6" fill="#34D399"/>
           </svg>
-          <span class="font-display text-[14.5px] font-semibold text-white">cargo<span class="text-moss-400">.green</span></span>
+          <span class="font-display text-[14.5px] font-semibold text-white">cargo<span class="text-moss-400"> green</span></span>
         </div>
         <p class="mt-4 max-w-xs text-[13.5px] leading-relaxed text-slate-500">A cached, remote-ready builder for Rust projects. Part of the <a href="https://github.com/fenollp/supergreen" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">supergreen</a> project.</p>
       </div>
       <div>
         <p class="eyebrow text-slate-600">Product</p>
-        <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="#problem" class="text-slate-400 transition hover:text-white">Why cargo-green</a></li><li><a href="#install" class="text-slate-400 transition hover:text-white">Install</a></li><li><a href="#how" class="text-slate-400 transition hover:text-white">How it works</a></li><li><a href="#pricing" class="text-slate-400 transition hover:text-white">Pricing</a></li></ul>
+        <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="#problem" class="text-slate-400 transition hover:text-white">Why cargo-green</a></li><li><a href="#use-install" class="text-slate-400 transition hover:text-white">Install</a></li><li><a href="#how" class="text-slate-400 transition hover:text-white">How it works</a></li><li><a href="#pricing" class="text-slate-400 transition hover:text-white">Pricing</a></li></ul>
       </div><div>
         <p class="eyebrow text-slate-600">Docs</p>
         <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="https://github.com/fenollp/supergreen#configuration" class="text-slate-400 transition hover:text-white">Configuration</a></li><li><a href="https://github.com/fenollp/supergreen#remote-execution" class="text-slate-400 transition hover:text-white">Remote execution</a></li><li><a href="https://github.com/fenollp/supergreen#caching" class="text-slate-400 transition hover:text-white">Caching</a></li><li><a href="https://github.com/fenollp/supergreen#alternatives" class="text-slate-400 transition hover:text-white">Alternatives</a></li></ul>
@@ -834,19 +834,57 @@ cargo green supergreen push</code></pre><pre id="t-ci" class="panel hidden overf
     items.forEach(el => io.observe(el));
   }
 
-  /* ---------- Code tabs ---------- */
-  const tabs = document.querySelectorAll('.tab');
-  const activate = (id) => {
+  /* ---------- Code tabs (each tab is an anchor target: #use-remote & co) ---------- */
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const panels = Array.from(document.querySelectorAll('.panel'));
+  const section = document.getElementById('use');
+
+  const activate = (id, updateHash) => {
+    const tab = tabs.find(t => t.id === id);
+    if (!tab) return false;
     tabs.forEach(t => {
-      const on = t.dataset.tab === id;
+      const on = t === tab;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('tabindex', on ? '0' : '-1');
     });
-    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('hidden', p.id !== id));
+    panels.forEach(p => p.classList.toggle('hidden', p.id !== tab.dataset.panel));
+    if (updateHash && history.replaceState) {
+      // replaceState, not location.hash: no scroll jump and no history spam per tab click.
+      history.replaceState(null, '', '#' + id);
+    }
+    return true;
   };
-  tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
-  const initial = document.querySelector('.tab.active') || tabs[0];
-  if (initial) activate(initial.dataset.tab);
+
+  tabs.forEach(t => t.addEventListener('click', () => activate(t.id, true)));
+
+  // Arrow keys move between tabs, per the ARIA tabs pattern.
+  tabs.forEach((t, i) => t.addEventListener('keydown', (e) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = tabs[(i + step + tabs.length) % tabs.length];
+    activate(next.id, true);
+    next.focus();
+  }));
+
+  const openFromHash = (smooth) => {
+    let id = '';
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
+    if (!activate(id)) return false;
+    if (section) {
+      section.scrollIntoView({ block: 'start', behavior: (smooth && !reduced) ? 'smooth' : 'auto' });
+    }
+    return true;
+  };
+
+  // On load the browser has already jumped to the tab button, so scroll instantly to avoid
+  // animating out of that jump. Later hash changes get the smooth treatment.
+  if (!openFromHash(false)) {
+    const initial = tabs.find(t => t.classList.contains('active')) || tabs[0];
+    if (initial) activate(initial.id);
+  }
+  window.addEventListener('hashchange', () => openFromHash(true));
 
   /* ---------- Copy buttons ---------- */
   const flash = (btn, label) => {

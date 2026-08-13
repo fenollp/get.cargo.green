@@ -2,9 +2,8 @@
 """Build FILE from content.md.
 
 Usage:
-    python3 build.py              build once
-    python3 build.py --watch      build, serve on :4347, open a browser, rebuild on change
-    python3 build.py --out FILE   write somewhere else
+    python3 build.py --out FILE     build once then sanity-check the result
+    python3 build.py --watch        build, check, serve on :4347, open a browser, then rebuild and re-check on every change
 """
 
 from __future__ import annotations
@@ -25,6 +24,13 @@ ASSETS = ROOT / "assets"
 DEFAULT_OUT = ROOT / "index.html"
 PORT = 4347
 URL = f"http://localhost:{PORT}"
+
+_COLOR = sys.stderr.isatty()
+
+
+def bold(text: str) -> str:
+    """Bold red when a human is watching, plain text in pipes and CI logs."""
+    return f"\033[1;31m{text}\033[0m" if _COLOR else text
 SOURCES = [CONTENT, ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js", Path(__file__)]
 
 
@@ -209,7 +215,8 @@ def icon(name: str, cls: str) -> str:
     return f'<i data-lucide="{name}" class="{cls}"></i>'
 
 
-def check(text: str, text_cls: str = "") -> str:
+def feature(text: str, text_cls: str = "") -> str:
+    """One check-marked list item, used by the answer panel and the pricing tiers."""
     body = f'<span class="{text_cls}">{text}</span>' if text_cls else text
     return (f'<li class="flex gap-3">{icon("check", "mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400")}'
             f"{body}</li>")
@@ -267,7 +274,7 @@ def render_nav(nav: Block, meta: Block) -> str:
           <path d="M4.6 9.6 16 16m0 0 11.4-6.4M16 16v12.8" stroke="#34D399" stroke-width="1.6" stroke-opacity=".45" stroke-linejoin="round"/>
           <circle cx="16" cy="16" r="2.6" fill="#34D399"/>
         </svg>
-        <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400">.green</span></span>
+        <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400"> green</span></span>
       </a>
       <div class="hidden items-center gap-8 lg:flex">{links}</div>
       <div class="flex items-center gap-2">
@@ -366,7 +373,7 @@ def render_problem(problem: Block, answer: Block, ci: Block) -> str:
         {prose(c, 'mt-2.5 text-[14.5px] leading-relaxed text-slate-400')}
       </article>""" for c in problem.items)
 
-    points = "".join(check(inline(p), "") for p in answer.list("points"))
+    points = "".join(feature(inline(p)) for p in answer.list("points"))
     ci_cards = "".join(f"""<div>
             {icon(c.get('icon'), 'h-5 w-5 text-moss-400')}
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">{esc(c.name)}</h4>
@@ -409,17 +416,24 @@ def render_problem(problem: Block, answer: Block, ci: Block) -> str:
 </section>"""
 
 
+def slug(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
 def render_install(install: Block, commands: Block) -> str:
     default = install.get("default_tab", install.items[0].name if install.items else "")
     tabs, panels = [], []
     for tab in install.items:
-        tid = "t-" + re.sub(r"[^a-z0-9]+", "-", tab.name.lower()).strip("-")
-        active = " active" if tab.name == default else ""
-        hidden = "" if tab.name == default else " hidden"
-        tabs.append(f'<button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition{active}" '
-                    f'data-tab="{tid}" role="tab" aria-selected="{"true" if active else "false"}">{esc(tab.name)}</button>')
-        panels.append(f'<pre id="{tid}" class="panel{hidden} overflow-x-auto p-6 font-mono text-[13px] '
-                      f'leading-[1.85] text-slate-300"><code>{highlight(tab.code, tab.lang)}</code></pre>')
+        tid = "use-" + slug(tab.name)
+        pid = "panel-" + tid
+        active = tab.name == default
+        tabs.append(f'<button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] '
+                    f'text-slate-400 transition{" active" if active else ""}" id="{tid}" data-panel="{pid}" '
+                    f'role="tab" aria-controls="{pid}" aria-selected="{"true" if active else "false"}" '
+                    f'tabindex="{"0" if active else "-1"}">{esc(tab.name)}</button>')
+        panels.append(f'<pre id="{pid}" class="panel{"" if active else " hidden"} overflow-x-auto p-6 '
+                      f'font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" '
+                      f'aria-labelledby="{tid}"><code>{highlight(tab.code, tab.lang)}</code></pre>')
 
     rows = []
     for i, cmd in enumerate(commands.items):
@@ -429,12 +443,12 @@ def render_install(install: Block, commands: Block) -> str:
             <dd class="text-[13.5px] text-slate-400">{esc(cmd.get('desc'))}</dd>
           </div>""")
 
-    return f"""<section id="install" class="py-24 sm:py-32">
+    return f"""<section id="use" class="scroll-mt-24 py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
     {section_head(install)}
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl">
-        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist">{''.join(tabs)}</div>
+        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green">{''.join(tabs)}</div>
         <div class="relative">
           <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
             {icon('copy', 'h-3.5 w-3.5')}<span>Copy</span>
@@ -578,7 +592,7 @@ def render_pricing(pricing: Block, table: Block) -> str:
                    "mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] "
                    "px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]")
         arrow = icon("arrow-right", "h-4 w-4" + ("" if featured else " text-moss-400"))
-        feats = "".join(check(inline(f)) for f in t.list("features"))
+        feats = "".join(feature(inline(f)) for f in t.list("features"))
         card_cls = ("reveal glass edge-lit relative flex flex-col rounded-2xl p-7 shadow-[0_0_80px_-30px_rgba(16,185,129,.45)]"
                     if featured else "reveal glass flex flex-col rounded-2xl p-7")
 
@@ -711,7 +725,7 @@ def render_footer(footer: Block, meta: Block) -> str:
             <path d="M16 3.2 27.4 9.6v12.8L16 28.8 4.6 22.4V9.6L16 3.2Z" stroke="#34D399" stroke-width="1.6" stroke-linejoin="round"/>
             <circle cx="16" cy="16" r="2.6" fill="#34D399"/>
           </svg>
-          <span class="font-display text-[14.5px] font-semibold text-white">cargo<span class="text-moss-400">.green</span></span>
+          <span class="font-display text-[14.5px] font-semibold text-white">cargo<span class="text-moss-400"> green</span></span>
         </div>
         <p class="mt-4 max-w-xs text-[13.5px] leading-relaxed text-slate-500">{inline(footer.get('tagline'))}</p>
       </div>
@@ -861,17 +875,72 @@ def open_browser(url: str) -> str:
     return ""
 
 
-def stamp(paths) -> dict:
-    return {p: p.stat().st_mtime for p in paths if p.exists()}
+def watchable() -> dict:
+    return {p: p.stat().st_mtime for p in SOURCES if p.exists()}
+
+
+# ─────────────────────────────  checking  ─────────────────────────────
+
+TAGS = ("section", "div", "details", "table", "ul", "ol", "li", "pre", "script",
+        "style", "header", "footer", "main", "nav", "dl", "tr", "a", "h1", "h2",
+        "h3", "h4", "p", "span", "article", "button")
+
+PATTERNS = ((r'href=""', "empty href"),
+            (r"\{\{", "unreplaced placeholder"),
+            (r">None<", "None leaked into output"),
+            (r"\{[a-z_]+\}", "unrendered {field}"))
+
+
+def check(path: Path) -> tuple[list[str], str]:
+    """Sanity-check a generated page. Returns (problems, one-line summary)."""
+    if not path.exists():
+        return ([f"{path} does not exist"], "")
+
+    page = path.read_text(encoding="utf-8")
+    problems = []
+
+    for tag in TAGS:
+        opened = len(re.findall(r"<%s[\s>]" % tag, page))
+        closed = len(re.findall(r"</%s>" % tag, page))
+        if opened != closed:
+            problems.append(f"unbalanced <{tag}>: {opened} open, {closed} close")
+
+    body = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", page, flags=re.S)
+    for pattern, label in PATTERNS:
+        if re.search(pattern, body):
+            problems.append(label)
+
+    if "<title>" not in page:
+        problems.append("missing <title>")
+    if 'name="description"' not in page:
+        problems.append("missing meta description")
+
+    ids = re.findall(r'id="([^"]+)"', page)
+    for anchor in sorted(set(re.findall(r'href="#([^"]+)"', page))):
+        if anchor and anchor not in ids:
+            problems.append(f"link to #{anchor} but no element has that id")
+
+    summary = (f"{len(page) // 1024} KB, {page.count('<section')} sections, {len(ids)} ids, "
+               f"{page.count('<details')} faq entries")
+    return (problems, summary)
+
+
+def report(path: Path) -> bool:
+    """Check and print the result. True when the page is clean."""
+    problems, summary = check(path)
+    if problems:
+        print(bold(f"check failed — {len(problems)} problem(s) in {path.name}"), file=sys.stderr)
+        for problem in problems:
+            print(bold(f"  ! {problem}"), file=sys.stderr)
+        return False
+    print(f"check passed — {summary}")
+    return True
 
 
 def watch(out_path: Path) -> None:
-    """Build, serve, open a browser, and rebuild on every change."""
-    try:
-        build(out_path)
-    except SystemExit as err:
-        print(err, file=sys.stderr)  # serve anyway so the error is visible in the browser
-    stamps = stamp(SOURCES)
+    """Build, serve dist/ on PORT, open a browser, and rebuild on every change."""
+    rebuild(out_path)
+    stamps = watchable()
 
     root = out_path.parent
     root.mkdir(parents=True, exist_ok=True)
@@ -893,16 +962,10 @@ def watch(out_path: Path) -> None:
 
     try:
         while True:
-            current = stamp(SOURCES)
+            current = watchable()
             if current != stamps:
                 stamps = current
-                try:
-                    build(out_path)
-                    print(f"[{time.strftime('%H:%M:%S')}] built {out_path.relative_to(ROOT)}")
-                except SystemExit as err:
-                    print(f"[{time.strftime('%H:%M:%S')}] {err}")
-                except Exception as err:  # keep the watcher alive through typos
-                    print(f"[{time.strftime('%H:%M:%S')}] build failed: {err}")
+                rebuild(out_path, stamped=True)
             time.sleep(0.5)
     except KeyboardInterrupt:
         print("\nstopping")
@@ -912,17 +975,39 @@ def watch(out_path: Path) -> None:
         server_thread.join(timeout=2)
 
 
+def rebuild(out_path: Path, stamped: bool = False) -> bool:
+    """Build then check, reporting failures without ever raising. Used by watch mode."""
+    stamp = f"[{time.strftime('%H:%M:%S')}] " if stamped else ""
+    try:
+        build(out_path)
+    except SystemExit as err:
+        print(bold(f"{stamp}{err}"), file=sys.stderr)
+        return False
+    except Exception as err:  # keep the watcher alive through typos
+        print(bold(f"{stamp}build failed: {err}"), file=sys.stderr)
+        return False
+
+    print(f"{stamp}built {out_path.relative_to(ROOT)}")
+    return report(out_path)
+
+
 def main() -> None:
     args = sys.argv[1:]
     out = DEFAULT_OUT
     if "--out" in args:
-        out = Path(args[args.index("--out") + 1]).resolve()
+        try:
+            out = Path(args[args.index("--out") + 1]).resolve()
+        except IndexError:
+            raise SystemExit("--out needs a file path")
+
     if "--watch" in args:
         watch(out)
-    else:
-        path = build(out)
-        size = path.stat().st_size
-        print(f"built {path} ({size // 1024} KB)")
+        return
+
+    path = build(out)
+    print(f"built {path} ({path.stat().st_size // 1024} KB)")
+    if not report(path):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

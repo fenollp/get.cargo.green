@@ -26,19 +26,57 @@
     items.forEach(el => io.observe(el));
   }
 
-  /* ---------- Code tabs ---------- */
-  const tabs = document.querySelectorAll('.tab');
-  const activate = (id) => {
+  /* ---------- Code tabs (each tab is an anchor target: #use-remote & co) ---------- */
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const panels = Array.from(document.querySelectorAll('.panel'));
+  const section = document.getElementById('use');
+
+  const activate = (id, updateHash) => {
+    const tab = tabs.find(t => t.id === id);
+    if (!tab) return false;
     tabs.forEach(t => {
-      const on = t.dataset.tab === id;
+      const on = t === tab;
       t.classList.toggle('active', on);
       t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('tabindex', on ? '0' : '-1');
     });
-    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('hidden', p.id !== id));
+    panels.forEach(p => p.classList.toggle('hidden', p.id !== tab.dataset.panel));
+    if (updateHash && history.replaceState) {
+      // replaceState, not location.hash: no scroll jump and no history spam per tab click.
+      history.replaceState(null, '', '#' + id);
+    }
+    return true;
   };
-  tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
-  const initial = document.querySelector('.tab.active') || tabs[0];
-  if (initial) activate(initial.dataset.tab);
+
+  tabs.forEach(t => t.addEventListener('click', () => activate(t.id, true)));
+
+  // Arrow keys move between tabs, per the ARIA tabs pattern.
+  tabs.forEach((t, i) => t.addEventListener('keydown', (e) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = tabs[(i + step + tabs.length) % tabs.length];
+    activate(next.id, true);
+    next.focus();
+  }));
+
+  const openFromHash = (smooth) => {
+    let id = '';
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
+    if (!activate(id)) return false;
+    if (section) {
+      section.scrollIntoView({ block: 'start', behavior: (smooth && !reduced) ? 'smooth' : 'auto' });
+    }
+    return true;
+  };
+
+  // On load the browser has already jumped to the tab button, so scroll instantly to avoid
+  // animating out of that jump. Later hash changes get the smooth treatment.
+  if (!openFromHash(false)) {
+    const initial = tabs.find(t => t.classList.contains('active')) || tabs[0];
+    if (initial) activate(initial.id);
+  }
+  window.addEventListener('hashchange', () => openFromHash(true));
 
   /* ---------- Copy buttons ---------- */
   const flash = (btn, label) => {
