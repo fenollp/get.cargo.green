@@ -18,7 +18,7 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-  tailwind.config = {
+tailwind.config = {
     theme: {
       extend: {
         colors: {
@@ -38,7 +38,7 @@
 </script>
 
 <style>
-  :root { color-scheme: dark; }
+:root { color-scheme: dark; }
 
   body {
     background-color: #05070A;
@@ -146,6 +146,22 @@
   }
 
   [data-lucide] { stroke-width: 1.6; }
+
+  /* ---------- Generated from content.md ---------- */
+  .code {
+    font-family: '"JetBrains Mono"', ui-monospace, monospace;
+    font-size: 0.92em; color: #E2E8F0; background: none;
+  }
+  em { font-style: normal; color: #E2E8F0; }
+  .hl {
+    background: linear-gradient(90deg, #34D399, #5EEAD4);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .val { color: #F8FAFC; }
+  .c-dim { color: #475569; }
+  .c-cmd { color: #34D399; }
+  .c-var { color: #5EEAD4; }
+  .c-str { color: #5EEAD4; }
 </style>
 </head>
 
@@ -156,7 +172,6 @@
 
 <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-moss-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950">Skip to content</a>
 
-<!-- ══════════════════════ NAV ══════════════════════ -->
 <header id="nav" class="fixed top-0 inset-x-0 z-40 transition-colors duration-300">
   <div class="mx-auto max-w-screen px-6">
     <nav class="flex h-16 items-center justify-between">
@@ -168,16 +183,7 @@
         </svg>
         <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400">.green</span></span>
       </a>
-
-      <div class="hidden items-center gap-8 lg:flex">
-        <a href="#problem" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Why</a>
-        <a href="#install" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Install</a>
-        <a href="#how" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">How it works</a>
-        <a href="#config" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Configuration</a>
-        <a href="#enterprise" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Enterprise</a>
-        <a href="#pricing" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Pricing</a>
-      </div>
-
+      <div class="hidden items-center gap-8 lg:flex"><a href="#problem" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Why</a><a href="#install" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Install</a><a href="#how" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">How it works</a><a href="#config" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Configuration</a><a href="#enterprise" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Enterprise</a><a href="#pricing" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">Pricing</a></div>
       <div class="flex items-center gap-2">
         <a href="https://github.com/fenollp/supergreen" class="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-[13px] font-medium text-slate-300 transition hover:border-white/20 hover:text-white sm:flex">
           <i data-lucide="github" class="h-4 w-4"></i> GitHub
@@ -190,86 +196,41 @@
 
 <main id="main">
 
-<!-- ══════════════════════ HERO ══════════════════════ -->
 <section class="relative pt-36 pb-20 sm:pt-44 sm:pb-28">
   <div class="mx-auto max-w-screen px-6">
     <div class="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-
-      <!-- Copy -->
       <div class="reveal">
         <a href="#how" class="inline-flex items-center gap-2 rounded-full border border-moss-400/25 bg-moss-500/10 px-3 py-1 text-[12px] font-medium text-moss-400 transition hover:border-moss-400/50">
           <span class="relative flex h-1.5 w-1.5">
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-moss-400 opacity-70"></span>
             <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-moss-400"></span>
           </span>
-          Crate-level caching, powered by BuildKit
-          <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+          Crate-level caching, powered by BuildKit or Nix <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
         </a>
-
-        <h1 class="mt-6 font-display text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-white sm:text-6xl">
-          Rust builds that<br class="hidden sm:block" />
-          never start
-          <span class="relative whitespace-nowrap">
-            <span class="bg-gradient-to-r from-moss-400 to-haze-400 bg-clip-text text-transparent">cold</span>
-            <svg class="absolute -bottom-1.5 left-0 w-full" height="9" viewBox="0 0 200 9" fill="none" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M2 6.5c48-5 148-5 196 0" stroke="url(#ug)" stroke-width="2.5" stroke-linecap="round"/>
-              <defs><linearGradient id="ug" x1="0" x2="200"><stop stop-color="#34D399" stop-opacity=".15"/><stop offset=".5" stop-color="#34D399"/><stop offset="1" stop-color="#5EEAD4" stop-opacity=".15"/></linearGradient></defs>
-            </svg>
-          </span>
-        </h1>
-
-        <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-slate-400">
-          <span class="font-mono text-[15px] text-slate-200">cargo green</span> sends every <span class="font-mono text-[15px] text-slate-200">rustc</span> call to a real build engine — BuildKit or Nix — so each crate becomes its own individually cached build step. Compile a dependency once, on a laptop or a big remote box or CI, and every other machine pulls the result instead of rebuilding it.
-        </p>
-
+        <h1 class="mt-6 font-display text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] text-white sm:text-6xl">Rust builds that never start <span class="hl">cold</span></h1>
+        <p class="mt-7 max-w-xl text-[17px] leading-relaxed text-slate-400"><code class="code">cargo green</code> sends every <code class="code">rustc</code> call to a real build engine — BuildKit or Nix — so each crate becomes its own individually cached build step. Compile a dependency once, on a laptop or a big remote box or CI, and every other machine pulls the result instead of rebuilding it.</p>
         <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a href="#install" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">
-            Install the CLI
-            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5"></i>
-          </a>
-          <a href="#enterprise" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white backdrop-blur transition hover:border-white/25 hover:bg-white/[.06]">
-            <i data-lucide="shield-check" class="h-4 w-4 text-moss-400"></i>
-            Talk to sales
-          </a>
+          <a href="#install" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+          <a href="#enterprise" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white backdrop-blur transition hover:border-moss-400/40 hover:bg-white/[.06]">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         </div>
-
-        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/[0.08] pt-7">
-          <div>
-            <dt class="eyebrow text-slate-600">Cache granularity</dt>
-            <dd class="mt-1.5 font-display text-xl font-semibold text-white">Per crate</dd>
-          </div>
-          <div>
-            <dt class="eyebrow text-slate-600">Build engine</dt>
-            <dd class="mt-1.5 font-display text-xl font-semibold text-white">BuildKit or Nix</dd>
-          </div>
-          <div>
-            <dt class="eyebrow text-slate-600">Cache store</dt>
-            <dd class="mt-1.5 font-display text-xl font-semibold text-white">Any OCI registry</dd>
-          </div>
-        </dl>
+        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/[0.08] pt-7"><div><dt class="eyebrow text-slate-600">Cache granularity</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Per crate</dd></div><div><dt class="eyebrow text-slate-600">Build engine</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">BuildKit or Nix</dd></div><div><dt class="eyebrow text-slate-600">Cache store</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Any OCI registry</dd></div></dl>
       </div>
 
-      <!-- Signature: replaying build log -->
       <div class="reveal">
         <div class="glass edge-lit rounded-2xl p-1.5">
           <div class="rounded-[13px] bg-[#070A0E]/90">
-            <!-- title bar -->
             <div class="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
               <div class="flex items-center gap-2">
-                <span class="h-2.5 w-2.5 rounded-full bg-white/[0.12]"></span>
-                <span class="h-2.5 w-2.5 rounded-full bg-white/[0.12]"></span>
-                <span class="h-2.5 w-2.5 rounded-full bg-white/[0.12]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
                 <span class="ml-3 font-mono text-[11px] text-slate-500">acme/payments-api — main</span>
               </div>
               <span class="flex items-center gap-1.5 font-mono text-[11px] text-moss-400">
                 <i data-lucide="cloud-download" class="h-3.5 w-3.5"></i> ghcr.io
               </span>
             </div>
-
-            <!-- log -->
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
-
-            <!-- summary -->
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
               <div class="px-4 py-3">
                 <div class="eyebrow text-slate-600">Restored</div>
@@ -292,821 +253,488 @@
   </div>
 </section>
 
-<!-- ══════════════════════ REGISTRY STRIP ══════════════════════ -->
 <section class="border-y border-white/[0.08] bg-white/[.015] py-7">
   <div class="mx-auto max-w-screen px-6">
     <div class="flex flex-col items-center gap-5 sm:flex-row sm:justify-between">
       <p class="eyebrow shrink-0 text-slate-600">Stores cache where you already keep artifacts</p>
-      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[13px] text-slate-500">
-        <span>GitHub Container Registry</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Amazon ECR</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Google Artifact Registry</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Harbor</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Quay</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Docker Hub</span>
-        <span class="hidden h-3 w-px bg-white/10 sm:block"></span>
-        <span>Nix binary cache</span>
-      </div>
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[13px] text-slate-500"><span>GitHub Container Registry</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Amazon ECR</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Google Artifact Registry</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Harbor</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Quay</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Docker Hub</span><span class="hidden h-3 w-px bg-white/10 sm:block"></span><span>Nix binary cache</span></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ PROBLEM ══════════════════════ -->
 <section id="problem" class="py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal max-w-3xl">
       <p class="eyebrow text-moss-400">The problem</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">
-        Your team compiles the same code hundreds of times a day.
-      </h2>
-      <p class="mt-6 text-[17px] leading-relaxed text-slate-400">
-        Every Rust build starts from scratch somewhere. Your laptop remembers <em class="not-italic text-slate-200">your</em> last build — your teammate's laptop doesn't, and CI forgets everything the moment a job ends. So the same <span class="font-mono text-[15px] text-slate-300">serde</span>, the same <span class="font-mono text-[15px] text-slate-300">tokio</span>, the same four hundred dependencies get rebuilt again and again: on every machine, on every branch, on every pull request. That is minutes per build, hours per engineer per week, and a CI bill for recompiling code nobody changed.
-      </p>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">Your team compiles the same code hundreds of times a day.</h2>
+      <p class="mt-6 text-[17px] leading-relaxed text-slate-400">Every Rust build starts from scratch somewhere. Your laptop remembers <em>your</em> last build — your teammate's laptop doesn't, and CI forgets everything the moment a job ends. So the same <code class="code">serde</code>, the same <code class="code">tokio</code>, the same four hundred dependencies get rebuilt again and again: on every machine, on every branch, on every pull request. That is minutes per build, hours per engineer per week, and a CI bill for recompiling code nobody changed.</p>
     </div>
 
-    <div class="mt-14 grid gap-5 md:grid-cols-3">
-      <article class="reveal glass glass-hover rounded-2xl p-7">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]">
-          <i data-lucide="hard-drive" class="h-5 w-5 text-slate-300"></i>
-        </div>
+    <div class="mt-14 grid gap-5 md:grid-cols-3"><article class="reveal glass glass-hover rounded-2xl p-7">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="hard-drive" class="h-5 w-5 text-slate-300"></i></div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Local caches don't travel</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          <span class="font-mono text-[13px] text-slate-300">target/</span> lives and dies on one machine. A fresh checkout, a new worktree, or a CI runner means starting over from zero.
-        </p>
-      </article>
-
-      <article class="reveal glass glass-hover rounded-2xl p-7">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]">
-          <i data-lucide="unplug" class="h-5 w-5 text-slate-300"></i>
-        </div>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400"><code class="code">target/</code> lives and dies on one machine. A fresh checkout, a new worktree, or a CI runner means starting over from zero.</p>
+      </article><article class="reveal glass glass-hover rounded-2xl p-7">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="unplug" class="h-5 w-5 text-slate-300"></i></div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Shared caches are brittle</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          Tools that ship raw compiled artifacts around tend to miss — or worse, misbehave — when paths, toolchains, or system libraries differ between machines.
-        </p>
-      </article>
-
-      <article class="reveal glass glass-hover rounded-2xl p-7">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]">
-          <i data-lucide="archive-restore" class="h-5 w-5 text-slate-300"></i>
-        </div>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Tools that ship raw compiled artifacts around tend to miss — or worse, misbehave — when paths, toolchains, or system libraries differ between machines.</p>
+      </article><article class="reveal glass glass-hover rounded-2xl p-7">
+        <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="archive-restore" class="h-5 w-5 text-slate-300"></i></div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">CI caches are all-or-nothing</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          Most CI caches key one big archive on your <span class="font-mono text-[13px] text-slate-300">Cargo.lock</span>. Bump a single dependency and the whole thing misses — after your job already spent minutes downloading and unpacking it.
-        </p>
-      </article>
-    </div>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Most CI caches key one big archive on your <code class="code">Cargo.lock</code>. Bump a single dependency and the whole thing misses — after your job already spent minutes downloading and unpacking it.</p>
+      </article></div>
 
-    <!-- The answer -->
     <div class="reveal glass edge-lit mt-8 overflow-hidden rounded-2xl">
       <div class="grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
         <div>
           <p class="eyebrow text-moss-400">The answer</p>
-          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">
-            Give the compilation to a real build engine.
-          </h3>
-          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">
-            cargo-green turns each <span class="font-mono text-[14px] text-slate-300">rustc</span> call into its own build step and hands it to BuildKit or Nix. Each step is sealed off from whatever is unique about your machine, so the same crate produces the same key everywhere — and the cache actually hits. Results live as ordinary content in a registry you control, shared by every developer and every CI job.
-          </p>
+          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">Give the compilation to a real build engine.</h3>
+          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">cargo-green turns each <code class="code">rustc</code> call into its own build step and hands it to BuildKit or Nix. Each step is sealed off from whatever is unique about your machine, so the same crate produces the same key everywhere — and the cache actually hits. Results live as ordinary content in a registry you control, shared by every developer and every CI job.</p>
           <p class="mt-5 font-display text-lg font-medium text-white">Build once, anywhere. Reuse everywhere.</p>
         </div>
-
-        <ul class="space-y-3.5">
-          <li class="flex gap-3 text-[14.5px] text-slate-300"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Crate-level granularity — one changed crate rebuilds one crate</li>
-          <li class="flex gap-3 text-[14.5px] text-slate-300"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Cache keys that match across machines and CI runners</li>
-          <li class="flex gap-3 text-[14.5px] text-slate-300"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Works with proc-macros, build scripts, and linking</li>
-          <li class="flex gap-3 text-[14.5px] text-slate-300"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Offload compilation to any remote machine over SSH</li>
-          <li class="flex gap-3 text-[14.5px] text-slate-300"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>No new build system — it is still <span class="font-mono text-[13.5px] text-slate-200">cargo</span></li>
-        </ul>
+        <ul class="space-y-3.5 text-[14.5px] text-slate-300"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Crate-level granularity — one changed crate rebuilds one crate</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Cache keys that match across machines and CI runners</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Works with proc-macros, build scripts, and linking</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Offload compilation to any remote machine over SSH</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>No new build system — it is still <code class="code">cargo</code></li></ul>
       </div>
     </div>
 
-    <!-- CI: progressive fetch -->
     <div class="reveal glass mt-5 overflow-hidden rounded-2xl">
       <div class="grid gap-10 p-8 sm:p-10 lg:grid-cols-[1fr_1.25fr]">
         <div>
           <p class="eyebrow text-moss-400">Day one</p>
-          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">
-            Every CI job gets faster immediately.
-          </h3>
-          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">
-            There is no cache to warm up and no lockfile to match. The first job you run against a shared cache already skips most of its work.
-          </p>
+          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">Every CI job gets faster immediately.</h3>
+          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">There is no cache to warm up and no lockfile to match. The first job you run against a shared cache already skips most of its work.</p>
         </div>
-
-        <div class="grid gap-5 sm:grid-cols-3">
-          <div>
+        <div class="grid gap-5 sm:grid-cols-3"><div>
             <i data-lucide="unlink" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">Not keyed on Cargo.lock</h4>
             <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Each crate is cached on its own. Bumping one dependency invalidates that crate and whatever depends on it — not the other four hundred.</p>
-          </div>
-          <div>
+          </div><div>
             <i data-lucide="download-cloud" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">Fetched as the build runs</h4>
             <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Cached crates stream in while compilation is already underway, instead of a restore step that blocks the job before anything starts.</p>
-          </div>
-          <div>
+          </div><div>
             <i data-lucide="scissors" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">No save/restore steps</h4>
             <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Delete the cache actions from your workflow. Nothing to tar, upload, or expire — and nothing to rate-limit you on a busy morning.</p>
-          </div>
-        </div>
+          </div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ INSTALL & USE ══════════════════════ -->
 <section id="install" class="py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
-    <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-      <div class="max-w-2xl">
-        <p class="eyebrow text-moss-400">Install &amp; use</p>
-        <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">
-          One install. One extra word.
-        </h2>
-        <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">
-          cargo-green is a cargo plugin, not a replacement. Your commands, your <span class="font-mono text-[15px] text-slate-300">Cargo.toml</span>, your CI — unchanged.
-        </p>
-      </div>
-      <a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">
-        Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i>
-      </a>
-    </div>
-
+    <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="eyebrow text-moss-400">Install &amp; use</p>
+<h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">One install. One extra word.</h2>
+<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green is a cargo plugin, not a replacement. Your commands, your <code class="code">Cargo.toml</code>, your CI — unchanged.</p></div><a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
-      <!-- Tabbed terminal -->
       <div class="reveal glass rounded-2xl">
-        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist">
-          <button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-build" role="tab">build</button>
-          <button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-install" role="tab">install</button>
-          <button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-remote" role="tab">remote</button>
-          <button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-share" role="tab">share cache</button>
-          <button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-ci" role="tab">CI</button>
-        </div>
-
+        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist"><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" data-tab="t-build" role="tab" aria-selected="true">build</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-install" role="tab" aria-selected="false">install</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-remote" role="tab" aria-selected="false">remote</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-share-cache" role="tab" aria-selected="false">share cache</button><button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" data-tab="t-ci" role="tab" aria-selected="false">CI</button></div>
         <div class="relative">
           <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
             <i data-lucide="copy" class="h-3.5 w-3.5"></i><span>Copy</span>
           </button>
+          <pre id="t-build" class="panel overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Once: start from a clean slate</span>
+<span class="c-cmd">cargo</span> clean
 
-          <pre id="t-install" class="panel overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="text-slate-600"># From crates.io</span>
-<span class="text-moss-400">cargo</span> install cargo-green
+<span class="c-dim"># Then use cargo, with one extra word</span>
+<span class="c-cmd">cargo</span> green build
+<span class="c-cmd">cargo</span> green test
+<span class="c-cmd">cargo</span> green clippy
 
-<span class="text-slate-600"># …or track the latest from git</span>
-<span class="text-moss-400">cargo</span> install --locked --force \
+<span class="c-dim"># Like it? Make it invisible</span>
+<span class="c-cmd">alias</span> cargo=<span class="c-str">'cargo green'</span>
+
+<span class="c-dim"># Pick your engine: docker (default), podman, or nix</span>
+<span class="c-cmd">export</span> <span class="c-var">CARGOGREEN_RUNNER</span>=nix
+
+<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="t-install" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># From crates.io</span>
+<span class="c-cmd">cargo</span> install cargo-green
+
+<span class="c-dim"># …or track the latest from git</span>
+<span class="c-cmd">cargo</span> install --locked --force \
   --git https://github.com/fenollp/supergreen.git cargo-green
 
-<span class="text-slate-600"># Make sure $CARGO_HOME/bin is on your $PATH</span>
-<span class="text-moss-400">which</span> cargo-green
+<span class="c-dim"># Make sure $CARGO_HOME/bin is on your $PATH</span>
+<span class="c-cmd">which</span> cargo-green
 
-<span class="text-slate-600"># Needs one build engine on the machine:</span>
-<span class="text-slate-600"># a docker or podman client, or nix.</span></code></pre>
+<span class="c-dim"># Needs one build engine on the machine:</span>
+<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="t-remote" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
+<span class="c-var">DOCKER_HOST</span>=ssh://build-farm-01 cargo green test
 
-          <pre id="t-build" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="text-slate-600"># Once: start from a clean slate</span>
-<span class="text-moss-400">cargo</span> clean
+<span class="c-dim"># Same idea with the Nix engine</span>
+<span class="c-var">CARGOGREEN_RUNNER</span>=nix <span class="c-var">NIX_SSHOPTS</span>=<span class="c-str">"-A"</span> \
+  <span class="c-cmd">cargo</span> green build --release
 
-<span class="text-slate-600"># Then use cargo, with one extra word</span>
-<span class="text-moss-400">cargo</span> green build
-<span class="text-moss-400">cargo</span> green test
-<span class="text-moss-400">cargo</span> green clippy
-
-<span class="text-slate-600"># Like it? Make it invisible</span>
-<span class="text-moss-400">alias</span> cargo=<span class="text-haze-400">'cargo green'</span>
-
-<span class="text-slate-600"># Pick your engine: docker (default), podman, or nix</span>
-<span class="text-moss-400">export</span> <span class="text-haze-400">CARGOGREEN_RUNNER</span>=nix
-
-<span class="text-slate-600"># Plain `cargo build` keeps working afterwards.</span></code></pre>
-
-          <pre id="t-remote" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="text-slate-600"># Compile on the 96-core box, run the binary locally</span>
-<span class="text-haze-400">DOCKER_HOST</span>=ssh://build-farm-01 <span class="text-moss-400">cargo</span> green test
-
-<span class="text-slate-600"># Same idea with the Nix engine</span>
-<span class="text-haze-400">CARGOGREEN_RUNNER</span>=nix <span class="text-haze-400">NIX_SSHOPTS</span>=<span class="text-haze-400">"-A"</span> \
-  <span class="text-moss-400">cargo</span> green build --release
-
-<span class="text-slate-600"># Laptops stay quiet. Fans stay off.</span></code></pre>
-
-          <pre id="t-share" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="text-slate-600"># Cargo.toml</span>
-[package.metadata.green]
-cache-images = [
-  <span class="text-haze-400">"docker-image://ghcr.io/acme/payments-api"</span>,
+<span class="c-dim"># Laptops stay quiet. Fans stay off.</span></code></pre><pre id="t-share-cache" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># Cargo.toml</span>
+<span class="c-cmd">[package.metadata.green]</span>
+<span class="c-var">cache-images</span> = [
+  <span class="c-str">"docker-image://ghcr.io/acme/payments-api"</span>,
 ]
-cache-from-images = [
-  <span class="text-haze-400">"docker-image://ghcr.io/acme/global-cache"</span>,
+<span class="c-var">cache-from-images</span> = [
+  <span class="c-str">"docker-image://ghcr.io/acme/global-cache"</span>,
 ]
 
-<span class="text-slate-600"># Push the cache for everyone else</span>
-<span class="text-moss-400">cargo</span> green supergreen push</code></pre>
+<span class="c-dim"># Push the cache for everyone else</span>
+cargo green supergreen push</code></pre><pre id="t-ci" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="c-dim"># .github/workflows/ci.yml</span>
+- <span class="c-var">run</span>: cargo install cargo-green
+- <span class="c-var">run</span>: cargo green test
+  <span class="c-var">env</span>:
+    <span class="c-var">CARGOGREEN_CACHE_IMAGES</span>: docker-image://ghcr.io/acme/api
 
-          <pre id="t-ci" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300"><code><span class="text-slate-600"># .github/workflows/ci.yml</span>
-- <span class="text-haze-400">run</span>: cargo install cargo-green
-- <span class="text-haze-400">run</span>: cargo green test
-  <span class="text-haze-400">env</span>:
-    CARGOGREEN_CACHE_IMAGES: docker-image://ghcr.io/acme/api
-
-<span class="text-slate-600"># Warm the cache for offline / air-gapped runners</span>
-- <span class="text-haze-400">run</span>: cargo green supergreen sync</code></pre>
+<span class="c-dim"># Warm the cache for offline / air-gapped runners</span>
+- <span class="c-var">run</span>: cargo green supergreen sync</code></pre>
         </div>
       </div>
-
-      <!-- Command surface -->
       <div class="reveal glass rounded-2xl p-8">
         <h3 class="font-display text-lg font-semibold text-white">The command surface</h3>
         <p class="mt-2 text-[14.5px] leading-relaxed text-slate-400">Everything else lives under one subcommand, so nothing else pollutes your cargo namespace.</p>
-        <dl class="mt-7 space-y-3.5">
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+        <dl class="mt-7 space-y-3.5"><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen setup</dt>
             <dd class="text-[13.5px] text-slate-400">Create the required symlinks</dd>
-          </div>
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+          </div><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen env</dt>
             <dd class="text-[13.5px] text-slate-400">Show the values actually in use</dd>
-          </div>
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+          </div><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen doc</dt>
             <dd class="text-[13.5px] text-slate-400">Documentation for those values</dd>
-          </div>
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+          </div><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen sync</dt>
             <dd class="text-[13.5px] text-slate-400">Pull everything, for offline use</dd>
-          </div>
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+          </div><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen push</dt>
             <dd class="text-[13.5px] text-slate-400">Push the shared cache, all tags</dd>
-          </div>
-          <div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
+          </div><div class="flex flex-col gap-1 border-b border-white/[0.08] pb-3.5">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen builder</dt>
             <dd class="text-[13.5px] text-slate-400">Manage the local or remote builder</dd>
-          </div>
-          <div class="flex flex-col gap-1">
+          </div><div class="flex flex-col gap-1">
             <dt class="font-mono text-[12.5px] text-moss-400"><span class="text-slate-600">$ </span>cargo green supergreen show-rust-base</dt>
             <dd class="text-[13.5px] text-slate-400">Inspect the build environment in use</dd>
-          </div>
-        </dl>
+          </div></dl>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ HOW IT WORKS ══════════════════════ -->
 <section id="how" class="border-y border-white/[0.08] bg-white/[.012] py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
-    <div class="reveal max-w-2xl">
-      <p class="eyebrow text-moss-400">How it works</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">
-        A wrapper, a build graph, a shared cache.
-      </h2>
-      <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">
-        cargo-green slots in as the compiler wrapper cargo already supports. Four things happen between <span class="font-mono text-[15px] text-slate-300">cargo green build</span> and your binary.
-      </p>
-    </div>
-
-    <ol class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-      <li class="reveal glass glass-hover rounded-2xl p-7">
+    <div class="reveal max-w-2xl"><p class="eyebrow text-moss-400">How it works</p>
+<h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">A wrapper, a build graph, a shared cache.</h2>
+<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green slots in as the compiler wrapper cargo already supports. Four things happen between <code class="code">cargo green build</code> and your binary.</p></div>
+    <ol class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4"><li class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[12px] text-moss-400">01</span>
           <i data-lucide="git-fork" class="h-5 w-5 text-slate-500"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Wrap</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          <span class="font-mono text-[13px] text-slate-300">cargo green</span> sets <span class="font-mono text-[13px] text-slate-300">$RUSTC_WRAPPER</span> and calls cargo. Cargo still resolves, still schedules, still owns your build.
-        </p>
-      </li>
-      <li class="reveal glass glass-hover rounded-2xl p-7">
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400"><code class="code">cargo green</code> sets <code class="code">$RUSTC_WRAPPER</code> and calls cargo. Cargo still resolves, still schedules, still owns your build.</p>
+      </li><li class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[12px] text-moss-400">02</span>
           <i data-lucide="file-code-2" class="h-5 w-5 text-slate-500"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Translate</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          Every <span class="font-mono text-[13px] text-slate-300">rustc</span> call and build-script run becomes its own sealed build step, pinned to your exact toolchain.
-        </p>
-      </li>
-      <li class="reveal glass glass-hover rounded-2xl p-7">
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Every <code class="code">rustc</code> call and build-script run becomes its own sealed build step, pinned to your exact toolchain.</p>
+      </li><li class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[12px] text-moss-400">03</span>
           <i data-lucide="cpu" class="h-5 w-5 text-slate-500"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Build</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          BuildKit or Nix runs the graph with full parallelism — on your machine, or on any remote one you point it at.
-        </p>
-      </li>
-      <li class="reveal glass glass-hover rounded-2xl p-7">
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">BuildKit or Nix runs the graph with full parallelism — on your machine, or on any remote one you point it at.</p>
+      </li><li class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[12px] text-moss-400">04</span>
           <i data-lucide="database-zap" class="h-5 w-5 text-slate-500"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Cache &amp; share</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">
-          Results are cached per crate and pulled in progressively as the build runs. Your team and your CI read the same cache.
-        </p>
-      </li>
-    </ol>
-
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Results are cached per crate and pulled in progressively as the build runs. Your team and your CI read the same cache.</p>
+      </li></ol>
     <div class="mt-8 grid gap-5 lg:grid-cols-[1fr_1fr]">
-      <!-- Why it hits -->
       <div class="reveal glass rounded-2xl p-8">
-        <div class="flex items-center gap-3">
-          <i data-lucide="lock" class="h-5 w-5 text-moss-400"></i>
+        <div class="flex items-center gap-3"><i data-lucide="lock" class="h-5 w-5 text-moss-400"></i>
           <h3 class="font-display text-lg font-semibold text-white">Why the cache actually hits</h3>
         </div>
-        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">
-          A shared cache is only worth having if it hits on someone else's machine. cargo-green removes the things that normally make two identical builds look different:
-        </p>
-        <ul class="mt-6 space-y-3">
-          <li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>The build environment is pinned, not whatever happens to be installed</li>
-          <li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Paths are normalized, so your home directory never leaks into a key</li>
-          <li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Git dependencies are pinned to an exact revision</li>
-          <li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Build outputs are made reproducible, down to file timestamps</li>
-        </ul>
-        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">
-          The same properties make a build auditable: you can show exactly what produced a binary, and rebuild it later to prove it.
-        </p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">A shared cache is only worth having if it hits on someone else's machine. cargo-green removes the things that normally make two identical builds look different:</p>
+        <ul class="mt-6 space-y-3"><li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>The build environment is pinned, not whatever happens to be installed</li><li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Paths are normalized, so your home directory never leaks into a key</li><li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Git dependencies are pinned to an exact revision</li><li class="flex gap-3 text-[14px] text-slate-400"><i data-lucide="dot" class="h-[18px] w-[18px] shrink-0 text-moss-400"></i>Build outputs are made reproducible, down to file timestamps</li></ul>
+        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">The same properties make a build auditable: you can show exactly what produced a binary, and rebuild it later to prove it.</p>
       </div>
-
-      <!-- Two engines -->
       <div class="reveal glass rounded-2xl p-8">
-        <div class="flex items-center gap-3">
-          <i data-lucide="split" class="h-5 w-5 text-moss-400"></i>
+        <div class="flex items-center gap-3"><i data-lucide="split" class="h-5 w-5 text-moss-400"></i>
           <h3 class="font-display text-lg font-semibold text-white">Two engines, one cache</h3>
         </div>
-        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">
-          Pick whichever engine your team already trusts. The workflow, the commands, and the cached results are the same either way — teams can even mix both and still share hits.
-        </p>
-
-        <div class="mt-6 grid gap-4 sm:grid-cols-2">
-          <div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
+        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">Pick whichever engine your team already trusts. The workflow, the commands, and the cached results are the same either way — teams can even mix both and still share hits.</p>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2"><div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
             <div class="flex items-center gap-2.5">
               <i data-lucide="container" class="h-[18px] w-[18px] text-moss-400"></i>
               <h4 class="font-display text-[15px] font-semibold text-white">BuildKit</h4>
             </div>
             <p class="mt-2.5 text-[13.5px] leading-relaxed text-slate-400">Through the docker or podman client you already have. Cache lives in any OCI registry.</p>
             <p class="mt-3 font-mono text-[11.5px] text-slate-500">runner = "docker" | "podman"</p>
-          </div>
-          <div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
+          </div><div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
             <div class="flex items-center gap-2.5">
               <i data-lucide="hexagon" class="h-[18px] w-[18px] text-moss-400"></i>
               <h4 class="font-display text-[15px] font-semibold text-white">Nix</h4>
             </div>
             <p class="mt-2.5 text-[13.5px] leading-relaxed text-slate-400">For teams already on Nix. Cache lives in a binary cache, with the same crate-level granularity.</p>
             <p class="mt-3 font-mono text-[11.5px] text-slate-500">runner = "nix"</p>
-          </div>
-        </div>
-
-        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">
-          No daemon on the laptop is required either way — point cargo-green at a shared machine and let it do the work.
-        </p>
+          </div></div>
+        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">No daemon on the laptop is required either way — point cargo-green at a shared machine and let it do the work.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ CONFIGURATION ══════════════════════ -->
 <section id="config" class="py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
-    <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-      <div class="max-w-2xl">
-        <p class="eyebrow text-moss-400">Configuration</p>
-        <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">
-          Defaults that work. Knobs when you need them.
-        </h2>
-        <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">
-          Set anything in <span class="font-mono text-[15px] text-slate-300">[package.metadata.green]</span> in your <span class="font-mono text-[15px] text-slate-300">Cargo.toml</span>, or with a <span class="font-mono text-[15px] text-slate-300">$CARGOGREEN_*</span> environment variable — env vars win, which is what you want in CI.
-        </p>
-      </div>
-      <a href="https://github.com/fenollp/supergreen#configuration" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">
-        Full reference <i data-lucide="external-link" class="h-4 w-4"></i>
-      </a>
-    </div>
-
-    <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-      <a href="https://github.com/fenollp/supergreen#caching" class="reveal glass glass-hover group block rounded-2xl p-7">
+    <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="eyebrow text-moss-400">Configuration</p>
+<h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">Defaults that work. Knobs when you need them.</h2>
+<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Set anything in <code class="code">[package.metadata.green]</code> in your <code class="code">Cargo.toml</code>, or with a <code class="code">$CARGOGREEN_*</code> environment variable — env vars win, which is what you want in CI.</p></div><a href="https://github.com/fenollp/supergreen#configuration" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full reference <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
+    <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3"><a href="https://github.com/fenollp/supergreen#caching" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10">
-            <i data-lucide="database" class="h-5 w-5 text-moss-400"></i>
-          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="database" class="h-5 w-5 text-moss-400"></i></div>
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Cache &amp; sharing</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Where cached crates are read from and written to, so a team, a fork, and CI can all draw on the same pool.</p>
-        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500">
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-images</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-from-images</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-to-images</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">registry-mirrors</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/fenollp/supergreen#cargogreen_runner" class="reveal glass glass-hover group block rounded-2xl p-7">
+        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-images</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-from-images</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">cache-to-images</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">registry-mirrors</span></div>
+      </a><a href="https://github.com/fenollp/supergreen#cargogreen_runner" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10">
-            <i data-lucide="split" class="h-5 w-5 text-moss-400"></i>
-          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="split" class="h-5 w-5 text-moss-400"></i></div>
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Build engine</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Which engine compiles your crates, and where it runs — docker, podman, or Nix, locally or on a remote machine.</p>
-        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500">
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">runner</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$DOCKER_HOST</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$BUILDX_BUILDER</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/fenollp/supergreen#cargogreen_base_image" class="reveal glass glass-hover group block rounded-2xl p-7">
+        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">runner</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$DOCKER_HOST</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$BUILDX_BUILDER</span></div>
+      </a><a href="https://github.com/fenollp/supergreen#cargogreen_base_image" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10">
-            <i data-lucide="box" class="h-5 w-5 text-moss-400"></i>
-          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="box" class="h-5 w-5 text-moss-400"></i></div>
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Build environment</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-slate-400">What sits inside the sandbox each crate compiles in: base image, system packages, toolchain components, network access.</p>
-        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500">
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">base-image</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">with-network</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">components</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">add.apt</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">add.apk</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/fenollp/supergreen#cargogreen_log" class="reveal glass glass-hover group block rounded-2xl p-7">
+        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">base-image</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">with-network</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">components</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">add.apt</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">add.apk</span></div>
+      </a><a href="https://github.com/fenollp/supergreen#cargogreen_log" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10">
-            <i data-lucide="scroll-text" class="h-5 w-5 text-moss-400"></i>
-          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="scroll-text" class="h-5 w-5 text-moss-400"></i></div>
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Diagnostics</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Turn on logging when a build surprises you, and see exactly which values cargo-green resolved and used.</p>
-        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500">
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$CARGOGREEN_LOG</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$CARGOGREEN_LOG_PATH</span>
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">supergreen env</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/fenollp/supergreen#cargogreen_final_path" class="reveal glass glass-hover group block rounded-2xl p-7">
+        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$CARGOGREEN_LOG</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$CARGOGREEN_LOG_PATH</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">supergreen env</span></div>
+      </a><a href="https://github.com/fenollp/supergreen#cargogreen_final_path" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
-          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10">
-            <i data-lucide="file-output" class="h-5 w-5 text-moss-400"></i>
-          </div>
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="file-output" class="h-5 w-5 text-moss-400"></i></div>
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Artifacts &amp; provenance</h3>
         <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Export the finished build as a single file you can archive, review, or rebuild somewhere else entirely.</p>
-        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500">
-          <span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">final-path</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/fenollp/supergreen#configuration" class="reveal glass glass-hover group flex flex-col justify-between rounded-2xl border-dashed p-7">
+        <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">final-path</span></div>
+      </a><a href="https://github.com/fenollp/supergreen#configuration" class="reveal glass glass-hover group flex flex-col justify-between rounded-2xl border-dashed p-7">
         <div>
           <div class="flex items-start justify-between">
-            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]">
-              <i data-lucide="book-open" class="h-5 w-5 text-slate-300"></i>
-            </div>
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="book-open" class="h-5 w-5 text-slate-300"></i></div>
             <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
           </div>
           <h3 class="mt-5 font-display text-lg font-semibold text-white">Every option, documented</h3>
           <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Each setting has a page of its own in the README, with defaults, examples, and the environment variable that overrides it.</p>
         </div>
         <span class="mt-6 inline-flex items-center gap-2 text-[13.5px] font-medium text-moss-400">Read the configuration reference <i data-lucide="arrow-right" class="h-4 w-4"></i></span>
-      </a>
-    </div>
+      </a></div>
   </div>
 </section>
 
-<!-- ══════════════════════ ENTERPRISE ══════════════════════ -->
 <section id="enterprise" class="border-y border-white/[0.08] bg-white/[.012] py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
       <div class="reveal">
         <p class="eyebrow text-moss-400">Enterprise</p>
-        <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">
-          Runs inside your perimeter.
-        </h2>
-        <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">
-          Nothing about the cache requires our servers. It is ordinary content in a registry or binary cache, which means it can live wherever your compliance posture requires: your own cloud account, your own VPC, or an air-gapped network with no egress at all.
-        </p>
-        <a href="#pricing" class="mt-8 inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.06]">
-          Book a security review <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i>
-        </a>
+        <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">Runs inside your perimeter.</h2>
+        <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Nothing about the cache requires our servers. It is ordinary content in a registry or binary cache, which means it can live wherever your compliance posture requires: your own cloud account, your own VPC, or an air-gapped network with no egress at all.</p>
+        <div class="mt-8"><a href="#pricing" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white backdrop-blur transition hover:border-moss-400/40 hover:bg-white/[.06]">Book a security review <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a></div>
       </div>
-
-      <div class="grid gap-5 sm:grid-cols-2">
-        <div class="reveal glass rounded-2xl p-6">
+      <div class="grid gap-5 sm:grid-cols-2"><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="shield-check" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">SOC 2 Type II</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Annual audit, report available under NDA, plus a DPA and standard contractual clauses for EU data.</p>
-        </div>
-        <div class="reveal glass rounded-2xl p-6">
+        </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="key-round" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">SSO, SCIM &amp; scoped tokens</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">SAML and OIDC single sign-on, directory-synced groups, per-project read/write tokens with rotation.</p>
-        </div>
-        <div class="reveal glass rounded-2xl p-6">
+        </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="cloud-cog" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">BYOC &amp; air-gapped</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Bring your own cloud account and registry, run single-tenant, or sync a cache into a network with no egress.</p>
-        </div>
-        <div class="reveal glass rounded-2xl p-6">
+        </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="activity" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">99.9% uptime SLA</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Written availability commitment, a named support engineer, and a shared Slack channel with the maintainers.</p>
-        </div>
-        <div class="reveal glass rounded-2xl p-6">
+        </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="file-search" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">Audit logs &amp; attribution</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">See who built what, when, and from which revision — and which teams are driving build spend, before finance asks.</p>
-        </div>
-        <div class="reveal glass rounded-2xl p-6">
+        </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="scale" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">Open source core</h3>
           <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">The CLI is AGPL-3.0 and auditable line by line. Self-hosted control plane and commercial licensing available where the AGPL doesn't fit.</p>
-        </div>
-      </div>
+        </div></div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════ PRICING ══════════════════════ -->
 <section id="pricing" class="py-24 sm:py-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal mx-auto max-w-2xl text-center">
       <p class="eyebrow text-moss-400">Pricing</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">
-        The CLI is free forever.
-      </h2>
-      <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">
-        Point cargo-green at a registry you already run and pay nothing, ever. The hosted cache is for teams who would rather not operate one — priced on what you actually use, per organization rather than per developer.
-      </p>
-      <p class="mt-4 text-[14px] text-slate-500">
-        Your CI jobs and your coding agents build too. Charging by headcount stopped making sense.
-      </p>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">The CLI is free, forever.</h2>
+      <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Point cargo-green at a registry you already run and pay nothing, ever. The hosted cache is for teams who would rather not operate one — priced on what you actually use, per organization rather than per developer.</p>
+      <p class="mt-4 text-[14px] text-slate-500">Your CI jobs and your coding agents build too. Charging by headcount stopped making sense.</p>
     </div>
 
-    <!-- Billing toggle -->
     <div class="reveal mt-9 flex items-center justify-center gap-3">
       <span id="lbl-monthly" class="text-[13.5px] font-medium text-white">Monthly</span>
-      <button id="billing-toggle" role="switch" aria-checked="false" aria-label="Switch to annual billing"
-        class="switch relative h-6 w-11 rounded-full border border-white/[0.12] bg-white/[.06] transition-colors">
+      <button id="billing-toggle" role="switch" aria-checked="false" aria-label="Switch to annual billing" class="switch relative h-6 w-11 rounded-full border border-white/[0.12] bg-white/[.06] transition-colors">
         <span class="knob absolute left-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-slate-300 transition-transform duration-200"></span>
       </button>
       <span id="lbl-annual" class="dim text-[13.5px] font-medium">Annual</span>
-      <span class="rounded-full border border-moss-400/25 bg-moss-500/10 px-2.5 py-0.5 font-mono text-[11px] text-moss-400">&minus;20%</span>
+      <span class="rounded-full border border-moss-400/25 bg-moss-500/10 px-2.5 py-0.5 font-mono text-[11px] text-moss-400">−20%</span>
     </div>
 
-    <!-- Tiers -->
-    <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-
-      <!-- Developer -->
-      <div class="reveal glass flex flex-col rounded-2xl p-7">
+    <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4"><div class="reveal glass flex flex-col rounded-2xl p-7">
+        
         <h3 class="font-display text-xl font-semibold text-white">Developer</h3>
         <p class="mt-2 text-[13.5px] text-slate-400">Individuals, side projects, open source.</p>
         <div class="mt-6 flex items-baseline gap-2">
-          <span class="font-display text-4xl font-semibold tracking-tight text-white">$0</span>
+          <span class="font-display text-4xl font-semibold tracking-tight text-white"><span data-price-monthly="$0" data-price-annual="$0">$0</span></span>
           <span class="text-[13.5px] text-slate-500">free forever</span>
         </div>
-        <a href="#install" class="mt-6 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-white/25 hover:bg-white/[.08]">
-          Install the CLI
-        </a>
+        
+        <a href="#install" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         <div class="mt-7 rule-glow"></div>
-        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400">
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited local &amp; remote builds</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Bring your own registry — no limits</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-slate-200">500K</span> cache requests / month</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-slate-200">20 GB</span> cache storage</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>50 core-hours of remote builds</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>1 project, 7-day retention</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Community support on GitHub</li>
-        </ul>
-      </div>
-
-      <!-- Team -->
-      <div class="reveal glass edge-lit relative flex flex-col rounded-2xl p-7 shadow-[0_0_80px_-30px_rgba(16,185,129,.45)]">
+        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited local &amp; remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Bring your own registry — no limits</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">500K</span> cache requests / month</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">20 GB</span> cache storage</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>50 core-hours of remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>1 project, 7-day retention</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Community support on GitHub</li></ul>
+      </div><div class="reveal glass edge-lit relative flex flex-col rounded-2xl p-7 shadow-[0_0_80px_-30px_rgba(16,185,129,.45)]">
         <div class="absolute -top-3 left-7 rounded-full border border-moss-400/30 bg-ink-950 px-3 py-1 font-mono text-[11px] uppercase tracking-[.14em] text-moss-400">Most popular</div>
         <h3 class="font-display text-xl font-semibold text-white">Team</h3>
         <p class="mt-2 text-[13.5px] text-slate-400">Startups shipping Rust every day.</p>
         <div class="mt-6 flex items-baseline gap-2">
-          <span class="font-display text-4xl font-semibold tracking-tight text-white">$<span id="price-team">49</span></span>
+          <span class="font-display text-4xl font-semibold tracking-tight text-white"><span data-price-monthly="$49" data-price-annual="$39">$49</span></span>
           <span class="text-[13.5px] text-slate-500">/ month</span>
         </div>
-        <p class="mt-1.5 text-[12.5px] text-slate-500">Per organization<span class="annual-note hidden">, billed yearly</span>.</p>
-        <a href="#" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14px] font-semibold text-ink-950 shadow-[0_10px_40px_-14px_rgba(16,185,129,.8)] transition hover:bg-moss-400">
-          Start 14-day trial <i data-lucide="arrow-right" class="h-4 w-4"></i>
-        </a>
+        <p class="mt-1.5 text-[12.5px] text-slate-500">Per organization<span class="annual-note hidden">, billed yearly</span></p>
+        <a href="#" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14px] font-semibold text-ink-950 shadow-[0_10px_40px_-14px_rgba(16,185,129,.8)] transition hover:bg-moss-400">Start 14-day trial <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
         <div class="mt-7 rule-glow"></div>
-        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-300">
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Developer, plus:</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-white">10 million</span> cache requests / month</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-white">500 GB</span> cache storage</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>200 core-hours of remote builds</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Overage at $0.15/GB, $0.10/core-hour</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited projects and seats</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Prewarmed cache for popular crates</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Build analytics: what's slow, what missed</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Priority email support, 1 business day</li>
-        </ul>
-      </div>
-
-      <!-- Scale -->
-      <div class="reveal glass flex flex-col rounded-2xl p-7">
+        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-300"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Developer, plus:</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">10 million</span> cache requests / month</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">500 GB</span> cache storage</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>200 core-hours of remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Overage at $0.15/GB, $0.10/core-hour</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited projects and seats</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Prewarmed cache for popular crates</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Build analytics: what's slow, what missed</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Priority email support, 1 business day</li></ul>
+      </div><div class="reveal glass flex flex-col rounded-2xl p-7">
+        
         <h3 class="font-display text-xl font-semibold text-white">Scale</h3>
         <p class="mt-2 text-[13.5px] text-slate-400">Engineering orgs of 20–100 developers.</p>
         <div class="mt-6 flex items-baseline gap-2">
-          <span class="font-display text-4xl font-semibold tracking-tight text-white">$<span id="price-scale">400</span></span>
+          <span class="font-display text-4xl font-semibold tracking-tight text-white"><span data-price-monthly="$400" data-price-annual="$320">$400</span></span>
           <span class="text-[13.5px] text-slate-500">/ month</span>
         </div>
-        <p class="mt-1.5 text-[12.5px] text-slate-500">Per organization<span class="annual-note hidden">, billed yearly</span>.</p>
-        <a href="#" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">
-          Start 14-day trial <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i>
-        </a>
+        <p class="mt-1.5 text-[12.5px] text-slate-500">Per organization<span class="annual-note hidden">, billed yearly</span></p>
+        <a href="#" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">Start 14-day trial <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         <div class="mt-7 rule-glow"></div>
-        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400">
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Team, plus:</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-slate-200">100 million</span> cache requests / month</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="text-slate-200">2 TB</span> cache storage</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>2,000 core-hours of remote builds</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Warm runners: pull requests never cold-start</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Spend attribution per team and repo</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>90-day retention, configurable per project</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Shared Slack channel</li>
-        </ul>
-      </div>
-
-      <!-- Enterprise -->
-      <div class="reveal glass flex flex-col rounded-2xl p-7">
+        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Team, plus:</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">100 million</span> cache requests / month</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i><span class="val">2 TB</span> cache storage</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>2,000 core-hours of remote builds</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Warm runners: pull requests never cold-start</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Spend attribution per team and repo</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>90-day retention, configurable per project</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Shared Slack channel</li></ul>
+      </div><div class="reveal glass flex flex-col rounded-2xl p-7">
+        
         <h3 class="font-display text-xl font-semibold text-white">Enterprise</h3>
         <p class="mt-2 text-[13.5px] text-slate-400">Platform and security orgs with their own rules.</p>
         <div class="mt-6 flex items-baseline gap-2">
-          <span class="font-display text-4xl font-semibold tracking-tight text-white">Custom</span>
+          <span class="font-display text-4xl font-semibold tracking-tight text-white"><span data-price-monthly="Custom" data-price-annual="Custom">Custom</span></span>
+          
         </div>
-        <p class="mt-1.5 text-[12.5px] text-slate-500">Annual contract, invoice billing.</p>
-        <a href="mailto:sales@cargo.green" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">
-          Contact us <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i>
-        </a>
+        <p class="mt-1.5 text-[12.5px] text-slate-500">Annual contract, invoice billing</p>
+        <a href="mailto:sales@cargo.green" class="mt-5 inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.04] px-5 py-3 text-[14px] font-semibold text-white transition hover:border-moss-400/40 hover:bg-white/[.08]">Contact us <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         <div class="mt-7 rule-glow"></div>
-        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400">
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Scale, plus:</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited requests, custom storage and compute</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Self-hosted control plane, BYOC, or air-gapped</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>SSO/SAML, SCIM, audit log export</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>SOC 2 Type II report, DPA, security review</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>99.9% uptime SLA</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Dedicated support engineer</li>
-          <li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Commercial licensing &amp; roadmap input</li>
-        </ul>
-      </div>
-    </div>
+        <ul class="mt-7 space-y-3 text-[13.5px] text-slate-400"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Everything in Scale, plus:</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Unlimited requests, custom storage and compute</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Self-hosted control plane, BYOC, or air-gapped</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>SSO/SAML, SCIM, audit log export</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>SOC 2 Type II report, DPA, security review</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>99.9% uptime SLA</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Dedicated support engineer</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Commercial licensing &amp; roadmap input</li></ul>
+      </div></div>
 
-    <!-- Comparison table -->
     <div class="reveal glass mt-8 overflow-hidden rounded-2xl">
       <div class="overflow-x-auto">
         <table class="w-full min-w-[820px] text-left text-[14px]">
-          <thead>
-            <tr class="border-b border-white/[0.08] text-slate-500">
-              <th scope="col" class="px-6 py-4 font-medium">Compare plans</th>
-              <th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Developer</th>
-              <th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-moss-400">Team</th>
-              <th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Scale</th>
-              <th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Enterprise</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-white/[0.06] text-slate-400">
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">cargo-green CLI (AGPL-3.0)</th><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">BuildKit &amp; Nix engines</th><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Bring your own registry</th><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Cache requests / month</th><td class="px-6 py-3.5">500K</td><td class="px-6 py-3.5 text-slate-200">10M</td><td class="px-6 py-3.5 text-slate-200">100M</td><td class="px-6 py-3.5">Unlimited</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Cache storage</th><td class="px-6 py-3.5">20 GB</td><td class="px-6 py-3.5 text-slate-200">500 GB</td><td class="px-6 py-3.5 text-slate-200">2 TB</td><td class="px-6 py-3.5">Custom</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Remote build core-hours</th><td class="px-6 py-3.5">50</td><td class="px-6 py-3.5">200</td><td class="px-6 py-3.5">2,000</td><td class="px-6 py-3.5">Custom</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Retention</th><td class="px-6 py-3.5">7 days</td><td class="px-6 py-3.5">30 days</td><td class="px-6 py-3.5">90 days</td><td class="px-6 py-3.5">Custom</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Projects / seats</th><td class="px-6 py-3.5">1 / 1</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Prewarmed crate cache</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Build analytics</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Spend attribution</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">SSO/SAML &amp; SCIM</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Self-hosted / air-gapped</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Uptime SLA</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5">99.9%</td></tr>
-            <tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Support</th><td class="px-6 py-3.5">Community</td><td class="px-6 py-3.5">Priority email</td><td class="px-6 py-3.5">Shared Slack</td><td class="px-6 py-3.5">Dedicated engineer</td></tr>
-          </tbody>
+          <thead><tr class="border-b border-white/[0.08] text-slate-500">
+            <th scope="col" class="px-6 py-4 font-medium">Compare plans</th><th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Developer</th><th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-moss-400">Team</th><th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Scale</th><th scope="col" class="px-6 py-4 font-display text-[15px] font-semibold text-white">Enterprise</th>
+          </tr></thead>
+          <tbody class="divide-y divide-white/[0.06] text-slate-400"><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">cargo-green CLI (AGPL-3.0)</th><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">BuildKit &amp; Nix engines</th><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Bring your own registry</th><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Cache requests / month</th><td class="px-6 py-3.5">500K</td><td class="px-6 py-3.5"><span class="val">10M</span></td><td class="px-6 py-3.5"><span class="val">100M</span></td><td class="px-6 py-3.5">Unlimited</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Cache storage</th><td class="px-6 py-3.5">20 GB</td><td class="px-6 py-3.5"><span class="val">500 GB</span></td><td class="px-6 py-3.5"><span class="val">2 TB</span></td><td class="px-6 py-3.5">Custom</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Remote build core-hours</th><td class="px-6 py-3.5">50</td><td class="px-6 py-3.5">200</td><td class="px-6 py-3.5">2,000</td><td class="px-6 py-3.5">Custom</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Retention</th><td class="px-6 py-3.5">7 days</td><td class="px-6 py-3.5">30 days</td><td class="px-6 py-3.5">90 days</td><td class="px-6 py-3.5">Custom</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Projects / seats</th><td class="px-6 py-3.5">1 / 1</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td><td class="px-6 py-3.5">Unlimited</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Prewarmed crate cache</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Build analytics</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Spend attribution</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">SSO/SAML &amp; SCIM</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Self-hosted / air-gapped</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5"><i data-lucide="check" class="h-4 w-4 text-moss-400"></i></td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Uptime SLA</th><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5 text-slate-600">&mdash;</td><td class="px-6 py-3.5">99.9%</td></tr><tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">Support</th><td class="px-6 py-3.5">Community</td><td class="px-6 py-3.5">Priority email</td><td class="px-6 py-3.5">Shared Slack</td><td class="px-6 py-3.5">Dedicated engineer</td></tr></tbody>
         </table>
       </div>
     </div>
 
-    <p class="reveal mt-6 text-center text-[13.5px] text-slate-500">
-      Soft limits, not hard walls. A burst month won't break your build — we'll get in touch if it becomes the new normal.
-    </p>
+    <p class="reveal mt-6 text-center text-[13.5px] text-slate-500">Soft limits, not hard walls. A burst month won't break your build — we'll get in touch if it becomes the new normal.</p>
   </div>
 </section>
 
-<!-- ══════════════════════ FAQ ══════════════════════ -->
 <section id="faq" class="border-t border-white/[0.08] py-24 sm:py-32">
   <div class="mx-auto max-w-3xl px-6">
     <div class="reveal text-center">
       <p class="eyebrow text-moss-400">FAQ</p>
       <h2 class="mt-4 font-display text-4xl font-semibold tracking-[-0.025em] text-white">Before you install</h2>
     </div>
-
-    <div class="mt-12 space-y-3">
-      <details class="reveal glass rounded-xl px-6 py-5">
+    <div class="mt-12 space-y-3"><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">Do I have to change my workflow?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">One <span class="font-mono text-[13.5px] text-slate-300">cargo clean</span> when you switch over, then <span class="font-mono text-[13.5px] text-slate-300">cargo green build</span> behaves like <span class="font-mono text-[13.5px] text-slate-300">cargo build</span> and produces the same files. Plain <span class="font-mono text-[13.5px] text-slate-300">cargo build</span> keeps working afterwards, so you can back out at any time.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">One <code class="code">cargo clean</code> when you switch over, then <code class="code">cargo green build</code> behaves like <code class="code">cargo build</code> and produces the same files. Plain <code class="code">cargo build</code> keeps working afterwards, so you can back out at any time.</p>
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">Does this lock us in?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. The CLI is AGPL-3.0 open source, and the cache is ordinary OCI content in a registry you choose. The hosted cache is a convenience — swap in your own registry with one line of config and everything keeps working.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. The CLI is AGPL-3.0 open source, and the cache is ordinary content in a registry or binary cache you choose. Swap in your own with one line of config and everything keeps working.</p>
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">Do we need Docker on every developer machine?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. You need one engine available: a <span class="font-mono text-[13.5px] text-slate-300">docker</span> or <span class="font-mono text-[13.5px] text-slate-300">podman</span> client, or Nix. And the machine that actually compiles doesn't have to be the laptop — point cargo-green at a shared build machine and laptops just orchestrate.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. You need one engine available: a <code class="code">docker</code> or <code class="code">podman</code> client, or Nix. And the machine that actually compiles doesn't have to be the laptop — point cargo-green at a shared build machine and laptops just orchestrate.</p>
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">How is this different from sccache or cargo-chef?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">sccache caches compiler output but expects matching paths and environments across machines, can't cache linking, struggles with proc-macros, and gets chatty enough with a remote backend that checking the cache can cost more than compiling. cargo-chef caches your dependency tree as Docker layers, so one dependency bump rebuilds all of them. cargo-green compiles inside sealed, pinned build steps: keys match across machines, granularity is per crate, and a partial match still helps.</p>
-        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">A survey of the whole landscape lives in the <a href="https://github.com/fenollp/supergreen#alternatives" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">alternatives section</a> of the README.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
-        <summary class="flex items-center justify-between gap-4">
-          <span class="font-display text-[16px] font-medium text-white">Can it run with no network access?</span>
-          <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
-        </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Yes. <span class="font-mono text-[13.5px] text-slate-300">cargo green supergreen sync</span> pulls every image and crate you need up front, and builds default to <span class="font-mono text-[13.5px] text-slate-300">--network none</span>. Air-gapped environments are a supported Enterprise deployment.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">sccache caches compiler output but expects matching paths and environments across machines, can't cache linking, struggles with proc-macros, and gets chatty enough with a remote backend that checking the cache can cost more than compiling. cargo-chef caches your dependency tree as Docker layers, so one dependency bump rebuilds all of them. cargo-green compiles inside sealed, pinned build steps: keys match across machines, granularity is per crate, and a partial match still helps. A survey of the whole landscape lives in the <a href="https://github.com/fenollp/supergreen#alternatives" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">alternatives section</a> of the README.</p>
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">BuildKit or Nix — which should we pick?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
         <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Whichever your team already runs. Most teams have a docker or podman client on hand, so that is the default. If you are already on Nix, use Nix and keep your existing binary cache. The commands, the configuration, and the cached results are the same either way, and both engines can share hits.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">How long before CI gets faster?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
         <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">The first job. There is no lockfile to match and no archive to restore — cached crates are pulled in progressively while compilation is already running, so a job benefits from whatever is in the cache at the moment it starts. A branch that bumps a dependency still reuses everything else.</p>
-      </details>
-
-      <details class="reveal glass rounded-xl px-6 py-5">
+      </details><details class="reveal glass rounded-xl px-6 py-5">
+        <summary class="flex items-center justify-between gap-4">
+          <span class="font-display text-[16px] font-medium text-white">Can it run with no network access?</span>
+          <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
+        </summary>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Yes. <code class="code">cargo green supergreen sync</code> pulls every image and crate you need up front, and builds default to no network. Air-gapped environments are a supported Enterprise deployment.</p>
+      </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">What counts as a cache request?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">One read or write of a cached build stage. A warm build of a 400-crate workspace is roughly 400 requests, so 10 million covers a busy team's laptops and CI with room to spare. Usage is visible in the dashboard before it ever appears on an invoice.</p>
-      </details>
-    </div>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">One read or write of a cached build step. A warm build of a 400-crate workspace is roughly 400 requests, so 10 million covers a busy team's laptops and CI with room to spare. Usage is visible in the dashboard before it ever appears on an invoice.</p>
+      </details></div>
   </div>
 </section>
 
-<!-- ══════════════════════ FINAL CTA ══════════════════════ -->
 <section class="pb-24 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-8 py-16 text-center sm:px-16">
       <div class="pointer-events-none absolute inset-x-0 -top-40 h-80" style="background: radial-gradient(420px 200px at 50% 100%, rgba(16,185,129,.22), transparent 70%);"></div>
-      <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">
-        Stop paying for the same build twice.
-      </h2>
-      <p class="relative mx-auto mt-5 max-w-xl text-[16.5px] leading-relaxed text-slate-400">
-        Install the CLI, run <span class="font-mono text-[15px] text-slate-200">cargo green build</span>, and watch the second machine finish in seconds.
-      </p>
+      <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">Stop paying for the same build twice.</h2>
+      <div class="relative mx-auto mt-5 max-w-xl"><p class="text-[16.5px] leading-relaxed text-slate-400">Install the CLI, run <code class="code">cargo green build</code>, and watch the second machine finish in seconds.</p></div>
       <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <div class="group flex items-center gap-3 rounded-xl border border-white/10 bg-[#070A0E]/80 px-5 py-3 font-mono text-[14px]">
           <span class="text-slate-600">$</span>
           <span class="text-slate-200">cargo install cargo-green</span>
-          <button class="copy-inline ml-1 text-slate-500 transition hover:text-moss-400" data-copy="cargo install cargo-green" aria-label="Copy install command">
-            <i data-lucide="copy" class="h-4 w-4"></i>
-          </button>
+          <button class="copy-inline ml-1 text-slate-500 transition hover:text-moss-400" data-copy="cargo install cargo-green" aria-label="Copy install command"><i data-lucide="copy" class="h-4 w-4"></i></button>
         </div>
-        <a href="mailto:sales@cargo.green" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 transition hover:bg-moss-400">
-          Talk to sales <i data-lucide="arrow-right" class="h-4 w-4"></i>
-        </a>
+        <a href="mailto:sales@cargo.green" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
       </div>
     </div>
   </div>
@@ -1114,7 +742,6 @@ cache-from-images = [
 
 </main>
 
-<!-- ══════════════════════ FOOTER ══════════════════════ -->
 <footer class="border-t border-white/[0.08] py-14">
   <div class="mx-auto max-w-screen px-6">
     <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -1126,54 +753,57 @@ cache-from-images = [
           </svg>
           <span class="font-display text-[14.5px] font-semibold text-white">cargo<span class="text-moss-400">.green</span></span>
         </div>
-        <p class="mt-4 max-w-xs text-[13.5px] leading-relaxed text-slate-500">
-          A cached, remote-ready builder for Rust projects. Part of the <a href="https://github.com/fenollp/supergreen" class="text-slate-400 underline decoration-white/20 underline-offset-4 hover:text-moss-400">supergreen</a> project.
-        </p>
+        <p class="mt-4 max-w-xs text-[13.5px] leading-relaxed text-slate-500">A cached, remote-ready builder for Rust projects. Part of the <a href="https://github.com/fenollp/supergreen" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">supergreen</a> project.</p>
       </div>
-
       <div>
         <p class="eyebrow text-slate-600">Product</p>
-        <ul class="mt-4 space-y-2.5 text-[13.5px]">
-          <li><a href="#problem" class="text-slate-400 transition hover:text-white">Why cargo-green</a></li>
-          <li><a href="#install" class="text-slate-400 transition hover:text-white">Install</a></li>
-          <li><a href="#how" class="text-slate-400 transition hover:text-white">How it works</a></li>
-          <li><a href="#pricing" class="text-slate-400 transition hover:text-white">Pricing</a></li>
-        </ul>
-      </div>
-
-      <div>
+        <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="#problem" class="text-slate-400 transition hover:text-white">Why cargo-green</a></li><li><a href="#install" class="text-slate-400 transition hover:text-white">Install</a></li><li><a href="#how" class="text-slate-400 transition hover:text-white">How it works</a></li><li><a href="#pricing" class="text-slate-400 transition hover:text-white">Pricing</a></li></ul>
+      </div><div>
         <p class="eyebrow text-slate-600">Docs</p>
-        <ul class="mt-4 space-y-2.5 text-[13.5px]">
-          <li><a href="https://github.com/fenollp/supergreen#configuration" class="text-slate-400 transition hover:text-white">Configuration</a></li>
-          <li><a href="https://github.com/fenollp/supergreen#remote-execution" class="text-slate-400 transition hover:text-white">Remote execution</a></li>
-          <li><a href="https://github.com/fenollp/supergreen#caching" class="text-slate-400 transition hover:text-white">Caching</a></li>
-          <li><a href="https://github.com/fenollp/supergreen#alternatives" class="text-slate-400 transition hover:text-white">Alternatives</a></li>
-        </ul>
-      </div>
-
-      <div>
+        <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="https://github.com/fenollp/supergreen#configuration" class="text-slate-400 transition hover:text-white">Configuration</a></li><li><a href="https://github.com/fenollp/supergreen#remote-execution" class="text-slate-400 transition hover:text-white">Remote execution</a></li><li><a href="https://github.com/fenollp/supergreen#caching" class="text-slate-400 transition hover:text-white">Caching</a></li><li><a href="https://github.com/fenollp/supergreen#alternatives" class="text-slate-400 transition hover:text-white">Alternatives</a></li></ul>
+      </div><div>
         <p class="eyebrow text-slate-600">Company</p>
-        <ul class="mt-4 space-y-2.5 text-[13.5px]">
-          <li><a href="https://github.com/fenollp/supergreen" class="text-slate-400 transition hover:text-white">GitHub</a></li>
-          <li><a href="mailto:sales@cargo.green" class="text-slate-400 transition hover:text-white">Contact sales</a></li>
-          <li><a href="#enterprise" class="text-slate-400 transition hover:text-white">Security</a></li>
-          <li><a href="#" class="text-slate-400 transition hover:text-white">Status</a></li>
-        </ul>
+        <ul class="mt-4 space-y-2.5 text-[13.5px]"><li><a href="https://github.com/fenollp/supergreen" class="text-slate-400 transition hover:text-white">GitHub</a></li><li><a href="mailto:sales@cargo.green" class="text-slate-400 transition hover:text-white">Contact sales</a></li><li><a href="#enterprise" class="text-slate-400 transition hover:text-white">Security</a></li><li><a href="#" class="text-slate-400 transition hover:text-white">Status</a></li></ul>
       </div>
     </div>
-
     <div class="mt-12 flex flex-col gap-4 border-t border-white/[0.08] pt-7 sm:flex-row sm:items-center sm:justify-between">
       <p class="font-mono text-[12px] text-slate-600">© 2026 cargo.green · CLI licensed AGPL-3.0</p>
       <div class="flex items-center gap-6 font-mono text-[12px] text-slate-600">
-        <a href="#" class="transition hover:text-slate-400">Privacy</a>
-        <a href="#" class="transition hover:text-slate-400">Terms</a>
-        <a href="#" class="transition hover:text-slate-400">DPA</a>
+        <a href="#" class="transition hover:text-slate-400">Privacy</a><a href="#" class="transition hover:text-slate-400">Terms</a><a href="#" class="transition hover:text-slate-400">DPA</a>
         <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-moss-400"></span>All systems operational</span>
       </div>
     </div>
   </div>
 </footer>
 
+<script>
+  window.CG = {
+    lines: [
+    ["cmd", "$ cargo green build --release"],
+    ["dim", "#1  [internal] load build definition"],
+    ["dim", "#2  preparing pinned build environment"],
+    ["dim", "#3  streaming cache from ghcr.io/acme/payments-api"],
+    ["blank", ""],
+    ["hit", "#12  CACHED   rustc   serde v1.0.219"],
+    ["hit", "#13  CACHED   rustc   tokio v1.46.0"],
+    ["hit", "#14  CACHED   rustc   clap v4.5.45"],
+    ["hit", "#15  CACHED   rustc   reqwest v0.12.9"],
+    ["hit", "#16  CACHED   rustc   hyper v1.5.1"],
+    ["hit", "#17  CACHED   rustc   sqlx-core v0.8.2"],
+    ["dim", "… 406 more crates restored from cache"],
+    ["blank", ""],
+    ["run", "#414 rustc   payments-core v0.4.0        2.1s"],
+    ["run", "#415 rustc   payments-http v0.4.0        3.4s"],
+    ["run", "#416 rustc   payments-api  v0.4.0        4.8s"],
+    ["dim", "=> exporting cache to ghcr.io/acme/payments-api"],
+    ["blank", ""],
+    ["ok", "Finished `release` profile in 11.3s"]
+    ],
+    total: 419,
+    cached: 412,
+    wall: 11.3
+  };
+</script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script>
 (function () {
@@ -1215,7 +845,8 @@ cache-from-images = [
     document.querySelectorAll('.panel').forEach(p => p.classList.toggle('hidden', p.id !== id));
   };
   tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
-  activate('t-build');
+  const initial = document.querySelector('.tab.active') || tabs[0];
+  if (initial) activate(initial.dataset.tab);
 
   /* ---------- Copy buttons ---------- */
   const flash = (btn, label) => {
@@ -1239,18 +870,16 @@ cache-from-images = [
 
   /* ---------- Pricing: billing toggle ---------- */
   const toggle = document.getElementById('billing-toggle');
-  const priceTeam = document.getElementById('price-team');
-  const priceScale = document.getElementById('price-scale');
   const notes = document.querySelectorAll('.annual-note');
+  const prices = document.querySelectorAll('[data-price-monthly]');
   const lblM = document.getElementById('lbl-monthly');
   const lblA = document.getElementById('lbl-annual');
   let annual = false;
-  toggle.addEventListener('click', () => {
+  if (toggle) toggle.addEventListener('click', () => {
     annual = !annual;
     toggle.setAttribute('aria-checked', annual ? 'true' : 'false');
     toggle.classList.toggle('on', annual);
-    priceTeam.textContent = annual ? '39' : '49';
-    priceScale.textContent = annual ? '320' : '400';
+    prices.forEach(el => { el.textContent = annual ? el.dataset.priceAnnual : el.dataset.priceMonthly; });
     notes.forEach(n => n.classList.toggle('hidden', !annual));
     lblM.classList.toggle('dim', annual);
     lblA.classList.toggle('dim', !annual);
@@ -1262,27 +891,8 @@ cache-from-images = [
   const rate = document.getElementById('stat-rate');
   const time = document.getElementById('stat-time');
 
-  const L = [
-    ['cmd',   '$ cargo green build --release'],
-    ['dim',   '#1  [internal] load build definition'],
-    ['dim',   '#2  preparing pinned build environment'],
-    ['dim',   '#3  streaming cache from ghcr.io/acme/payments-api'],
-    ['blank', ''],
-    ['hit',   '#12  CACHED   rustc   serde v1.0.219'],
-    ['hit',   '#13  CACHED   rustc   tokio v1.46.0'],
-    ['hit',   '#14  CACHED   rustc   clap v4.5.45'],
-    ['hit',   '#15  CACHED   rustc   reqwest v0.12.9'],
-    ['hit',   '#16  CACHED   rustc   hyper v1.5.1'],
-    ['hit',   '#17  CACHED   rustc   sqlx-core v0.8.2'],
-    ['dim',   '     … 406 more crates restored from cache'],
-    ['blank', ''],
-    ['run',   '#414 rustc   payments-core v0.4.0        2.1s'],
-    ['run',   '#415 rustc   payments-http v0.4.0        3.4s'],
-    ['run',   '#416 rustc   payments-api  v0.4.0        4.8s'],
-    ['dim',   '=> exporting cache to ghcr.io/acme/payments-api'],
-    ['blank', ''],
-    ['ok',    '    Finished `release` profile in 11.3s']
-  ];
+  const CG = window.CG || { lines: [], total: 0, cached: 0, wall: 0 };
+  const L = CG.lines;
 
   const cls = {
     cmd:   'text-slate-200',
@@ -1305,7 +915,9 @@ cache-from-images = [
       d.textContent = t || '\u00A0';
       term.appendChild(d);
     });
-    hits.textContent = '412'; rate.textContent = '98.3'; time.textContent = '11.3';
+    hits.textContent = String(CG.cached);
+    rate.textContent = (CG.cached / CG.total * 100).toFixed(1);
+    time.textContent = CG.wall.toFixed(1);
   }
 
   function play() {
@@ -1324,11 +936,11 @@ cache-from-images = [
       requestAnimationFrame(() => d.classList.add('in'));
 
       if (k === 'hit') { shownHits += 1; }
-      if (L[i][1].indexOf('406 more') > -1) { shownHits = 412; }
+      if (/more crates restored/.test(L[i][1])) { shownHits = CG.cached; }
 
       hits.textContent = String(shownHits);
-      rate.textContent = (shownHits / 419 * 100).toFixed(1);
-      time.textContent = (i / (L.length - 1) * 11.3).toFixed(1);
+      rate.textContent = (shownHits / CG.total * 100).toFixed(1);
+      time.textContent = (i / (L.length - 1) * CG.wall).toFixed(1);
 
       // Keep the viewport pinned to the newest line
       term.scrollTop = term.scrollHeight;

@@ -1,1 +1,1 @@
-# get.cargo.green
+# https://get.cargo.green
