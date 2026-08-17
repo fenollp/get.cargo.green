@@ -312,7 +312,7 @@ def render_hero(hero: Block, term: Block) -> str:
           {button(hero.get('cta_primary'), 'solid')}
           {button(hero.get('cta_secondary'), 'ghost')}
         </div>
-        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/[0.08] pt-7">{stats}</dl>
+        <dl class="mt-12 grid max-w-lg grid-cols-2 gap-x-6 gap-y-7 border-t border-white/[0.08] pt-7 sm:grid-cols-3 sm:gap-6">{stats}</dl>
       </div>
 
       <div class="reveal">
@@ -331,17 +331,17 @@ def render_hero(hero: Block, term: Block) -> str:
             </div>
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Restored</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-white"><span id="stat-hits">0</span> / {esc(hero.get('crate_total'))}</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / {esc(hero.get('crate_total'))}</div>
               </div>
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Hit rate</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-moss-400"><span id="stat-rate">0.0</span>%</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-moss-400 sm:text-[15px]"><span id="stat-rate">0.0</span>%</div>
               </div>
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Wall clock</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-white"><span id="stat-time">0.0</span>s</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-time">0.0</span>s</div>
               </div>
             </div>
           </div>
@@ -431,7 +431,7 @@ def render_install(install: Block, commands: Block) -> str:
                     f'text-slate-400 transition{" active" if active else ""}" id="{tid}" data-panel="{pid}" '
                     f'role="tab" aria-controls="{pid}" aria-selected="{"true" if active else "false"}" '
                     f'tabindex="{"0" if active else "-1"}">{esc(tab.name)}</button>')
-        panels.append(f'<pre id="{pid}" class="panel{"" if active else " hidden"} overflow-x-auto p-6 '
+        panels.append(f'<pre id="{pid}" class="panel{"" if active else " hidden"} overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 '
                       f'font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" '
                       f'aria-labelledby="{tid}"><code>{highlight(tab.code, tab.lang)}</code></pre>')
 
@@ -688,15 +688,15 @@ def render_cta(block: Block) -> str:
     cmd = block.get("command")
     return f"""<section class="pb-24 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
-    <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-8 py-16 text-center sm:px-16">
+    <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-6 py-16 text-center sm:px-16">
       <div class="pointer-events-none absolute inset-x-0 -top-40 h-80" style="background: radial-gradient(420px 200px at 50% 100%, rgba(16,185,129,.22), transparent 70%);"></div>
       <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">{inline(block.get('heading'))}</h2>
       <div class="relative mx-auto mt-5 max-w-xl">{prose(block, 'text-[16.5px] leading-relaxed text-slate-400')}</div>
       <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <div class="group flex items-center gap-3 rounded-xl border border-white/10 bg-[#070A0E]/80 px-5 py-3 font-mono text-[14px]">
-          <span class="text-slate-600">$</span>
+        <div class="group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
+          <span class="shrink-0 text-slate-600">$</span>
           <span class="text-slate-200">{esc(cmd)}</span>
-          <button class="copy-inline ml-1 text-slate-500 transition hover:text-moss-400" data-copy="{html.escape(cmd, quote=True)}" aria-label="Copy install command">{icon('copy', 'h-4 w-4')}</button>
+          <button class="copy-inline ml-1 shrink-0 text-slate-500 transition hover:text-moss-400" data-copy="{html.escape(cmd, quote=True)}" aria-label="Copy install command">{icon('copy', 'h-4 w-4')}</button>
         </div>
         {button(block.get('button'), 'solid')}
       </div>
@@ -733,7 +733,7 @@ def render_footer(footer: Block, meta: Block) -> str:
     </div>
     <div class="mt-12 flex flex-col gap-4 border-t border-white/[0.08] pt-7 sm:flex-row sm:items-center sm:justify-between">
       <p class="font-mono text-[12px] text-slate-600">{esc(meta.get('copyright'))}</p>
-      <div class="flex items-center gap-6 font-mono text-[12px] text-slate-600">
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[12px] text-slate-600">
         {legal}
         <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-moss-400"></span>{esc(footer.get('status'))}</span>
       </div>

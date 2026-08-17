@@ -67,6 +67,15 @@ tailwind.config = {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* ---------- Overflow guards ----------
+     Grid items default to min-width:auto, so a wide child (a code panel, a mono
+     terminal line) sizes its track past the viewport instead of scrolling or
+     clipping inside itself. :where() keeps specificity at 0 so any explicit
+     min-w-* utility still wins. Flex items are deliberately left alone: several
+     rows here rely on min-content to keep short labels on one line. */
+  :where(.grid) > * { min-width: 0; }
+  body { overflow-wrap: break-word; }
+
   /* ---------- Glass surfaces ---------- */
   .glass {
     background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
@@ -95,10 +104,22 @@ tailwind.config = {
     font-family: '"JetBrains Mono"', ui-monospace, monospace;
     font-size: .6875rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
   }
+  /* Wide tracking on a single uppercase word ("GRANULARITY", "RESTORED") is what
+     breaks narrow columns, so tighten it below Tailwind's sm breakpoint. */
+  @media (max-width: 639.98px) {
+    .eyebrow { font-size: .625rem; letter-spacing: .12em; }
+  }
 
   .rule-glow { height: 1px; background: linear-gradient(90deg, transparent, rgba(52,211,153,.35), transparent); }
 
   /* ---------- Terminal ---------- */
+  /* Log lines are wider than a phone; fade the clip instead of chopping it. */
+  @media (max-width: 639.98px) {
+    #term {
+      -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    }
+  }
   .term-line { opacity: 0; transform: translateY(3px); }
   .term-line.in { opacity: 1; transform: none; transition: opacity .18s ease, transform .18s ease; }
   .caret { display:inline-block; width:.5ch; height:1.05em; background:#34D399; vertical-align:-.16em; animation: blink 1.05s steps(1) infinite; }
@@ -213,7 +234,7 @@ tailwind.config = {
           <a href="#use-install" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Install the CLI <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
           <a href="#enterprise" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[.03] px-5 py-3 text-[14.5px] font-semibold text-white backdrop-blur transition hover:border-moss-400/40 hover:bg-white/[.06]">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4 text-moss-400"></i></a>
         </div>
-        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/[0.08] pt-7"><div><dt class="eyebrow text-slate-600">Cache granularity</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Per crate</dd></div><div><dt class="eyebrow text-slate-600">Build engine</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">BuildKit or Nix</dd></div><div><dt class="eyebrow text-slate-600">Cache store</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Any OCI registry</dd></div></dl>
+        <dl class="mt-12 grid max-w-lg grid-cols-2 gap-x-6 gap-y-7 border-t border-white/[0.08] pt-7 sm:grid-cols-3 sm:gap-6"><div><dt class="eyebrow text-slate-600">Cache granularity</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Per crate</dd></div><div><dt class="eyebrow text-slate-600">Build engine</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">BuildKit or Nix</dd></div><div><dt class="eyebrow text-slate-600">Cache store</dt><dd class="mt-1.5 font-display text-xl font-semibold text-white">Any OCI registry</dd></div></dl>
       </div>
 
       <div class="reveal">
@@ -232,17 +253,17 @@ tailwind.config = {
             </div>
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Restored</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-white"><span id="stat-hits">0</span> / 419</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / 419</div>
               </div>
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Hit rate</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-moss-400"><span id="stat-rate">0.0</span>%</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-moss-400 sm:text-[15px]"><span id="stat-rate">0.0</span>%</div>
               </div>
-              <div class="px-4 py-3">
+              <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Wall clock</div>
-                <div class="mt-1 font-mono text-[15px] font-medium text-white"><span id="stat-time">0.0</span>s</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-time">0.0</span>s</div>
               </div>
             </div>
           </div>
@@ -333,7 +354,7 @@ tailwind.config = {
           <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
             <i data-lucide="copy" class="h-3.5 w-3.5"></i><span>Copy</span>
           </button>
-          <pre id="panel-use-build" class="panel overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-build"><code><span class="c-dim"># Once: start from a clean slate</span>
+          <pre id="panel-use-build" class="panel overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-build"><code><span class="c-dim"># Once: start from a clean slate</span>
 <span class="c-cmd">cargo</span> clean
 
 <span class="c-dim"># Then use cargo, with one extra word</span>
@@ -347,7 +368,7 @@ tailwind.config = {
 <span class="c-dim"># Pick your engine: docker (default), podman, or nix</span>
 <span class="c-cmd">export</span> <span class="c-var">CARGOGREEN_RUNNER</span>=nix
 
-<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="panel-use-install" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-install"><code><span class="c-dim"># From crates.io</span>
+<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="panel-use-install" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-install"><code><span class="c-dim"># From crates.io</span>
 <span class="c-cmd">cargo</span> install cargo-green
 
 <span class="c-dim"># …or track the latest from git</span>
@@ -358,14 +379,14 @@ tailwind.config = {
 <span class="c-cmd">which</span> cargo-green
 
 <span class="c-dim"># Needs one build engine on the machine:</span>
-<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
+<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
 <span class="c-var">DOCKER_HOST</span>=ssh://build-farm-01 cargo green test
 
 <span class="c-dim"># Same idea with the Nix engine</span>
 <span class="c-var">CARGOGREEN_RUNNER</span>=nix <span class="c-var">NIX_SSHOPTS</span>=<span class="c-str">"-A"</span> \
   <span class="c-cmd">cargo</span> green build --release
 
-<span class="c-dim"># Laptops stay quiet. Fans stay off.</span></code></pre><pre id="panel-use-share-cache" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-share-cache"><code><span class="c-dim"># Cargo.toml</span>
+<span class="c-dim"># Laptops stay quiet. Fans stay off.</span></code></pre><pre id="panel-use-share-cache" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-share-cache"><code><span class="c-dim"># Cargo.toml</span>
 <span class="c-cmd">[package.metadata.green]</span>
 <span class="c-var">cache-images</span> = [
   <span class="c-str">"docker-image://ghcr.io/acme/payments-api"</span>,
@@ -375,7 +396,7 @@ tailwind.config = {
 ]
 
 <span class="c-dim"># Push the cache for everyone else</span>
-cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidden overflow-x-auto p-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-ci"><code><span class="c-dim"># .github/workflows/ci.yml</span>
+cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-ci"><code><span class="c-dim"># .github/workflows/ci.yml</span>
 - <span class="c-var">run</span>: cargo install cargo-green
 - <span class="c-var">run</span>: cargo green test
   <span class="c-var">env</span>:
@@ -724,15 +745,15 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
 
 <section class="pb-24 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
-    <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-8 py-16 text-center sm:px-16">
+    <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-6 py-16 text-center sm:px-16">
       <div class="pointer-events-none absolute inset-x-0 -top-40 h-80" style="background: radial-gradient(420px 200px at 50% 100%, rgba(16,185,129,.22), transparent 70%);"></div>
       <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">Stop paying for the same build twice.</h2>
       <div class="relative mx-auto mt-5 max-w-xl"><p class="text-[16.5px] leading-relaxed text-slate-400">Install the CLI, run <code class="code">cargo green build</code>, and watch the second machine finish in seconds.</p></div>
       <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <div class="group flex items-center gap-3 rounded-xl border border-white/10 bg-[#070A0E]/80 px-5 py-3 font-mono text-[14px]">
-          <span class="text-slate-600">$</span>
+        <div class="group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
+          <span class="shrink-0 text-slate-600">$</span>
           <span class="text-slate-200">cargo install cargo-green</span>
-          <button class="copy-inline ml-1 text-slate-500 transition hover:text-moss-400" data-copy="cargo install cargo-green" aria-label="Copy install command"><i data-lucide="copy" class="h-4 w-4"></i></button>
+          <button class="copy-inline ml-1 shrink-0 text-slate-500 transition hover:text-moss-400" data-copy="cargo install cargo-green" aria-label="Copy install command"><i data-lucide="copy" class="h-4 w-4"></i></button>
         </div>
         <a href="mailto:sales@cargo.green" class="inline-flex items-center justify-center gap-2 rounded-xl bg-moss-500 px-5 py-3 text-[14.5px] font-semibold text-ink-950 shadow-[0_10px_40px_-12px_rgba(16,185,129,.7)] transition hover:bg-moss-400">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
       </div>
@@ -768,7 +789,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
     </div>
     <div class="mt-12 flex flex-col gap-4 border-t border-white/[0.08] pt-7 sm:flex-row sm:items-center sm:justify-between">
       <p class="font-mono text-[12px] text-slate-600">© 2026 cargo.green · CLI licensed AGPL-3.0</p>
-      <div class="flex items-center gap-6 font-mono text-[12px] text-slate-600">
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[12px] text-slate-600">
         <a href="#" class="transition hover:text-slate-400">Privacy</a><a href="#" class="transition hover:text-slate-400">Terms</a><a href="#" class="transition hover:text-slate-400">DPA</a>
         <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-moss-400"></span>All systems operational</span>
       </div>

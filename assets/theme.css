@@ -27,6 +27,15 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* ---------- Overflow guards ----------
+     Grid items default to min-width:auto, so a wide child (a code panel, a mono
+     terminal line) sizes its track past the viewport instead of scrolling or
+     clipping inside itself. :where() keeps specificity at 0 so any explicit
+     min-w-* utility still wins. Flex items are deliberately left alone: several
+     rows here rely on min-content to keep short labels on one line. */
+  :where(.grid) > * { min-width: 0; }
+  body { overflow-wrap: break-word; }
+
   /* ---------- Glass surfaces ---------- */
   .glass {
     background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
@@ -55,10 +64,22 @@
     font-family: '"JetBrains Mono"', ui-monospace, monospace;
     font-size: .6875rem; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
   }
+  /* Wide tracking on a single uppercase word ("GRANULARITY", "RESTORED") is what
+     breaks narrow columns, so tighten it below Tailwind's sm breakpoint. */
+  @media (max-width: 639.98px) {
+    .eyebrow { font-size: .625rem; letter-spacing: .12em; }
+  }
 
   .rule-glow { height: 1px; background: linear-gradient(90deg, transparent, rgba(52,211,153,.35), transparent); }
 
   /* ---------- Terminal ---------- */
+  /* Log lines are wider than a phone; fade the clip instead of chopping it. */
+  @media (max-width: 639.98px) {
+    #term {
+      -webkit-mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+              mask-image: linear-gradient(to right, #000 80%, transparent 100%);
+    }
+  }
   .term-line { opacity: 0; transform: translateY(3px); }
   .term-line.in { opacity: 1; transform: none; transition: opacity .18s ease, transform .18s ease; }
   .caret { display:inline-block; width:.5ch; height:1.05em; background:#34D399; vertical-align:-.16em; animation: blink 1.05s steps(1) infinite; }
