@@ -349,12 +349,23 @@ tailwind.config = {
 <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green is a cargo plugin, not a replacement. Your commands, your <code class="code">Cargo.toml</code>, your CI, unchanged.</p></div><a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl">
-        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green"><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" id="use-build" data-panel="panel-use-build" role="tab" aria-controls="panel-use-build" aria-selected="true" tabindex="0">build</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-install" data-panel="panel-use-install" role="tab" aria-controls="panel-use-install" aria-selected="false" tabindex="-1">install</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-remote" data-panel="panel-use-remote" role="tab" aria-controls="panel-use-remote" aria-selected="false" tabindex="-1">remote</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-share-cache" data-panel="panel-use-share-cache" role="tab" aria-controls="panel-use-share-cache" aria-selected="false" tabindex="-1">share cache</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-ci" data-panel="panel-use-ci" role="tab" aria-controls="panel-use-ci" aria-selected="false" tabindex="-1">CI</button></div>
+        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green"><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-install" data-panel="panel-use-install" role="tab" aria-controls="panel-use-install" aria-selected="false" tabindex="-1">install</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" id="use-build" data-panel="panel-use-build" role="tab" aria-controls="panel-use-build" aria-selected="true" tabindex="0">build</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-remote" data-panel="panel-use-remote" role="tab" aria-controls="panel-use-remote" aria-selected="false" tabindex="-1">remote</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-share-cache" data-panel="panel-use-share-cache" role="tab" aria-controls="panel-use-share-cache" aria-selected="false" tabindex="-1">share cache</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-ci" data-panel="panel-use-ci" role="tab" aria-controls="panel-use-ci" aria-selected="false" tabindex="-1">CI</button></div>
         <div class="relative">
           <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
             <i data-lucide="copy" class="h-3.5 w-3.5"></i><span>Copy</span>
           </button>
-          <pre id="panel-use-build" class="panel overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-build"><code><span class="c-dim"># Once: start from a clean slate</span>
+          <pre id="panel-use-install" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-install"><code><span class="c-dim"># From crates.io</span>
+<span class="c-cmd">cargo</span> install cargo-green
+
+<span class="c-dim"># …or track the latest from git</span>
+<span class="c-cmd">cargo</span> install --locked --force \
+  --git https://github.com/fenollp/supergreen.git cargo-green
+
+<span class="c-dim"># Make sure $CARGO_HOME/bin is on your $PATH</span>
+<span class="c-cmd">which</span> cargo-green
+
+<span class="c-dim"># Needs one build engine on the machine to write to cache:</span>
+<span class="c-dim">#   a docker or podman client, or nix.</span></code></pre><pre id="panel-use-build" class="panel overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-build"><code><span class="c-dim"># Once: start from a clean slate</span>
 <span class="c-cmd">cargo</span> clean
 
 <span class="c-dim"># Then use cargo, with one extra word</span>
@@ -368,18 +379,7 @@ tailwind.config = {
 <span class="c-dim"># Pick your engine: docker (default), podman, or nix</span>
 <span class="c-cmd">export</span> <span class="c-var">CARGOGREEN_RUNNER</span>=nix
 
-<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="panel-use-install" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-install"><code><span class="c-dim"># From crates.io</span>
-<span class="c-cmd">cargo</span> install cargo-green
-
-<span class="c-dim"># …or track the latest from git</span>
-<span class="c-cmd">cargo</span> install --locked --force \
-  --git https://github.com/fenollp/supergreen.git cargo-green
-
-<span class="c-dim"># Make sure $CARGO_HOME/bin is on your $PATH</span>
-<span class="c-cmd">which</span> cargo-green
-
-<span class="c-dim"># Needs one build engine on the machine to write to cache:</span>
-<span class="c-dim">#   a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
+<span class="c-dim"># Plain `cargo build` keeps working afterwards.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
 <span class="c-var">DOCKER_HOST</span>=ssh://build-farm-01 cargo green test
 
 <span class="c-dim"># Same idea with the Nix engine</span>

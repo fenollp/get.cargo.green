@@ -189,6 +189,23 @@ default_tab: build
 
 cargo-green is a cargo plugin, not a replacement. Your commands, your `Cargo.toml`, your CI, unchanged.
 
+### install
+
+```sh
+# From crates.io
+cargo install cargo-green
+
+# …or track the latest from git
+cargo install --locked --force \
+  --git https://github.com/fenollp/supergreen.git cargo-green
+
+# Make sure $CARGO_HOME/bin is on your $PATH
+which cargo-green
+
+# Needs one build engine on the machine to write to cache:
+#   a docker or podman client, or nix.
+```
+
 ### build
 
 ```sh
@@ -207,23 +224,6 @@ alias cargo='cargo green'
 export CARGOGREEN_RUNNER=nix
 
 # Plain `cargo build` keeps working afterwards.
-```
-
-### install
-
-```sh
-# From crates.io
-cargo install cargo-green
-
-# …or track the latest from git
-cargo install --locked --force \
-  --git https://github.com/fenollp/supergreen.git cargo-green
-
-# Make sure $CARGO_HOME/bin is on your $PATH
-which cargo-green
-
-# Needs one build engine on the machine to write to cache:
-#   a docker or podman client, or nix.
 ```
 
 ### remote
