@@ -488,12 +488,13 @@ price: $0
 period: free forever
 cta: Install the CLI | #use-install
 features:
-  - Unlimited local & remote builds
-  - Bring your own registry — no limits
-  - {500K} cache requests / month
+  - Unlimited local builds
   - {20 GB} cache storage
-  - 50 core-hours of remote builds
+  - {500K} requests / month
+  - Unlimited projects and seats
+  - Prewarmed cache for popular crates
   - 1 project, 7-day retention
+  - Build analytics: what's slow, what missed
   - Community support on GitHub
 
 ### Team
@@ -507,13 +508,11 @@ featured: true
 cta: Start 14-day trial | #
 features:
   - Everything in Developer, plus:
-  - {10 million} cache requests / month
   - {500 GB} cache storage
+  - {10 million} requests / month
   - 200 core-hours of remote builds
   - Overage at $0.15/GB, $0.10/core-hour
-  - Unlimited projects and seats
-  - Prewarmed cache for popular crates
-  - Build analytics: what's slow, what missed
+  - Private cache for private code
   - Priority email support, 1 business day
 
 ### Scale
@@ -525,8 +524,8 @@ sub: Per organization
 cta: Start 14-day trial | #
 features:
   - Everything in Team, plus:
-  - {100 million} cache requests / month
   - {2 TB} cache storage
+  - {100 million} requests / month
   - 2,000 core-hours of remote builds
   - Warm runners: pull requests never cold-start
   - Spend attribution per team and repo
@@ -540,7 +539,7 @@ sub: Annual contract, invoice billing
 cta: Contact us | mailto:sales@cargo.green
 features:
   - Everything in Scale, plus:
-  - Unlimited requests, custom storage and compute
+  - Custom cache requests, storage and compute
   - Self-hosted control plane, BYOC, or air-gapped
   - SSO/SAML, SCIM, audit log export
   - SOC 2 Type II report, DPA, security review
@@ -559,13 +558,13 @@ rows:
   - cargo-green CLI (AGPL-3.0) | Unlimited | Unlimited | Unlimited | Unlimited
   - BuildKit & Nix engines | yes | yes | yes | yes
   - Bring your own registry | yes | yes | yes | yes
-  - Cache requests / month | 500K | {10M} | {100M} | Unlimited
+  - Cache requests / month | 500K | {10M} | {100M} | Custom
   - Cache storage | 20 GB | {500 GB} | {2 TB} | Custom
-  - Remote build core-hours | 50 | 200 | 2,000 | Custom
+  - Remote build core-hours | no | 200 | 2,000 | Custom
   - Retention | 7 days | 30 days | 90 days | Custom
-  - Projects / seats | 1 / 1 | Unlimited | Unlimited | Unlimited
-  - Prewarmed crate cache | no | yes | yes | yes
-  - Build analytics | no | yes | yes | yes
+  - Projects / seats | Unlimited | Unlimited | Unlimited | Unlimited
+  - Prewarmed crate cache | yes | yes | yes | yes
+  - Build analytics | yes | yes | yes | yes
   - Spend attribution | no | no | yes | yes
   - SSO/SAML & SCIM | no | no | no | yes
   - Self-hosted / air-gapped | no | no | no | yes
