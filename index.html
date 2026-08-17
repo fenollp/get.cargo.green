@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>cargo.green — Rust builds that never start cold</title>
-<meta name="description" content="cargo-green runs every rustc call through BuildKit or Nix, so each crate becomes a cacheable, shareable build step. Compile once — reuse across your team, your CI, and every machine." />
+<title>cargo green ~ Rust builds that never start cold</title>
+<meta name="description" content="cargo-green runs every rustc call through BuildKit or Nix, so each crate becomes a cacheable, shareable build step. Compile once, reuse across your team, your CI, and every machine." />
 <meta name="theme-color" content="#05070A" />
 
-<meta property="og:title" content="cargo.green — Rust builds that never start cold" />
+<meta property="og:title" content="cargo green ~ Rust builds that never start cold" />
 <meta property="og:description" content="Crate-level remote build cache for Rust, backed by BuildKit or Nix and any registry you already run." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://cargo.green" />
@@ -245,7 +245,7 @@ tailwind.config = {
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
-                <span class="ml-3 font-mono text-[11px] text-slate-500">acme/payments-api — main</span>
+                <span class="ml-3 font-mono text-[11px] text-slate-500">acme/payments-api @ main</span>
               </div>
               <span class="flex items-center gap-1.5 font-mono text-[11px] text-moss-400">
                 <i data-lucide="cloud-download" class="h-3.5 w-3.5"></i> ghcr.io
@@ -288,7 +288,7 @@ tailwind.config = {
     <div class="reveal max-w-3xl">
       <p class="eyebrow text-moss-400">The problem</p>
       <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">Your team compiles the same code hundreds of times a day.</h2>
-      <p class="mt-6 text-[17px] leading-relaxed text-slate-400">Every Rust build starts from scratch somewhere. Your laptop remembers <em>your</em> last build — your teammate's laptop doesn't, and CI forgets everything the moment a job ends. So the same <code class="code">serde</code>, the same <code class="code">tokio</code>, the same four hundred dependencies get rebuilt again and again: on every machine, on every branch, on every pull request. That is minutes per build, hours per engineer per week, and a CI bill for recompiling code nobody changed.</p>
+      <p class="mt-6 text-[17px] leading-relaxed text-slate-400">Every Rust build starts from scratch somewhere. Your laptop remembers <em>your</em> last build, your teammate's laptop doesn't, and CI forgets everything the moment a job ends. So the same <code class="code">serde</code>, the same <code class="code">tokio</code>, the same four hundred dependencies get rebuilt again and again: on every machine, on every branch, on every pull request. That is minutes per build, hours per engineer per week, heat wasted, and a CI bill for recompiling code nobody changed.</p>
     </div>
 
     <div class="mt-14 grid gap-5 md:grid-cols-3"><article class="reveal glass glass-hover rounded-2xl p-7">
@@ -298,11 +298,11 @@ tailwind.config = {
       </article><article class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="unplug" class="h-5 w-5 text-slate-300"></i></div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Shared caches are brittle</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Tools that ship raw compiled artifacts around tend to miss — or worse, misbehave — when paths, toolchains, or system libraries differ between machines.</p>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Tools that ship raw compiled artifacts around tend to miss or misbehave when paths, toolchains, or system libraries differ between machines.</p>
       </article><article class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[.04]"><i data-lucide="archive-restore" class="h-5 w-5 text-slate-300"></i></div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">CI caches are all-or-nothing</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Most CI caches key one big archive on your <code class="code">Cargo.lock</code>. Bump a single dependency and the whole thing misses — after your job already spent minutes downloading and unpacking it.</p>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">Most CI caches key one big archive on your <code class="code">Cargo.lock</code>. Bump a single dependency and the whole thing misses. And now a full clean build has to happen.</p>
       </article></div>
 
     <div class="reveal glass edge-lit mt-8 overflow-hidden rounded-2xl">
@@ -310,10 +310,10 @@ tailwind.config = {
         <div>
           <p class="eyebrow text-moss-400">The answer</p>
           <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">Give the compilation to a real build engine.</h3>
-          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">cargo-green turns each <code class="code">rustc</code> call into its own build step and hands it to BuildKit or Nix. Each step is sealed off from whatever is unique about your machine, so the same crate produces the same key everywhere — and the cache actually hits. Results live as ordinary content in a registry you control, shared by every developer and every CI job.</p>
+          <p class="mt-4 text-[15.5px] leading-relaxed text-slate-400">cargo-green turns each <code class="code">rustc</code> call into its own build step and hands it to BuildKit or Nix. Each step is sealed off from whatever is unique about your machine, so the same crate produces the same key everywhere and the cache actually hits. Results live as ordinary content in a registry you control, shared by every developer and every CI job.</p>
           <p class="mt-5 font-display text-lg font-medium text-white">Build once, anywhere. Reuse everywhere.</p>
         </div>
-        <ul class="space-y-3.5 text-[14.5px] text-slate-300"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Crate-level granularity — one changed crate rebuilds one crate</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Cache keys that match across machines and CI runners</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Works with proc-macros, build scripts, and linking</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Offload compilation to any remote machine over SSH</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>No new build system — it is still <code class="code">cargo</code></li></ul>
+        <ul class="space-y-3.5 text-[14.5px] text-slate-300"><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Crate-level granularity: one changed crate rebuilds one crate</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Cache keys that match across machines and CI runners</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Works with proc-macros, build scripts, and linking</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>Offload compilation to any remote machine over SSH</li><li class="flex gap-3"><i data-lucide="check" class="mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400"></i>No new build system, it is still <code class="code">cargo</code></li></ul>
       </div>
     </div>
 
@@ -327,7 +327,7 @@ tailwind.config = {
         <div class="grid gap-5 sm:grid-cols-3"><div>
             <i data-lucide="unlink" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">Not keyed on Cargo.lock</h4>
-            <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Each crate is cached on its own. Bumping one dependency invalidates that crate and whatever depends on it — not the other four hundred.</p>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Each crate is cached on its own. Bumping one dependency invalidates that crate and whatever depends on it, not the other four hundred.</p>
           </div><div>
             <i data-lucide="download-cloud" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">Fetched as the build runs</h4>
@@ -335,7 +335,7 @@ tailwind.config = {
           </div><div>
             <i data-lucide="scissors" class="h-5 w-5 text-moss-400"></i>
             <h4 class="mt-3.5 font-display text-[15.5px] font-semibold text-white">No save/restore steps</h4>
-            <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Delete the cache actions from your workflow. Nothing to tar, upload, or expire — and nothing to rate-limit you on a busy morning.</p>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">Delete the cache actions from your workflow. Nothing to tar, upload, or expire and nothing to rate-limit you on a busy morning.</p>
           </div></div>
       </div>
     </div>
@@ -346,7 +346,7 @@ tailwind.config = {
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="eyebrow text-moss-400">Install &amp; use</p>
 <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">One install. One extra word.</h2>
-<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green is a cargo plugin, not a replacement. Your commands, your <code class="code">Cargo.toml</code>, your CI — unchanged.</p></div><a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
+<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">cargo-green is a cargo plugin, not a replacement. Your commands, your <code class="code">Cargo.toml</code>, your CI, unchanged.</p></div><a href="https://github.com/fenollp/supergreen#installation" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full installation docs <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl">
         <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green"><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition active" id="use-build" data-panel="panel-use-build" role="tab" aria-controls="panel-use-build" aria-selected="true" tabindex="0">build</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-install" data-panel="panel-use-install" role="tab" aria-controls="panel-use-install" aria-selected="false" tabindex="-1">install</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-remote" data-panel="panel-use-remote" role="tab" aria-controls="panel-use-remote" aria-selected="false" tabindex="-1">remote</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-share-cache" data-panel="panel-use-share-cache" role="tab" aria-controls="panel-use-share-cache" aria-selected="false" tabindex="-1">share cache</button><button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] text-slate-400 transition" id="use-ci" data-panel="panel-use-ci" role="tab" aria-controls="panel-use-ci" aria-selected="false" tabindex="-1">CI</button></div>
@@ -378,8 +378,8 @@ tailwind.config = {
 <span class="c-dim"># Make sure $CARGO_HOME/bin is on your $PATH</span>
 <span class="c-cmd">which</span> cargo-green
 
-<span class="c-dim"># Needs one build engine on the machine:</span>
-<span class="c-dim"># a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
+<span class="c-dim"># Needs one build engine on the machine to write to cache:</span>
+<span class="c-dim">#   a docker or podman client, or nix.</span></code></pre><pre id="panel-use-remote" class="panel hidden overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 font-mono text-[13px] leading-[1.85] text-slate-300" role="tabpanel" aria-labelledby="use-remote"><code><span class="c-dim"># Compile on the 96-core box, run the binary locally</span>
 <span class="c-var">DOCKER_HOST</span>=ssh://build-farm-01 cargo green test
 
 <span class="c-dim"># Same idea with the Nix engine</span>
@@ -461,7 +461,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
           <i data-lucide="cpu" class="h-5 w-5 text-slate-500"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Build</h3>
-        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">BuildKit or Nix runs the graph with full parallelism — on your machine, or on any remote one you point it at.</p>
+        <p class="mt-2.5 text-[14.5px] leading-relaxed text-slate-400">BuildKit or Nix runs the graph with full parallelism on your machine, or on any remote one you point it at.</p>
       </li><li class="reveal glass glass-hover rounded-2xl p-7">
         <div class="flex items-center justify-between">
           <span class="font-mono text-[12px] text-moss-400">04</span>
@@ -483,7 +483,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
         <div class="flex items-center gap-3"><i data-lucide="split" class="h-5 w-5 text-moss-400"></i>
           <h3 class="font-display text-lg font-semibold text-white">Two engines, one cache</h3>
         </div>
-        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">Pick whichever engine your team already trusts. The workflow, the commands, and the cached results are the same either way — teams can even mix both and still share hits.</p>
+        <p class="mt-3 text-[14.5px] leading-relaxed text-slate-400">Pick whichever engine your team already trusts. The workflow, the commands, and the cached results are the same either way. Teams can even mix both and still share hits.</p>
         <div class="mt-6 grid gap-4 sm:grid-cols-2"><div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
             <div class="flex items-center gap-2.5">
               <i data-lucide="container" class="h-[18px] w-[18px] text-moss-400"></i>
@@ -499,7 +499,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
             <p class="mt-2.5 text-[13.5px] leading-relaxed text-slate-400">For teams already on Nix. Cache lives in a binary cache, with the same crate-level granularity.</p>
             <p class="mt-3 font-mono text-[11.5px] text-slate-500">runner = "nix"</p>
           </div></div>
-        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">No daemon on the laptop is required either way — point cargo-green at a shared machine and let it do the work.</p>
+        <p class="mt-6 text-[13.5px] leading-relaxed text-slate-500">No daemon on the laptop is required either way. Point cargo-green at a shared machine and let it do the work.</p>
       </div>
     </div>
   </div>
@@ -509,7 +509,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"><div class="max-w-2xl"><p class="eyebrow text-moss-400">Configuration</p>
 <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">Defaults that work. Knobs when you need them.</h2>
-<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Set anything in <code class="code">[package.metadata.green]</code> in your <code class="code">Cargo.toml</code>, or with a <code class="code">$CARGOGREEN_*</code> environment variable — env vars win, which is what you want in CI.</p></div><a href="https://github.com/fenollp/supergreen#configuration" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full reference <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
+<p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Set anything in <code class="code">[package.metadata.green]</code> in your <code class="code">Cargo.toml</code>, or with a <code class="code">$CARGOGREEN_*</code> environment variable. Env vars win, which is what you want in CI.</p></div><a href="https://github.com/fenollp/supergreen#configuration" class="inline-flex shrink-0 items-center gap-2 text-[14px] font-medium text-moss-400 transition hover:text-moss-300">Full reference <i data-lucide="external-link" class="h-4 w-4"></i></a></div>
     <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3"><a href="https://github.com/fenollp/supergreen#caching" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
           <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-moss-400/20 bg-moss-500/10"><i data-lucide="database" class="h-5 w-5 text-moss-400"></i></div>
@@ -524,7 +524,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
           <i data-lucide="arrow-up-right" class="h-4 w-4 text-slate-600 transition group-hover:text-moss-400"></i>
         </div>
         <h3 class="mt-5 font-display text-lg font-semibold text-white">Build engine</h3>
-        <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Which engine compiles your crates, and where it runs — docker, podman, or Nix, locally or on a remote machine.</p>
+        <p class="mt-2 text-[14px] leading-relaxed text-slate-400">Which engine compiles your crates, and where it runs: docker, podman, or Nix, locally or on a remote machine.</p>
         <div class="mt-5 flex flex-wrap gap-1.5 font-mono text-[11.5px] text-slate-500"><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">runner</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$DOCKER_HOST</span><span class="rounded-md border border-white/[0.08] bg-white/[.03] px-2 py-1">$BUILDX_BUILDER</span></div>
       </a><a href="https://github.com/fenollp/supergreen#cargogreen_base_image" class="reveal glass glass-hover group block rounded-2xl p-7">
         <div class="flex items-start justify-between">
@@ -592,7 +592,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
         </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="file-search" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">Audit logs &amp; attribution</h3>
-          <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">See who built what, when, and from which revision — and which teams are driving build spend, before finance asks.</p>
+          <p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">See who built what, when, and from which revision and which teams are driving build spend, before finance asks.</p>
         </div><div class="reveal glass rounded-2xl p-6">
           <i data-lucide="scale" class="h-5 w-5 text-moss-400"></i>
           <h3 class="mt-4 font-display text-[15.5px] font-semibold text-white">Open source core</h3>
@@ -607,7 +607,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
     <div class="reveal mx-auto max-w-2xl text-center">
       <p class="eyebrow text-moss-400">Pricing</p>
       <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">The CLI is free, forever.</h2>
-      <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Point cargo-green at a registry you already run and pay nothing, ever. The hosted cache is for teams who would rather not operate one — priced on what you actually use, per organization rather than per developer.</p>
+      <p class="mt-5 text-[16.5px] leading-relaxed text-slate-400">Use our free planet-wide cache or point cargo-green at an OCI registry you already run and pay nothing, ever. The hosted cache is for teams who would rather not operate one, priced on what you actually use, per organization rather than per developer.</p>
       <p class="mt-4 text-[14px] text-slate-500">Your CI jobs and your coding agents build too. Charging by headcount stopped making sense.</p>
     </div>
 
@@ -681,7 +681,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
       </div>
     </div>
 
-    <p class="reveal mt-6 text-center text-[13.5px] text-slate-500">Soft limits, not hard walls. A burst month won't break your build — we'll get in touch if it becomes the new normal.</p>
+    <p class="reveal mt-6 text-center text-[13.5px] text-slate-500">Soft limits, not hard walls. A burst month won't break your build: we'll get in touch if it becomes the new normal.</p>
   </div>
 </section>
 
@@ -708,16 +708,16 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
           <span class="font-display text-[16px] font-medium text-white">Do we need Docker on every developer machine?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. You need one engine available: a <code class="code">docker</code> or <code class="code">podman</code> client, or Nix. And the machine that actually compiles doesn't have to be the laptop — point cargo-green at a shared build machine and laptops just orchestrate.</p>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">No. You don't even need an engine (a <code class="code">docker</code> or <code class="code">podman</code> client, or Nix) if you want to use the global public cache read-only. And the machine that actually compiles doesn't have to be your laptop. Point cargo-green at a shared build machine and laptops just orchestrate.</p>
       </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">How is this different from sccache or cargo-chef?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">sccache caches compiler output but expects matching paths and environments across machines, can't cache linking, struggles with proc-macros, and gets chatty enough with a remote backend that checking the cache can cost more than compiling. cargo-chef caches your dependency tree as Docker layers, so one dependency bump rebuilds all of them. cargo-green compiles inside sealed, pinned build steps: keys match across machines, granularity is per crate, and a partial match still helps. A survey of the whole landscape lives in the <a href="https://github.com/fenollp/supergreen#alternatives" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">alternatives section</a> of the README.</p>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400"><code class="code">sccache</code> caches compiler output but expects matching paths and environments across machines, can't cache linking, struggles with proc-macros, and gets chatty enough with a remote backend that checking the cache can cost more than compiling. <code class="code">cargo-chef</code> caches your dependency tree as Docker layers, so one dependency bump rebuilds all of them. <code class="code">cargo-green</code> compiles inside sealed, pinned build steps: keys match across machines, granularity is per crate, and a partial match still helps. A survey of the whole landscape lives in the <a href="https://github.com/fenollp/supergreen#alternatives" class="text-moss-400 underline decoration-moss-400/30 underline-offset-4 hover:decoration-moss-400">alternatives section</a> of the README.</p>
       </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
-          <span class="font-display text-[16px] font-medium text-white">BuildKit or Nix — which should we pick?</span>
+          <span class="font-display text-[16px] font-medium text-white">BuildKit or Nix, which should we pick?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
         <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Whichever your team already runs. Most teams have a docker or podman client on hand, so that is the default. If you are already on Nix, use Nix and keep your existing binary cache. The commands, the configuration, and the cached results are the same either way, and both engines can share hits.</p>
@@ -726,13 +726,13 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
           <span class="font-display text-[16px] font-medium text-white">How long before CI gets faster?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">The first job. There is no lockfile to match and no archive to restore — cached crates are pulled in progressively while compilation is already running, so a job benefits from whatever is in the cache at the moment it starts. A branch that bumps a dependency still reuses everything else.</p>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">The first job. Cached crates are pulled in progressively while compilation is running, instead of waiting to fetch gigabytes of build artifacts before builds. A branch that bumps a dependency still reuses everything else.</p>
       </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">Can it run with no network access?</span>
           <i data-lucide="chevron-down" class="chev h-[18px] w-[18px] shrink-0 text-slate-500"></i>
         </summary>
-        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Yes. <code class="code">cargo green supergreen sync</code> pulls every image and crate you need up front, and builds default to no network. Air-gapped environments are a supported Enterprise deployment.</p>
+        <p class="mt-4 text-[14.5px] leading-relaxed text-slate-400">Yes. <code class="code">cargo green supergreen sync</code> pulls every image and crate you need up front. Builds then require no network. Air-gapped environments are a supported Enterprise deployment.</p>
       </details><details class="reveal glass rounded-xl px-6 py-5">
         <summary class="flex items-center justify-between gap-4">
           <span class="font-display text-[16px] font-medium text-white">What counts as a cache request?</span>
@@ -748,7 +748,7 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
     <div class="reveal glass edge-lit relative overflow-hidden rounded-3xl px-6 py-16 text-center sm:px-16">
       <div class="pointer-events-none absolute inset-x-0 -top-40 h-80" style="background: radial-gradient(420px 200px at 50% 100%, rgba(16,185,129,.22), transparent 70%);"></div>
       <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">Stop paying for the same build twice.</h2>
-      <div class="relative mx-auto mt-5 max-w-xl"><p class="text-[16.5px] leading-relaxed text-slate-400">Install the CLI, run <code class="code">cargo green build</code>, and watch the second machine finish in seconds.</p></div>
+      <div class="relative mx-auto mt-5 max-w-xl"><p class="text-[16.5px] leading-relaxed text-slate-400">Install the CLI and <code class="code">cargo green install</code> anything in seconds.</p></div>
       <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <div class="group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
           <span class="shrink-0 text-slate-600">$</span>
