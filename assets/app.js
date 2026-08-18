@@ -2,9 +2,6 @@
   'use strict';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Icons ---------- */
-  if (window.lucide) lucide.createIcons();
-
   /* ---------- Nav: glass on scroll ---------- */
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('nav-scrolled', window.scrollY > 12);

@@ -11,6 +11,7 @@ from __future__ import annotations
 import functools
 import html
 import http.server
+import json
 import re
 import subprocess
 import sys
@@ -31,7 +32,8 @@ _COLOR = sys.stderr.isatty()
 def bold(text: str) -> str:
     """Bold red when a human is watching, plain text in pipes and CI logs."""
     return f"\033[1;31m{text}\033[0m" if _COLOR else text
-SOURCES = [CONTENT, ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js", Path(__file__)]
+SOURCES = [CONTENT, ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js",
+           ASSETS / "icons.json", Path(__file__)]
 
 
 # ─────────────────────────────  parsing  ─────────────────────────────
@@ -211,8 +213,16 @@ def highlight(code: str, lang: str) -> str:
 
 # ─────────────────────────────  small helpers  ─────────────────────────────
 
+ICONS: dict[str, str] = json.loads((ASSETS / "icons.json").read_text(encoding="utf-8"))
+
+
 def icon(name: str, cls: str) -> str:
-    return f'<i data-lucide="{name}" class="{cls}"></i>'
+    """Inline a Lucide glyph. Vendored in assets/icons.json so the page loads no CDN script."""
+    if name not in ICONS:
+        raise KeyError(f"unknown icon {name!r} — add it to {ASSETS.name}/icons.json")
+    return (f'<svg data-lucide="{name}" class="{cls}" xmlns="http://www.w3.org/2000/svg" '
+            'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>')
 
 
 def feature(text: str, text_cls: str = "") -> str:
@@ -827,7 +837,6 @@ def build(out_path: Path) -> Path:
 <script>
   {config_js}
 </script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script>
 {(ASSETS / 'app.js').read_text(encoding='utf-8').rstrip()}
 </script>
