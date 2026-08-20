@@ -120,6 +120,11 @@ tailwind.config = {
               mask-image: linear-gradient(to right, #000 80%, transparent 100%);
     }
   }
+  /* Cargo's own colours, fixed: the panel shows what a terminal really prints
+     (bold green status verb, default foreground for the rest), not the page palette. */
+  #term { color: #d0cfcc; }
+  .ansi-green { color: #33d17a; font-weight: 700; }
+  .ansi-dim   { color: #5e5c64; }
   .term-line { opacity: 0; transform: translateY(3px); }
   .term-line.in { opacity: 1; transform: none; transition: opacity .18s ease, transform .18s ease; }
   .caret { display:inline-block; width:.5ch; height:1.05em; background:#34D399; vertical-align:-.16em; animation: blink 1.05s steps(1) infinite; }
@@ -245,17 +250,17 @@ tailwind.config = {
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
-                <span class="ml-3 font-mono text-[11px] text-slate-500">acme/payments-api @ main</span>
+                <span class="ml-3 font-mono text-[11px] text-slate-500">cargo green install --frozen cargo-nextest</span>
               </div>
               <span class="flex items-center gap-1.5 font-mono text-[11px] text-moss-400">
-                <svg data-lucide="cloud-download" class="h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13v8l-4-4" /> <path d="m12 21 4-4" /> <path d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284" /></svg> ghcr.io
+                <svg data-lucide="database-zap" class="h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 15 21.84" /> <path d="M21 5V8" /> <path d="M21 12L18 17H22L19 22" /> <path d="M3 12A9 3 0 0 0 14.59 14.87" /></svg> cargo-green v0.27.0
               </span>
             </div>
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Restored</div>
-                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / 419</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / 332</div>
               </div>
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Hit rate</div>
@@ -268,7 +273,7 @@ tailwind.config = {
             </div>
           </div>
         </div>
-        <p class="mt-3 text-center font-mono text-[11px] text-slate-600">Illustrative replay · same workspace, cold build: 8m 42s</p>
+        <p class="mt-3 text-center font-mono text-[11px] text-slate-600">Real run, empty CARGO_TARGET_DIR, plain cargo install: 3m 0s</p>
       </div>
     </div>
   </div>
@@ -799,30 +804,9 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
 
 <script>
   window.CG = {
-    lines: [
-    ["cmd", "$ cargo green build --release"],
-    ["dim", "#1  [internal] load build definition"],
-    ["dim", "#2  preparing pinned build environment"],
-    ["dim", "#3  streaming cache from ghcr.io/acme/payments-api"],
-    ["blank", ""],
-    ["hit", "#12  CACHED   rustc   serde v1.0.219"],
-    ["hit", "#13  CACHED   rustc   tokio v1.46.0"],
-    ["hit", "#14  CACHED   rustc   clap v4.5.45"],
-    ["hit", "#15  CACHED   rustc   reqwest v0.12.9"],
-    ["hit", "#16  CACHED   rustc   hyper v1.5.1"],
-    ["hit", "#17  CACHED   rustc   sqlx-core v0.8.2"],
-    ["dim", "… 406 more crates restored from cache"],
-    ["blank", ""],
-    ["run", "#414 rustc   payments-core v0.4.0        2.1s"],
-    ["run", "#415 rustc   payments-http v0.4.0        3.4s"],
-    ["run", "#416 rustc   payments-api  v0.4.0        4.8s"],
-    ["dim", "=> exporting cache to ghcr.io/acme/payments-api"],
-    ["blank", ""],
-    ["ok", "Finished `release` profile in 11.3s"]
-    ],
-    total: 419,
-    cached: 412,
-    wall: 11.3
+    lines: [[0.0,"cmd","$ CARGO_TARGET_DIR=$(mktemp -d) CARGOGREEN_RUNNER=none cargo green install --frozen cargo-nextest"],[0.218,"run","  Installing cargo-nextest v0.9.143"],[1.086,"hit","   Compiling proc-macro2 v1.0.106"],[1.086,"hit","   Compiling quote v1.0.45"],[1.086,"hit","   Compiling unicode-ident v1.0.24"],[1.086,"hit","   Compiling libc v0.2.189"],[1.086,"hit","   Compiling memchr v2.7.6"],[1.086,"hit","   Compiling cfg-if v1.0.4"],[1.086,"hit","   Compiling serde_core v1.0.229"],[1.093,"hit","   Compiling log v0.4.29"],[1.097,"hit","   Compiling serde v1.0.229"],[1.099,"hit","   Compiling bitflags v2.13.1"],[1.099,"hit","   Compiling autocfg v1.5.0"],[1.099,"hit","   Compiling zmij v1.0.18"],[1.099,"hit","   Compiling once_cell v1.21.3"],[1.137,"hit","   Compiling shlex v1.3.0"],[1.147,"hit","   Compiling thiserror v2.0.19"],[1.151,"hit","   Compiling rustix v1.0.7"],[1.151,"hit","   Compiling getrandom v0.3.4"],[1.155,"hit","   Compiling linux-raw-sys v0.9.4"],[1.16,"hit","   Compiling itoa v1.0.17"],[1.167,"hit","   Compiling version_check v0.9.5"],[1.181,"hit","   Compiling serde_json v1.0.151"],[1.186,"hit","   Compiling ucd-trie v0.1.7"],[1.193,"hit","   Compiling num-traits v0.2.19"],[1.198,"hit","   Compiling siphasher v1.0.1"],[1.208,"hit","   Compiling rand_core v0.6.4"],[1.214,"hit","   Compiling unicode-width v0.2.2"],[1.227,"hit","   Compiling pest v2.8.3"],[1.242,"hit","   Compiling rand v0.8.6"],[1.255,"hit","   Compiling syn v2.0.117"],[1.255,"hit","   Compiling syn v3.0.3"],[1.255,"hit","   Compiling phf_shared v0.11.3"],[1.262,"hit","   Compiling pin-project-lite v0.2.17"],[1.265,"hit","   Compiling allocator-api2 v0.2.21"],[1.265,"hit","   Compiling adler2 v2.0.1"],[1.265,"hit","   Compiling thiserror v1.0.69"],[1.276,"hit","   Compiling jobserver v0.1.33"],[1.292,"hit","   Compiling miniz_oxide v0.8.9"],[1.293,"hit","   Compiling phf_generator v0.11.3"],[1.304,"hit","   Compiling signal-hook-registry v1.4.5"],[1.312,"hit","   Compiling cc v1.2.30"],[1.322,"hit","   Compiling hashbrown v0.17.1"],[1.334,"hit","   Compiling pest_meta v2.8.3"],[1.334,"hit","   Compiling fs_extra v1.3.0"],[1.335,"hit","   Compiling dunce v1.0.5"],[1.342,"hit","   Compiling typenum v1.18.0"],[1.356,"hit","   Compiling cmake v0.1.54"],[1.357,"hit","   Compiling cfg_aliases v0.2.1"],[1.364,"hit","   Compiling smallvec v1.15.2"],[1.365,"hit","   Compiling generic-array v0.14.7"],[1.369,"hit","   Compiling aho-corasick v1.1.4"],[1.369,"hit","   Compiling serde_derive v1.0.229"],[1.369,"hit","   Compiling thiserror-impl v2.0.19"],[1.388,"hit","   Compiling signal-hook v0.3.18"],[1.389,"hit","   Compiling syn v1.0.109"],[1.394,"hit","   Compiling aws-lc-sys v0.39.0"],[1.394,"hit","   Compiling regex-syntax v0.8.11"],[1.401,"hit","   Compiling lazy_static v1.5.0"],[1.401,"hit","   Compiling camino v1.2.5"],[1.402,"hit","   Compiling equivalent v1.0.2"],[1.429,"hit","   Compiling pest_generator v2.8.3"],[1.43,"hit","   Compiling target-lexicon v0.13.3"],[1.453,"hit","   Compiling zeroize v1.8.1"],[1.461,"hit","   Compiling zerocopy-derive v0.8.27"],[1.466,"hit","   Compiling thiserror-impl v1.0.69"],[1.47,"hit","   Compiling zerocopy v0.8.27"],[1.474,"hit","   Compiling pest_derive v2.8.3"],[1.474,"hit","   Compiling strsim v0.11.1"],[1.477,"hit","   Compiling object v0.36.7"],[1.479,"hit","   Compiling futures-core v0.3.33"],[1.539,"hit","   Compiling indexmap v2.14.0"],[1.565,"hit","   Compiling regex-automata v0.4.16"],[1.566,"hit","   Compiling memoffset v0.9.1"],[1.57,"hit","   Compiling guppy-workspace-hack v0.1.0"],[1.57,"hit","   Compiling owo-colors v4.3.0"],[1.574,"hit","   Compiling gimli v0.31.1"],[1.584,"hit","   Compiling utf8parse v0.2.2"],[1.589,"hit","   Compiling bytemuck v1.24.0"],[1.597,"hit","   Compiling bytes v1.12.1"],[1.614,"hit","   Compiling pkg-config v0.3.32"],[1.619,"hit","   Compiling aws-lc-rs v1.16.2"],[1.634,"hit","   Compiling wezterm-dynamic-derive v0.1.1"],[1.634,"hit","   Compiling atomic v0.6.1"],[1.655,"hit","   Compiling zstd-sys v2.0.15+zstd.1.5.7"],[1.687,"hit","   Compiling regex v1.13.1"],[1.695,"hit","   Compiling phf_macros v0.11.3"],[1.709,"hit","   Compiling nix v0.29.0"],[1.709,"hit","   Compiling ordered-float v4.6.0"],[1.709,"hit","   Compiling tracing-core v0.1.36"],[1.724,"hit","   Compiling fastrand v2.3.0"],[1.724,"hit","   Compiling pulldown-cmark v0.13.4"],[1.725,"hit","   Compiling rustc-demangle v0.1.25"],[1.729,"hit","   Compiling target-spec v3.6.0"],[1.737,"hit","   Compiling addr2line v0.24.2"],[1.746,"hit","   Compiling crc32fast v1.5.0"],[1.753,"hit","   Compiling futures-sink v0.3.33"],[1.754,"hit","   Compiling tempfile v3.20.0"],[1.773,"hit","   Compiling futures-channel v0.3.33"],[1.778,"hit","   Compiling wezterm-dynamic v0.2.1"],[1.778,"hit","   Compiling phf v0.11.3"],[1.809,"hit","   Compiling cfg-expr v0.20.6"],[1.821,"hit","   Compiling uuid v1.18.1"],[1.822,"hit","   Compiling crypto-common v0.1.6"],[1.842,"hit","   Compiling block-buffer v0.10.4"],[1.845,"hit","   Compiling rustls-pki-types v1.12.0"],[1.845,"hit","   Compiling futures-macro v0.3.33"],[1.864,"hit","   Compiling scroll_derive v0.13.1"],[1.864,"hit","   Compiling phf_codegen v0.11.3"],[1.868,"hit","   Compiling terminal_size v0.4.4"],[1.87,"hit","   Compiling mio v1.2.0"],[1.87,"hit","   Compiling semver v1.0.28"],[1.876,"hit","   Compiling usdt-impl v0.6.0"],[1.897,"hit","   Compiling byteorder v1.5.0"],[1.904,"hit","   Compiling futures-io v0.3.33"],[1.904,"hit","   Compiling base64 v0.22.1"],[1.906,"hit","   Compiling winnow v1.0.4"],[1.906,"hit","   Compiling httparse v1.10.1"],[1.907,"hit","   Compiling futures-task v0.3.33"],[1.907,"hit","   Compiling either v1.15.0"],[1.912,"hit","   Compiling slab v0.4.11"],[1.92,"hit","   Compiling scroll v0.13.0"],[1.926,"hit","   Compiling backtrace v0.3.75"],[1.933,"hit","   Compiling terminfo v0.9.0"],[1.948,"hit","   Compiling futures-util v0.3.33"],[1.953,"hit","   Compiling digest v0.10.7"],[1.953,"hit","   Compiling dof v0.4.0"],[1.972,"hit","   Compiling dtrace-parser v0.3.0"],[1.979,"hit","   Compiling tracing-attributes v0.1.31"],[1.98,"hit","   Compiling thread-id v5.0.0"],[1.98,"hit","   Compiling ahash v0.8.12"],[1.98,"hit","   Compiling lock_api v0.4.13"],[1.983,"hit","   Compiling minimal-lexical v0.2.1"],[2.003,"hit","   Compiling lab v0.11.0"],[2.004,"hit","   Compiling rustls v0.23.42"],[2.008,"hit","   Compiling foldhash v0.1.5"],[2.008,"hit","   Compiling parking_lot_core v0.9.11"],[2.016,"hit","   Compiling unicode-segmentation v1.12.0"],[2.02,"hit","   Compiling bit-vec v0.6.3"],[2.027,"hit","   Compiling fnv v1.0.7"],[2.028,"hit","   Compiling cpufeatures v0.2.17"],[2.028,"hit","   Compiling plain v0.2.3"],[2.043,"hit","   Compiling zstd-safe v7.2.4"],[2.043,"hit","   Compiling portable-atomic v1.13.1"],[2.05,"hit","   Compiling scopeguard v1.2.0"],[2.055,"hit","   Compiling unicode-linebreak v0.1.5"],[2.056,"hit","   Compiling is_ci v1.2.0"],[2.057,"hit","   Compiling anyhow v1.0.98"],[2.069,"hit","   Compiling untrusted v0.9.0"],[2.07,"hit","   Compiling nextest-workspace-hack v0.1.0"],[2.073,"hit","   Compiling unicode-width v0.1.14"],[2.086,"hit","   Compiling rustls-webpki v0.103.13"],[2.1,"hit","   Compiling mac_address v1.1.8"],[2.104,"hit","   Compiling textwrap v0.16.2"],[2.109,"hit","   Compiling supports-color v3.0.2"],[2.114,"hit","   Compiling goblin v0.10.3"],[2.114,"hit","   Compiling sha2 v0.10.9"],[2.118,"hit","   Compiling tracing v0.1.44"],[2.12,"hit","   Compiling bit-set v0.5.3"],[2.135,"hit","   Compiling convert_case v0.7.1"],[2.136,"hit","   Compiling hashbrown v0.15.5"],[2.148,"hit","   Compiling csscolorparser v0.6.2"],[2.149,"hit","   Compiling nom v7.1.3"],[2.173,"hit","   Compiling flate2 v1.1.1"],[2.182,"hit","   Compiling toml_parser v1.1.2+spec-1.1.0"],[2.182,"hit","   Compiling backtrace-ext v0.2.1"],[2.194,"hit","   Compiling tracing-log v0.2.0"],[2.196,"hit","   Compiling serde_tokenstream v0.2.2"],[2.198,"hit","   Compiling http v1.4.2"],[2.206,"hit","   Compiling pathdiff v0.2.3"],[2.209,"hit","   Compiling cargo-platform v0.3.0"],[2.22,"hit","   Compiling tokio-macros v2.7.0"],[2.222,"hit","   Compiling miette-derive v7.6.0"],[2.222,"hit","   Compiling sharded-slab v0.1.7"],[2.227,"hit","   Compiling euclid v0.22.11"],[2.228,"hit","   Compiling os_pipe v1.2.2"],[2.238,"hit","   Compiling console v0.16.4"],[2.249,"hit","   Compiling toml_datetime v1.1.1+spec-1.1.0"],[2.25,"hit","   Compiling serde_spanned v1.1.1"],[2.25,"hit","   Compiling thread_local v1.1.8"],[2.25,"hit","   Compiling supports-unicode v3.0.0"],[2.263,"hit","   Compiling option-ext v0.2.0"],[2.267,"hit","   Compiling toml_writer v1.1.2+spec-1.1.0"],[2.278,"hit","   Compiling rand_core v0.10.0"],[2.279,"hit","   Compiling subtle v2.6.1"],[2.279,"hit","   Compiling bitflags v1.3.2"],[2.28,"hit","   Compiling rustix v0.38.44"],[2.292,"hit","   Compiling supports-hyperlinks v3.2.0"],[2.293,"hit","   Compiling fixedbitset v0.5.7"],[2.298,"hit","   Compiling pretty-hex v0.4.1"],[2.305,"hit","   Compiling debug-ignore v1.0.5"],[2.306,"hit","   Compiling deltae v0.3.2"],[2.306,"hit","   Compiling unicase v2.9.0"],[2.306,"hit","   Compiling getrandom v0.4.2"],[2.306,"hit","   Compiling miette v7.6.0"],[2.309,"hit","   Compiling wezterm-input-types v0.1.0"],[2.325,"hit","   Compiling petgraph v0.8.3"],[2.33,"hit","   Compiling tokio v1.53.1"],[2.337,"hit","   Compiling wezterm-color-types v0.3.0"],[2.356,"hit","   Compiling dirs-sys v0.5.0"],[2.36,"hit","   Compiling sigchld v0.2.4"],[2.364,"hit","   Compiling tracing-subscriber v0.3.23"],[2.372,"hit","   Compiling ureq-proto v0.6.0"],[2.374,"hit","   Compiling cargo_metadata v0.23.1"],[2.408,"hit","   Compiling derive_more-impl v2.0.1"],[2.409,"hit","   Compiling wezterm-blob-leases v0.1.1"],[2.409,"hit","   Compiling fancy-regex v0.11.0"],[2.468,"hit","   Compiling futures-executor v0.3.33"],[2.469,"hit","   Compiling itertools v0.14.0"],[2.479,"hit","   Compiling socks v0.3.4"],[2.499,"hit","   Compiling webpki-roots v1.0.0"],[2.499,"hit","   Compiling wezterm-bidi v0.2.3"],[2.499,"hit","   Compiling vtparse v0.6.2"],[2.503,"hit","   Compiling anstyle-parse v1.0.0"],[2.509,"hit","   Compiling filedescriptor v0.8.3"],[2.528,"hit","   Compiling smol_str v0.3.2"],[2.538,"hit","   Compiling pin-project-internal v1.1.10"],[2.538,"hit","   Compiling num-derive v0.4.2"],[2.538,"hit","   Compiling nix v0.31.3"],[2.543,"hit","   Compiling xattr v1.5.0"],[2.551,"hit","   Compiling filetime v0.2.25"],[2.551,"hit","   Compiling memmap2 v0.9.8"],[2.568,"hit","   Compiling termios v0.3.3"],[2.571,"hit","   Compiling vte v0.14.1"],[2.585,"hit","   Compiling bstr v1.13.0"],[2.591,"hit","   Compiling encoding_rs v0.8.35"],[2.597,"hit","   Compiling colorchoice v1.0.3"],[2.597,"hit","   Compiling is_terminal_polyfill v1.70.1"],[2.598,"hit","   Compiling hex v0.4.3"],[2.598,"hit","   Compiling static_assertions v1.1.0"],[2.62,"hit","   Compiling finl_unicode v1.4.0"],[2.62,"hit","   Compiling tinyvec_macros v0.1.1"],[2.63,"hit","   Compiling fixedbitset v0.4.2"],[2.63,"hit","   Compiling anstyle-query v1.1.2"],[2.63,"hit","   Compiling percent-encoding v2.3.2"],[2.633,"hit","   Compiling nested v0.1.1"],[2.64,"hit","   Compiling cpufeatures v0.3.0"],[2.653,"hit","   Compiling self_update v0.44.0"],[2.655,"hit","   Compiling litrs v0.4.1"],[2.655,"hit","   Compiling linux-raw-sys v0.4.15"],[2.67,"hit","   Compiling color-spantrace v0.3.0"],[2.67,"hit","   Compiling utf8-zero v0.8.1"],[2.67,"hit","   Compiling iana-time-zone v0.1.63"],[2.67,"hit","   Compiling unit-prefix v0.5.1"],[2.67,"hit","   Compiling memmem v0.1.1"],[2.67,"hit","   Compiling anstyle v1.0.14"],[2.682,"hit","   Compiling eyre v0.6.12"],[2.695,"hit","   Compiling chacha20 v0.10.0"],[2.699,"hit","   Compiling termwiz v0.23.3"],[2.7,"hit","   Compiling indicatif v0.18.6"],[2.708,"hit","   Compiling document-features v0.2.11"],[2.711,"hit","   Compiling chrono v0.4.45"],[2.717,"hit","   Compiling anstream v1.0.0"],[2.721,"hit","   Compiling ureq v3.3.0"],[2.73,"hit","   Compiling enum_dispatch v0.3.13"],[2.73,"hit","   Compiling guppy v0.17.26"],[2.731,"hit","   Compiling tinyvec v1.9.0"],[2.74,"hit","   Compiling pin-project v1.1.10"],[2.744,"hit","   Compiling globset v0.4.19"],[2.76,"hit","   Compiling strip-ansi-escapes v0.2.1"],[2.774,"hit","   Compiling tar v0.4.46"],[2.78,"hit","   Compiling nextest-metadata v0.15.0"],[2.784,"hit","   Compiling futures v0.3.33"],[2.789,"hit","   Compiling derive_more v2.0.1"],[2.799,"hit","   Compiling parking_lot v0.12.4"],[2.8,"hit","   Compiling zstd v0.13.3"],[2.807,"hit","   Compiling tracing-error v0.2.1"],[2.825,"hit","   Compiling shared_child v1.1.1"],[2.825,"hit","   Compiling dirs v6.0.0"],[2.842,"hit","   Compiling toml v1.1.3+spec-1.1.0"],[2.842,"hit","   Compiling usdt-macro v0.6.0"],[2.842,"hit","   Compiling usdt-attr-macro v0.6.0"],[2.843,"hit","   Compiling signal-hook-mio v0.2.5"],[2.843,"hit","   Compiling newtype-uuid v1.3.2"],[2.847,"hit","   Compiling self-replace v1.5.0"],[2.871,"hit","   Compiling quick-xml v0.41.0"],[2.874,"hit","   Compiling quick-xml v0.38.4"],[2.88,"hit","   Compiling indenter v0.3.4"],[2.884,"hit","   Compiling shell-words v1.1.1"],[2.884,"hit","   Compiling nohash-hasher v0.2.0"],[2.891,"hit","   Compiling shared_thread v0.2.0"],[2.891,"hit","   Compiling heck v0.5.0"],[2.898,"hit","   Compiling char_index v0.1.5"],[2.898,"hit","   Compiling if_chain v1.0.3"],[2.901,"hit","   Compiling foldhash v0.2.0"],[2.921,"hit","   Compiling humantime v2.3.0"],[2.927,"hit","   Compiling urlencoding v2.1.3"],[2.927,"hit","   Compiling vec_map v0.8.2"],[2.927,"hit","   Compiling lru v0.16.3"],[2.931,"hit","   Compiling recursion v0.5.4"],[2.933,"hit","   Compiling clap_lex v1.0.0"],[2.936,"hit","   Compiling usdt v0.6.0"],[2.937,"hit","   Compiling synoptic v2.2.9"],[2.951,"hit","   Compiling humantime-serde v1.1.1"],[2.955,"hit","   Compiling clap_derive v4.6.4"],[2.956,"hit","   Compiling iddqd v0.4.6"],[2.967,"hit","   Compiling clap_builder v4.6.2"],[2.968,"hit","   Compiling nextest-filtering v0.22.0"],[2.968,"hit","   Compiling quick-junit v0.7.0"],[2.969,"hit","   Compiling duct v1.1.1"],[2.976,"hit","   Compiling config v0.15.25"],[2.979,"hit","   Compiling sapling-streampager v0.12.0"],[3.002,"hit","   Compiling atomicwrites v0.4.4"],[3.002,"hit","   Compiling cargo-nextest v0.9.143"],[3.011,"hit","   Compiling crossterm v0.29.0"],[3.011,"hit","   Compiling rand v0.10.2"],[3.026,"hit","   Compiling eazip v0.2.5"],[3.026,"hit","   Compiling async-scoped v0.9.0"],[3.034,"hit","   Compiling unicode-normalization v0.1.25"],[3.041,"hit","   Compiling tokio-stream v0.1.19"],[3.041,"hit","   Compiling target-spec-miette v0.4.8"],[3.043,"hit","   Compiling future-queue v0.4.0"],[3.044,"hit","   Compiling toml_edit v0.25.13+spec-1.1.0"],[3.055,"hit","   Compiling itertools v0.15.0"],[3.059,"hit","   Compiling mukti-metadata v0.3.0"],[3.06,"hit","   Compiling camino-tempfile v1.4.1"],[3.073,"hit","   Compiling derive-where v1.6.1"],[3.074,"hit","   Compiling serde_path_to_error v0.1.20"],[3.079,"hit","   Compiling bytesize v2.4.2"],[3.085,"hit","   Compiling serde_ignored v0.1.14"],[3.09,"hit","   Compiling etcetera v0.11.0"],[3.094,"hit","   Compiling home v0.5.12"],[3.094,"hit","   Compiling swrite v0.1.0"],[3.102,"hit","   Compiling countio v0.2.19"],[3.109,"hit","   Compiling xxhash-rust v0.8.18"],[3.11,"hit","   Compiling indoc v2.0.7"],[3.11,"hit","   Compiling anstyle-progress v0.1.3"],[3.111,"hit","   Compiling color-eyre v0.6.5"],[3.128,"hit","   Compiling clap v4.6.4"],[3.128,"hit","   Compiling dialoguer v0.12.0"],[3.133,"hit","   Compiling locked-tripwire v0.1.0"],[3.137,"hit","   Compiling idna_adapter v1.0.0"],[3.137,"hit","   Compiling enable-ansi-support v0.3.1"],[3.146,"hit","   Compiling nextest-runner v0.122.1"],[4.619,"ok","    Finished `release` profile [optimized] target(s) in 4.48s"],[4.697,"run","  Installing $HOME/.cargo/bin/cargo-nextest"],[4.745,"ok","   Installed package `cargo-nextest v0.9.143` (executable `cargo-nextest`)"]],
+    crates: 332,
+    wall: 4.776
   };
 </script>
 <script>
@@ -946,65 +930,88 @@ cargo green supergreen push</code></pre><pre id="panel-use-ci" class="panel hidd
   const rate = document.getElementById('stat-rate');
   const time = document.getElementById('stat-time');
 
-  const CG = window.CG || { lines: [], total: 0, cached: 0, wall: 0 };
+  // Every entry is [seconds after launch, kind, text], straight out of a recorded
+  // `cargo green install` (see record.py). The replay is scheduled against a wall
+  // clock rather than a per-line delay, so what you watch is the speed it really ran:
+  // the long pause while cargo resolves, then 332 crates landing in bursts.
+  const CG = window.CG || { lines: [], crates: 0, wall: 0 };
   const L = CG.lines;
 
-  const cls = {
-    cmd:   'text-slate-200',
-    dim:   'text-slate-600',
-    hit:   'text-moss-400',
-    run:   'text-slate-300',
-    ok:    'text-white',
-    blank: ''
+  const caret = document.createElement('div');
+  caret.innerHTML = '<span class="ansi-dim">$ </span><span class="caret"></span>';
+  caret.className = 'term-line in';
+
+  const span = (cls, text) => {
+    const s = document.createElement('span');
+    if (cls) s.className = cls;
+    s.textContent = text;
+    return s;
   };
 
-  const caret = document.createElement('div');
-  caret.innerHTML = '<span class="text-slate-600">$ </span><span class="caret"></span>';
-  caret.className = 'term-line in';
+  // Cargo prints its status verb in bold green and the rest of the line in the
+  // terminal's default foreground; the replay reproduces exactly that, so the
+  // panel reads like the output people already know.
+  const STATUS = /^(\s*)([A-Z][A-Za-z-]*)([\s\S]*)$/;
+
+  const lineNode = (kind, text, shown) => {
+    const d = document.createElement('div');
+    d.className = 'term-line whitespace-pre' + (kind === 'dim' ? ' ansi-dim' : '') + (shown ? ' in' : '');
+    if (!text) { d.textContent = '\u00A0'; return d; }
+    if (kind === 'cmd') {
+      d.appendChild(span('ansi-dim', '$ '));
+      d.appendChild(span('', text.replace(/^\$ /, '')));
+      return d;
+    }
+    const m = (kind === 'hit' || kind === 'ok' || kind === 'run') && STATUS.exec(text);
+    if (!m) { d.textContent = text; return d; }
+    d.appendChild(span('', m[1]));
+    d.appendChild(span('ansi-green', m[2]));
+    d.appendChild(span('', m[3]));
+    return d;
+  };
+
+  const setStats = (crates, elapsed) => {
+    hits.textContent = String(crates);
+    rate.textContent = CG.crates > 0 ? (crates / CG.crates * 100).toFixed(1) : '0.0';
+    time.textContent = elapsed.toFixed(1);
+  };
 
   function renderAll() {
     term.innerHTML = '';
-    L.forEach(([k, t]) => {
-      const d = document.createElement('div');
-      d.className = 'term-line in whitespace-pre ' + cls[k];
-      d.textContent = t || '\u00A0';
-      term.appendChild(d);
-    });
-    hits.textContent = String(CG.cached);
-    rate.textContent = (CG.cached / CG.total * 100).toFixed(1);
-    time.textContent = CG.wall.toFixed(1);
+    L.forEach(([, k, t]) => term.appendChild(lineNode(k, t, true)));
+    term.scrollTop = term.scrollHeight;
+    setStats(CG.crates, CG.wall);
   }
 
   function play() {
     term.innerHTML = '';
-    let i = 0, shownHits = 0;
-    const step = () => {
-      if (i >= L.length) {
-        term.appendChild(caret);
-        return;
+    const started = performance.now();
+    let i = 0, crates = 0;
+
+    const frame = () => {
+      const elapsed = (performance.now() - started) / 1000;
+
+      // Several crates can share a timestamp; emit every line that is now due.
+      while (i < L.length && L[i][0] <= elapsed) {
+        const [, k, t] = L[i];
+        const d = lineNode(k, t, false);
+        term.appendChild(d);
+        requestAnimationFrame(() => d.classList.add('in'));
+        if (k === 'hit') crates += 1;
+        i += 1;
       }
-      const [k, t] = L[i];
-      const d = document.createElement('div');
-      d.className = 'term-line whitespace-pre ' + cls[k];
-      d.textContent = t || '\u00A0';
-      term.appendChild(d);
-      requestAnimationFrame(() => d.classList.add('in'));
 
-      if (k === 'hit') { shownHits += 1; }
-      if (/more crates restored/.test(L[i][1])) { shownHits = CG.cached; }
+      setStats(crates, Math.min(elapsed, CG.wall));
+      term.scrollTop = term.scrollHeight;   // stay pinned to the newest line
 
-      hits.textContent = String(shownHits);
-      rate.textContent = (shownHits / CG.total * 100).toFixed(1);
-      time.textContent = (i / (L.length - 1) * CG.wall).toFixed(1);
-
-      // Keep the viewport pinned to the newest line
-      term.scrollTop = term.scrollHeight;
-
-      i += 1;
-      const delay = k === 'blank' ? 90 : (k === 'hit' ? 130 : 240);
-      setTimeout(step, delay);
+      if (i < L.length || elapsed < CG.wall) {
+        requestAnimationFrame(frame);
+      } else {
+        term.appendChild(caret);
+        term.scrollTop = term.scrollHeight;
+      }
     };
-    step();
+    requestAnimationFrame(frame);
   }
 
   if (reduced) {

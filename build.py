@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content.md"
 ASSETS = ROOT / "assets"
+REPLAY = ASSETS / "replay.json"
 DEFAULT_OUT = ROOT / "index.html"
 PORT = 4347
 URL = f"http://localhost:{PORT}"
@@ -33,7 +34,7 @@ def bold(text: str) -> str:
     """Bold red when a human is watching, plain text in pipes and CI logs."""
     return f"\033[1;31m{text}\033[0m" if _COLOR else text
 SOURCES = [CONTENT, ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js",
-           ASSETS / "icons.json", Path(__file__)]
+           ASSETS / "icons.json", REPLAY, Path(__file__)]
 
 
 # ─────────────────────────────  parsing  ─────────────────────────────
@@ -298,8 +299,18 @@ def render_nav(nav: Block, meta: Block) -> str:
 </header>"""
 
 
-def render_hero(hero: Block, term: Block) -> str:
+def duration(seconds: float) -> str:
+    """3m 1s / 4.8s — how cargo itself prints a build time."""
+    if seconds < 60:
+        return f"{seconds:.1f}s".replace(".0s", "s")
+    return f"{int(seconds) // 60}m {int(seconds) % 60}s"
+
+
+def render_hero(hero: Block, replay: dict) -> str:
     badge_label, badge_href = split_pipe(hero.get("badge"))
+    # Everything measurable comes off the recording, so the copy cannot drift from it.
+    caption = (f"{hero.get('caption')}, "
+               f"plain cargo install: {duration(replay['baseline_wall'])}")
     stats = "".join(
         f'<div><dt class="eyebrow text-slate-600">{esc(s.name)}</dt>'
         f'<dd class="mt-1.5 font-display text-xl font-semibold text-white">{esc(s.get("value"))}</dd></div>'
@@ -336,14 +347,14 @@ def render_hero(hero: Block, term: Block) -> str:
                 <span class="ml-3 font-mono text-[11px] text-slate-500">{esc(hero.get('repo_label'))}</span>
               </div>
               <span class="flex items-center gap-1.5 font-mono text-[11px] text-moss-400">
-                {icon('cloud-download', 'h-3.5 w-3.5')} {esc(hero.get('registry_label'))}
+                {icon('database-zap', 'h-3.5 w-3.5')} {esc(replay['tool'])}
               </span>
             </div>
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Restored</div>
-                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / {esc(hero.get('crate_total'))}</div>
+                <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / {replay['crates']}</div>
               </div>
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
                 <div class="eyebrow text-slate-600">Hit rate</div>
@@ -356,7 +367,7 @@ def render_hero(hero: Block, term: Block) -> str:
             </div>
           </div>
         </div>
-        <p class="mt-3 text-center font-mono text-[11px] text-slate-600">{esc(hero.get('caption'))}</p>
+        <p class="mt-3 text-center font-mono text-[11px] text-slate-600">{esc(caption)}</p>
       </div>
     </div>
   </div>
@@ -757,7 +768,7 @@ def render_footer(footer: Block, meta: Block) -> str:
 def build(out_path: Path) -> Path:
     sections = parse(CONTENT.read_text(encoding="utf-8"))
 
-    required = ["meta", "nav", "hero", "terminal", "registries", "problem", "answer", "ci",
+    required = ["meta", "nav", "hero", "registries", "problem", "answer", "ci",
                 "install", "commands", "how", "hits", "engines", "config", "enterprise",
                 "pricing", "table", "faq", "cta", "footer"]
     missing = [name for name in required if name not in sections]
@@ -765,25 +776,25 @@ def build(out_path: Path) -> Path:
         raise SystemExit(f"content.md is missing section(s): {', '.join('## ' + m for m in missing)}")
 
     S = sections
-    meta, hero, term = S["meta"], S["hero"], S["terminal"]
+    meta, hero = S["meta"], S["hero"]
 
-    lines = [split_pipe(l, 2) for l in term.list("lines")]
-    line_js = ",\n    ".join(f'["{kind}", {kind_text!r}]'.replace("'", '"')
-                             for kind, kind_text in ((k, t) for k, t in lines))
+    replay = json.loads(REPLAY.read_text(encoding="utf-8"))
+    # The command is line zero of the replay; the recording only holds the output.
+    lines = [[0.0, "cmd", "$ " + replay["command"]]] + replay["lines"]
+
+    # `</` would close the inline <script> early if a log line ever contained it.
+    lines_js = json.dumps(lines, separators=(",", ":")).replace("</", "<\\/")
 
     config_js = f"""window.CG = {{
-    lines: [
-    {line_js}
-    ],
-    total: {hero.get('crate_total', '0')},
-    cached: {hero.get('crates_cached', '0')},
-    wall: {hero.get('wall_clock', '0')}
+    lines: {lines_js},
+    crates: {replay['crates']},
+    wall: {replay['wall']}
   }};"""
 
     body = "\n\n".join([
         render_nav(S["nav"], meta),
         '<main id="main">',
-        render_hero(hero, term),
+        render_hero(hero, replay),
         render_registries(S["registries"]),
         render_problem(S["problem"], S["answer"], S["ci"]),
         render_install(S["install"], S["commands"]),

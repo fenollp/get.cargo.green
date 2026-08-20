@@ -118,65 +118,88 @@
   const rate = document.getElementById('stat-rate');
   const time = document.getElementById('stat-time');
 
-  const CG = window.CG || { lines: [], total: 0, cached: 0, wall: 0 };
+  // Every entry is [seconds after launch, kind, text], straight out of a recorded
+  // `cargo green install` (see record.py). The replay is scheduled against a wall
+  // clock rather than a per-line delay, so what you watch is the speed it really ran:
+  // the long pause while cargo resolves, then 332 crates landing in bursts.
+  const CG = window.CG || { lines: [], crates: 0, wall: 0 };
   const L = CG.lines;
 
-  const cls = {
-    cmd:   'text-slate-200',
-    dim:   'text-slate-600',
-    hit:   'text-moss-400',
-    run:   'text-slate-300',
-    ok:    'text-white',
-    blank: ''
+  const caret = document.createElement('div');
+  caret.innerHTML = '<span class="ansi-dim">$ </span><span class="caret"></span>';
+  caret.className = 'term-line in';
+
+  const span = (cls, text) => {
+    const s = document.createElement('span');
+    if (cls) s.className = cls;
+    s.textContent = text;
+    return s;
   };
 
-  const caret = document.createElement('div');
-  caret.innerHTML = '<span class="text-slate-600">$ </span><span class="caret"></span>';
-  caret.className = 'term-line in';
+  // Cargo prints its status verb in bold green and the rest of the line in the
+  // terminal's default foreground; the replay reproduces exactly that, so the
+  // panel reads like the output people already know.
+  const STATUS = /^(\s*)([A-Z][A-Za-z-]*)([\s\S]*)$/;
+
+  const lineNode = (kind, text, shown) => {
+    const d = document.createElement('div');
+    d.className = 'term-line whitespace-pre' + (kind === 'dim' ? ' ansi-dim' : '') + (shown ? ' in' : '');
+    if (!text) { d.textContent = '\u00A0'; return d; }
+    if (kind === 'cmd') {
+      d.appendChild(span('ansi-dim', '$ '));
+      d.appendChild(span('', text.replace(/^\$ /, '')));
+      return d;
+    }
+    const m = (kind === 'hit' || kind === 'ok' || kind === 'run') && STATUS.exec(text);
+    if (!m) { d.textContent = text; return d; }
+    d.appendChild(span('', m[1]));
+    d.appendChild(span('ansi-green', m[2]));
+    d.appendChild(span('', m[3]));
+    return d;
+  };
+
+  const setStats = (crates, elapsed) => {
+    hits.textContent = String(crates);
+    rate.textContent = CG.crates > 0 ? (crates / CG.crates * 100).toFixed(1) : '0.0';
+    time.textContent = elapsed.toFixed(1);
+  };
 
   function renderAll() {
     term.innerHTML = '';
-    L.forEach(([k, t]) => {
-      const d = document.createElement('div');
-      d.className = 'term-line in whitespace-pre ' + cls[k];
-      d.textContent = t || '\u00A0';
-      term.appendChild(d);
-    });
-    hits.textContent = String(CG.cached);
-    rate.textContent = (CG.cached / CG.total * 100).toFixed(1);
-    time.textContent = CG.wall.toFixed(1);
+    L.forEach(([, k, t]) => term.appendChild(lineNode(k, t, true)));
+    term.scrollTop = term.scrollHeight;
+    setStats(CG.crates, CG.wall);
   }
 
   function play() {
     term.innerHTML = '';
-    let i = 0, shownHits = 0;
-    const step = () => {
-      if (i >= L.length) {
-        term.appendChild(caret);
-        return;
+    const started = performance.now();
+    let i = 0, crates = 0;
+
+    const frame = () => {
+      const elapsed = (performance.now() - started) / 1000;
+
+      // Several crates can share a timestamp; emit every line that is now due.
+      while (i < L.length && L[i][0] <= elapsed) {
+        const [, k, t] = L[i];
+        const d = lineNode(k, t, false);
+        term.appendChild(d);
+        requestAnimationFrame(() => d.classList.add('in'));
+        if (k === 'hit') crates += 1;
+        i += 1;
       }
-      const [k, t] = L[i];
-      const d = document.createElement('div');
-      d.className = 'term-line whitespace-pre ' + cls[k];
-      d.textContent = t || '\u00A0';
-      term.appendChild(d);
-      requestAnimationFrame(() => d.classList.add('in'));
 
-      if (k === 'hit') { shownHits += 1; }
-      if (/more crates restored/.test(L[i][1])) { shownHits = CG.cached; }
+      setStats(crates, Math.min(elapsed, CG.wall));
+      term.scrollTop = term.scrollHeight;   // stay pinned to the newest line
 
-      hits.textContent = String(shownHits);
-      rate.textContent = (shownHits / CG.total * 100).toFixed(1);
-      time.textContent = (i / (L.length - 1) * CG.wall).toFixed(1);
-
-      // Keep the viewport pinned to the newest line
-      term.scrollTop = term.scrollHeight;
-
-      i += 1;
-      const delay = k === 'blank' ? 90 : (k === 'hit' ? 130 : 240);
-      setTimeout(step, delay);
+      if (i < L.length || elapsed < CG.wall) {
+        requestAnimationFrame(frame);
+      } else {
+        term.appendChild(caret);
+        term.scrollTop = term.scrollHeight;
+      }
     };
-    step();
+    requestAnimationFrame(frame);
   }
 
   if (reduced) {

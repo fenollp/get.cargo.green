@@ -80,6 +80,11 @@
               mask-image: linear-gradient(to right, #000 80%, transparent 100%);
     }
   }
+  /* Cargo's own colours, fixed: the panel shows what a terminal really prints
+     (bold green status verb, default foreground for the rest), not the page palette. */
+  #term { color: #d0cfcc; }
+  .ansi-green { color: #33d17a; font-weight: 700; }
+  .ansi-dim   { color: #5e5c64; }
   .term-line { opacity: 0; transform: translateY(3px); }
   .term-line.in { opacity: 1; transform: none; transition: opacity .18s ease, transform .18s ease; }
   .caret { display:inline-block; width:.5ch; height:1.05em; background:#34D399; vertical-align:-.16em; animation: blink 1.05s steps(1) infinite; }
