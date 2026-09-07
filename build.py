@@ -759,6 +759,7 @@ def render_footer(footer: Block, meta: Block) -> str:
         <span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-moss-400"></span>{esc(footer.get('status'))}</span>
       </div>
     </div>
+    <p class="mt-6 max-w-3xl text-[12px] leading-relaxed text-slate-600">{inline(footer.get('disclaimer'))}</p>
   </div>
 </footer>"""
 

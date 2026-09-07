@@ -619,6 +619,7 @@ Install the CLI and `cargo green install` anything in seconds.
 ## footer
 tagline: A cached, remote-ready builder for Rust projects. Part of the [supergreen](https://github.com/fenollp/supergreen) project.
 status: All systems operational
+disclaimer: cargo green is an independent project. It is not affiliated with, endorsed by, or sponsored by the Rust Foundation or the Rust Project. Rust and Cargo are trademarks of the Rust Foundation, used here only to describe compatibility.
 legal:
   - Privacy | #
   - Terms | #
