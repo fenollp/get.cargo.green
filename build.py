@@ -291,6 +291,9 @@ def render_nav(nav: Block, meta: Block) -> str:
       </a>
       <div class="hidden items-center gap-8 lg:flex">{links}</div>
       <div class="flex items-center gap-2">
+        <button type="button" id="theme-toggle" class="theme-toggle flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition hover:border-white/20 hover:text-white" aria-label="Toggle light and dark theme" title="Toggle theme">
+          {icon('sun', 'i-sun h-4 w-4')}{icon('moon', 'i-moon h-4 w-4')}
+        </button>
         <a href="{meta.get('repo')}" class="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-[13px] font-medium text-slate-300 transition hover:border-white/20 hover:text-white sm:flex">
           {icon('github', 'h-4 w-4')} GitHub
         </a>
@@ -340,7 +343,7 @@ def render_hero(hero: Block, replay: dict) -> str:
 
       <div class="reveal">
         <div class="glass edge-lit rounded-2xl p-1.5">
-          <div class="rounded-[13px] bg-[#070A0E]/90">
+          <div class="theme-dark rounded-[13px] bg-[#070A0E]/90">
             <div class="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
               <div class="flex items-center gap-2">
                 <span class="h-2.5 w-2.5 rounded-full bg-white/12"></span>
@@ -470,13 +473,15 @@ def render_install(install: Block, commands: Block) -> str:
   <div class="mx-auto max-w-screen px-6">
     {section_head(install)}
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
-      <div class="reveal glass rounded-2xl">
-        <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green">{''.join(tabs)}</div>
-        <div class="relative">
-          <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
-            {icon('copy', 'h-3.5 w-3.5')}<span>Copy</span>
-          </button>
-          {''.join(panels)}
+      <div class="reveal glass rounded-2xl p-1.5">
+        <div class="theme-dark h-full rounded-[13px] bg-[#070A0E]/90">
+          <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green">{''.join(tabs)}</div>
+          <div class="relative">
+            <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
+              {icon('copy', 'h-3.5 w-3.5')}<span>Copy</span>
+            </button>
+            {''.join(panels)}
+          </div>
         </div>
       </div>
       <div class="reveal glass rounded-2xl p-8">
@@ -716,7 +721,7 @@ def render_cta(block: Block) -> str:
       <h2 class="relative font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">{inline(block.get('heading'))}</h2>
       <div class="relative mx-auto mt-5 max-w-xl">{prose(block, 'text-[16.5px] leading-relaxed text-slate-400')}</div>
       <div class="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <div class="group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
+        <div class="theme-dark group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
           <span class="shrink-0 text-slate-600">$</span>
           <span class="text-slate-200">{esc(cmd)}</span>
           <button class="copy-inline ml-1 shrink-0 text-slate-500 transition hover:text-moss-400" data-copy="{html.escape(cmd, quote=True)}" aria-label="Copy install command">{icon('copy', 'h-4 w-4')}</button>
@@ -818,7 +823,17 @@ def build(out_path: Path) -> Path:
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>{esc(meta.get('title'))}</title>
 <meta name="description" content="{html.escape(meta.get('description'), quote=True)}" />
-<meta name="theme-color" content="#05070A" />
+<meta name="theme-color" content="#05070A" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#F6F8F7" media="(prefers-color-scheme: light)" />
+<script>
+  /* Before first paint: stored choice, else the OS preference. */
+  (function () {{
+    var t;
+    try {{ t = localStorage.getItem('theme'); }} catch (e) {{}}
+    if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+  }})();
+</script>
 
 <meta property="og:title" content="{html.escape(meta.get('og_title'), quote=True)}" />
 <meta property="og:description" content="{html.escape(meta.get('og_description'), quote=True)}" />
