@@ -25,6 +25,8 @@ ASSETS = ROOT / "assets"
 REPLAY = ASSETS / "replay.json"
 DEFAULT_OUT = ROOT / "index.html"
 PORT = 4347
+TAILWIND = "tailwindcss@3.4.19"
+TAILWIND_SLOT = "/* tailwind */"
 URL = f"http://localhost:{PORT}"
 
 _COLOR = sys.stderr.isatty()
@@ -827,11 +829,9 @@ def build(out_path: Path) -> Path:
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-{(ASSETS / 'tailwind.config.js').read_text(encoding='utf-8').rstrip()}
-</script>
-
+<style>
+{TAILWIND_SLOT}
+</style>
 <style>
 {(ASSETS / 'theme.css').read_text(encoding='utf-8').rstrip()}
 </style>
@@ -857,8 +857,24 @@ def build(out_path: Path) -> Path:
 """
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    # Tailwind scans the page it styles, so write it once, compile, then fill the slot.
+    out_path.write_text(doc, encoding="utf-8")
+    doc = doc.replace(TAILWIND_SLOT, tailwind(out_path), 1)
     out_path.write_text(doc, encoding="utf-8")
     return out_path
+
+
+def tailwind(page: Path) -> str:
+    """Compile only the utilities the page (and app.js) use, via the Tailwind v3 CLI."""
+    cmd = ["npx", "--yes", TAILWIND, "--config", str(ASSETS / "tailwind.config.js"),
+           "--content", f"{page},{ASSETS / 'app.js'}", "--minify"]
+    try:
+        run = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, check=False)
+    except OSError as err:
+        raise SystemExit(f"cannot run npx (Node.js is needed to compile Tailwind): {err}")
+    if run.returncode != 0 or not run.stdout.strip():
+        raise SystemExit(f"tailwind failed:\n{run.stderr.strip()}")
+    return run.stdout.strip()
 
 
 class DevServer(http.server.ThreadingHTTPServer):
