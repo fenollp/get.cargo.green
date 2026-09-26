@@ -1,7 +1,33 @@
-:root { color-scheme: dark; }
+/* ---------- Palette ----------
+     RGB triplets consumed by the Tailwind colours (see tailwind.config.js) and by
+     the rules below. Dark is the default; .theme-dark pins a panel (the terminal)
+     to it whatever the page theme is. */
+  :root, .theme-dark {
+    color-scheme: dark;
+    --c-white: 255 255 255;
+    --c-slate-200: 226 232 240; --c-slate-300: 203 213 225; --c-slate-400: 148 163 184;
+    --c-slate-500: 100 116 139; --c-slate-600: 71 85 105;
+    --c-ink-950: 5 7 10; --c-ink-900: 8 11 16; --c-ink-800: 12 17 23; --c-ink-700: 18 24 33;
+    --c-moss-300: 110 231 183; --c-moss-400: 52 211 153; --c-moss-500: 16 185 129;
+    --c-moss-600: 5 150 105; --c-moss-700: 4 120 87;
+    --c-haze-400: 94 234 212;
+    --page: 5 7 10;
+  }
+  /* Light: "white" becomes ink, slate darkens, ink becomes paper, moss deepens for contrast. */
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --c-white: 11 18 32;
+    --c-slate-200: 30 41 59; --c-slate-300: 51 65 85; --c-slate-400: 71 85 105;
+    --c-slate-500: 100 116 139; --c-slate-600: 115 128 150;
+    --c-ink-950: 255 255 255; --c-ink-900: 248 250 249; --c-ink-800: 241 245 243; --c-ink-700: 229 235 232;
+    --c-moss-300: 6 95 70; --c-moss-400: 4 120 87; --c-moss-500: 6 95 70;
+    --c-moss-600: 4 120 87; --c-moss-700: 5 150 105;
+    --c-haze-400: 13 148 136;
+    --page: 246 248 247;
+  }
 
   body {
-    background-color: #05070A;
+    background-color: rgb(var(--page));
     -webkit-font-smoothing: antialiased;
   }
 
@@ -13,11 +39,12 @@
       radial-gradient(760px 480px at 88% 4%, rgba(45,212,191,.10), transparent 60%),
       radial-gradient(1000px 700px at 50% 108%, rgba(5,150,105,.10), transparent 65%);
   }
+  [data-theme="light"] .bg-stage { opacity: .7; }
   .bg-grid {
     position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
     background-image:
-      linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
+      linear-gradient(to right, rgb(var(--c-white) / .045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-white) / .045) 1px, transparent 1px);
     background-size: 64px 64px;
     -webkit-mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 78%);
             mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 15%, transparent 78%);
@@ -26,6 +53,7 @@
     position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .22; mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+  [data-theme="light"] .bg-grain { opacity: .12; }
 
   /* ---------- Overflow guards ----------
      Grid items default to min-width:auto, so a wide child (a code panel, a mono
@@ -49,6 +77,15 @@
     border-color: rgba(52,211,153,.30);
     transform: translateY(-2px);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 30px 70px -34px rgba(0,0,0,.95), 0 0 0 1px rgba(52,211,153,.06);
+  }
+  [data-theme="light"] .glass {
+    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.6));
+    border-color: rgba(15,23,42,.09);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 24px 60px -34px rgba(15,23,42,.25);
+  }
+  [data-theme="light"] .glass-hover:hover {
+    border-color: rgba(4,120,87,.35);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 30px 70px -34px rgba(15,23,42,.3), 0 0 0 1px rgba(4,120,87,.06);
   }
 
   /* Gradient hairline used on featured surfaces */
@@ -102,28 +139,28 @@
 
   /* ---------- JS-toggled states (kept in CSS so they never depend on the JIT scanner) ---------- */
   .nav-scrolled {
-    background: rgba(5,7,10,.72);
+    background: rgb(var(--page) / .72);
     backdrop-filter: blur(20px) saturate(140%);
     -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border-bottom: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgb(var(--c-white) / .08);
   }
-  .tab.active { background: rgba(255,255,255,.07); color: #fff; }
+  .tab.active { background: rgb(var(--c-white) / .07); color: rgb(var(--c-white)); }
   .switch.on { background: rgba(16,185,129,.28); border-color: rgba(52,211,153,.45); }
-  .switch.on .knob { transform: translateX(20px); background: #34D399; }
+  .switch.on .knob { transform: translateX(20px); background: rgb(var(--c-moss-400)); }
   .dim { color: #64748b; }
-  .flash { color: #34D399 !important; }
+  .flash { color: rgb(var(--c-moss-400)) !important; }
 
   /* ---------- Focus & motion floors ---------- */
   a:focus-visible, button:focus-visible, summary:focus-visible {
-    outline: 2px solid #34D399; outline-offset: 3px; border-radius: 6px;
+    outline: 2px solid rgb(var(--c-moss-400)); outline-offset: 3px; border-radius: 6px;
   }
-  ::selection { background: rgba(16,185,129,.32); color: #ECFDF5; }
+  ::selection { background: rgba(16,185,129,.32); color: rgb(var(--c-white)); }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 11px; height: 11px; }
-  ::-webkit-scrollbar-track { background: #05070A; }
-  ::-webkit-scrollbar-thumb { background: #1b2430; border-radius: 99px; border: 3px solid #05070A; }
-  ::-webkit-scrollbar-thumb:hover { background: #2a3745; }
+  ::-webkit-scrollbar-track { background: rgb(var(--page)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--c-white) / .12); border-radius: 99px; border: 3px solid rgb(var(--page)); }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-white) / .2); }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
@@ -136,16 +173,21 @@
   /* ---------- Generated from content.md ---------- */
   .code {
     font-family: '"JetBrains Mono"', ui-monospace, monospace;
-    font-size: 0.92em; color: #E2E8F0; background: none;
+    font-size: 0.92em; color: rgb(var(--c-slate-200)); background: none;
   }
-  em { font-style: normal; color: #E2E8F0; }
+  em { font-style: normal; color: rgb(var(--c-slate-200)); }
   .hl {
-    background: linear-gradient(90deg, #34D399, #5EEAD4);
+    background: linear-gradient(90deg, rgb(var(--c-moss-400)), rgb(var(--c-haze-400)));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .val { color: #F8FAFC; }
-  .c-dim { color: #475569; }
-  .c-cmd { color: #34D399; }
-  .c-var { color: #5EEAD4; }
-  .c-str { color: #5EEAD4; }
+  .val { color: rgb(var(--c-white)); }
+  .c-dim { color: rgb(var(--c-slate-600)); }
+  .c-cmd { color: rgb(var(--c-moss-400)); }
+  .c-var { color: rgb(var(--c-haze-400)); }
+  .c-str { color: rgb(var(--c-haze-400)); }
+
+  /* ---------- Theme toggle: show the icon of the theme you'd switch to ---------- */
+  .theme-toggle .i-moon { display: none; }
+  [data-theme="light"] .theme-toggle .i-moon { display: block; }
+  [data-theme="light"] .theme-toggle .i-sun { display: none; }
 

@@ -8,6 +8,14 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  /* ---------- Theme toggle (initial theme is set by the inline script in <head>) ---------- */
+  const root = document.documentElement;
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) { /* private mode: session-only */ }
+  });
+
   /* ---------- Scroll reveal ---------- */
   const items = document.querySelectorAll('.reveal');
   if (reduced || !('IntersectionObserver' in window)) {
