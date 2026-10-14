@@ -46,9 +46,9 @@ words in front of them.
 
 ## meta
 title: cargo green ~ Rust builds that never start cold
-description: cargo-green runs every rustc call through BuildKit or Nix, so each crate becomes a cacheable, shareable build step. Compile once, reuse across your team, your CI, and every machine.
+description: cargo-green caches every Rust crate you compile and shares it across your team and CI, using BuildKit or Nix and a registry you already run. Same cargo commands, one extra word.
 og_title: cargo green ~ Rust builds that never start cold
-og_description: Crate-level remote build cache for Rust, backed by BuildKit or Nix and any registry you already run.
+og_description: Per-crate build cache for Rust, shared across laptops and CI. Backed by BuildKit or Nix and any OCI registry.
 url: https://cargo.green
 repo: https://github.com/fenollp/supergreen
 sales_email: sales@cargo.green
@@ -65,113 +65,101 @@ links:
   - Pricing | #pricing
 
 ## hero
-badge: Crate-level caching, powered by BuildKit or Nix | #how
+badge: Open source · Finest granularity · Storing options | #how
 headline: Rust builds that never start {cold}
 cta_primary: Install the CLI | #use-install
 cta_secondary: Talk to sales | #enterprise
 repo_label: cargo green install --frozen cargo-nextest
 caption: Real run, empty CARGO_TARGET_DIR
 
-`cargo green` sends every `rustc` call to a real build engine — BuildKit or Nix — so each crate
-becomes its own individually cached build step. Compile a dependency once, on a laptop or a big
-remote box or CI, and every other machine pulls the result instead of rebuilding it.
+Compile each crate once. Every laptop and CI job after that downloads it instead of rebuilding.
+Same `cargo` commands, one extra word: `cargo green build`. Start on the free planet-wide cache,
+or keep everything in your own registry.
 
 ### Cache granularity
 value: Per crate
 
-### Build engine
-value: BuildKit or Nix
+### Built using
+value: Nix or BuildKit
 
 ### Cache store
 value: Any OCI registry
 
 ## registries
-label: Stores cache where you already keep artifacts
+label: Works with the registry you already run
 items:
-  - GitHub Container Registry
-  - Amazon ECR
-  - Google Artifact Registry
-  - Harbor
-  - Quay
-  - Docker Hub
-  - Nix binary cache
+  - GCR
+  - GHCR
+  - ECR
+  - Nix cache
+  - S3
+  - R2
 
 ## problem
-eyebrow: The problem
-heading: Your team compiles the same code hundreds of times a day.
+heading: Your team rebuilds the same dependencies all day.
 
-Every Rust build starts from scratch somewhere. Your laptop remembers *your* last build, your
-teammate's laptop doesn't, and CI forgets everything the moment a job ends. So the same `serde`,
-the same `tokio`, the same four hundred dependencies get rebuilt again and again: on every
-machine, on every branch, on every pull request. That is minutes per build, hours per engineer
-per week, heat wasted, and a CI bill for recompiling code nobody changed.
+Your laptop's `target/` only helps you. Your teammates and CI rebuild the same `serde`, `tokio`
+and hundreds of other crates on every machine, branch and pull request. That costs minutes per
+build and a CI bill for compiling code nobody changed.
 
-### Local caches don't travel
+### Local caches stay local
 icon: hard-drive
 
-`target/` lives and dies on one machine. A fresh checkout, a new worktree, or a CI runner means
-starting over from zero.
+`target/` belongs to one machine. A fresh clone, a new worktree or a new CI runner starts from zero.
 
-### Shared caches are brittle
+### Shared caches miss
 icon: unplug
 
-Tools that ship raw compiled artifacts around tend to miss or misbehave when paths,
-toolchains, or system libraries differ between machines.
+Tools that copy compiled files between machines miss when paths, toolchains or system libraries
+differ.
 
 ### CI caches are all-or-nothing
 icon: archive-restore
 
-Most CI caches key one big archive on your `Cargo.lock`. Bump a single dependency and the whole
-thing misses. And now a full clean build has to happen.
+Most CI caches store one archive keyed on `Cargo.lock`. Bump one dependency and the whole cache
+misses.
 
 ## answer
-eyebrow: The answer
-heading: Give the compilation to a real build engine.
-kicker: Build once, anywhere. Reuse everywhere.
+heading: Cache each crate, the same way on every machine.
+kicker: Build once. Reuse everywhere.
 points:
-  - Crate-level granularity: one changed crate rebuilds one crate
-  - Cache keys that match across machines and CI runners
-  - Works with proc-macros, build scripts, and linking
-  - Offload compilation to any remote machine over SSH
-  - No new build system, it is still `cargo`
+  - Change one crate, rebuild one crate (and what depends on it)
+  - Cache hits across laptops, CI runners and build servers
+  - Covers proc-macros, build scripts and linking
+  - Compile on a remote machine over SSH
+  - Still `cargo`: no new build system to learn
 
-cargo-green turns each `rustc` call into its own build step and hands it to BuildKit or Nix. Each
-step is sealed off from whatever is unique about your machine, so the same crate produces the same
-key everywhere and the cache actually hits. Results live as ordinary content in a registry you
-control, shared by every developer and every CI job.
+`cargo green` builds each crate in an isolated, pinned environment using BuildKit or Nix. The same
+crate gets the same cache key on every machine, so a teammate's build or a CI job can reuse yours.
+Results are stored in a registry you control.
 
 ## ci
-eyebrow: Day one
-heading: Every CI job gets faster immediately.
+heading: Faster from the first CI job.
 
-There is no cache to warm up and no lockfile to match. The first job you run against a shared
-cache already skips most of its work.
+No warm-up and no lockfile matching. The first job against a shared cache skips every crate
+someone already built.
 
 ### Not keyed on Cargo.lock
 icon: unlink
 
-Each crate is cached on its own. Bumping one dependency invalidates that crate and whatever
-depends on it, not the other four hundred.
+Bump one dependency and only that crate and its dependents rebuild.
 
-### Fetched as the build runs
+### Downloads during the build
 icon: download-cloud
 
-Cached crates stream in while compilation is already underway, instead of a restore step that
-blocks the job before anything starts.
+Cached crates download while compilation runs. No restore step blocking the job.
 
-### No save/restore steps
+### No cache steps
 icon: scissors
 
-Delete the cache actions from your workflow. Nothing to tar, upload, or expire and nothing to
-rate-limit you on a busy morning.
+Remove the cache save/restore actions from your workflow. Nothing to archive, upload or expire.
 
 ## install
-eyebrow: Install & use
 heading: One install. One extra word.
 link: Full installation docs | https://github.com/fenollp/supergreen#installation
 default_tab: build
 
-cargo-green is a cargo plugin, not a replacement. Your commands, your `Cargo.toml`, your CI, unchanged.
+`cargo green` is a cargo plugin. Your commands, `Cargo.toml` and CI stay the same.
 
 ### install
 
@@ -253,106 +241,98 @@ cargo green supergreen push
 ```
 
 ## commands
-heading: The command surface
+heading: Extra commands
 
-Everything else lives under one subcommand, so nothing else pollutes your cargo namespace.
+All under `cargo green supergreen`.
 
 ### cargo green supergreen setup
-desc: Create the required symlinks
+<!--desc: Create the required symlinks-->
 
 ### cargo green supergreen env
-desc: Show the values actually in use
+desc: Show the settings in use
 
 ### cargo green supergreen doc
-desc: Documentation for those values
+desc: Explain each setting
 
 ### cargo green supergreen sync
-desc: Pull everything, for offline use
+desc: Download everything for offline builds
 
-### cargo green supergreen push
-desc: Push the shared cache, all tags
+<!--### cargo green supergreen push-->
+<!--desc: Push the shared cache, all tags-->
 
 ### cargo green supergreen builder
 desc: Manage the local or remote builder
 
-### cargo green supergreen show-rust-base
-desc: Inspect the build environment in use
+<!--### cargo green supergreen show-rust-base-->
+<!--desc: Show the build environment in use-->
 
 ## how
-eyebrow: How it works
-heading: A wrapper, a build graph, a shared cache.
+heading: Wrap, translate, build, share.
 
-cargo-green slots in as the compiler wrapper cargo already supports. Four things happen between
+`cargo green` plugs into `$RUSTC_WRAPPER`, a hook `cargo` already supports. Four steps run between
 `cargo green build` and your binary.
 
 ### Wrap
 icon: git-fork
 
-`cargo green` sets `$RUSTC_WRAPPER` and calls cargo. Cargo still resolves, still schedules, still
-owns your build.
+`cargo green` sets `$RUSTC_WRAPPER` and runs `cargo`. `cargo` still resolves and schedules your build.
 
 ### Translate
 icon: file-code-2
 
-Every `rustc` call and build-script run becomes its own sealed build step, pinned to your exact
-toolchain.
+Each `rustc` call and build script becomes an isolated build step, pinned to your exact toolchain.
 
 ### Build
 icon: cpu
 
-BuildKit or Nix runs the graph with full parallelism on your machine, or on any remote one you
-point it at.
+[Nix](https://nixos.org/) or [BuildKit](https://github.com/moby/buildkit) ([Docker](https://docs.docker.com/build/buildkit/), [Podman](https://podman.io/)) runs the steps in parallel, locally or on a remote machine.
 
 ### Cache & share
 icon: database-zap
 
-Results are cached per crate and pulled in progressively as the build runs. Your team and your CI
-read the same cache.
+Each crate's result is fetched from or sent to storage. You, your team, CI and the World share one cache.
 
 ## hits
 icon: lock
-heading: Why the cache actually hits
+heading: Why the cache hits on other machines
 points:
-  - The build environment is pinned, not whatever happens to be installed
-  - Paths are normalized, so your home directory never leaks into a key
+  - The build environment is pinned, not taken from the host
+  - Paths are normalized, so your `$HOME` never enters a cache key
   - Git dependencies are pinned to an exact revision
-  - Build outputs are made reproducible, down to file timestamps
-footnote: The same properties make a build auditable: you can show exactly what produced a binary, and rebuild it later to prove it.
+  - Outputs are reproducible, down to file timestamps
+footnote: Bonus: *builds are auditable*. You can show what produced a binary and rebuild it later to prove it.
 
-A shared cache is only worth having if it hits on someone else's machine. cargo-green removes the
-things that normally make two identical builds look different:
+Two machines building the same crate usually produce different keys. `cargo green` removes the differences:
 
 ## engines
 icon: split
-heading: Two engines, one cache
-footnote: No daemon on the laptop is required either way. Point cargo-green at a shared machine and let it do the work.
+heading: Two engines, one workflow
+footnote: Laptops don't need to run a daemon. Point `cargo green` at a shared machine and it does the compiling.
 
-Pick whichever engine your team already trusts. The workflow, the commands, and the cached results
-are the same either way. Teams can even mix both and still share hits.
+Use the engine your team already has. Commands, config and cached results work the same with both.
 
 ### BuildKit
 icon: container
 config: runner = "docker" | "podman"
 
-Through the docker or podman client you already have. Cache lives in any OCI registry.
+Uses your `docker` or `podman` client. Cache lives in any OCI registry.
 
 ### Nix
 icon: hexagon
 config: runner = "nix"
 
-For teams already on Nix. Cache lives in a binary cache, with the same crate-level granularity.
+For teams on `nix`. Cache lives in a Nix binary cache, still per crate.
 
 ## config
-eyebrow: Configuration
-heading: Defaults that work. Knobs when you need them.
+heading: Works by default. Configurable when needed.
 link: Full reference | https://github.com/fenollp/supergreen#configuration
 reference_title: Every option, documented
-reference_body: Each setting has a page of its own in the README, with defaults, examples, and the environment variable that overrides it.
+reference_body: Each setting is documented along with its default, an example and its environment variable.
 reference_cta: Read the configuration reference
 reference_href: https://github.com/fenollp/supergreen#configuration
 
-Set anything in `[package.metadata.green]` in your `Cargo.toml`, or with a `$CARGOGREEN_*`
-environment variable. Env vars win, which is what you want in CI.
+Set options in `[package.metadata.green]` in `Cargo.toml`, or with `$CARGOGREEN_*` environment
+variables. Environment variables take precedence, which suits CI.
 
 ### Cache & sharing
 icon: database
@@ -363,8 +343,7 @@ chips:
   - cache-to-images
   - registry-mirrors
 
-Where cached crates are read from and written to, so a team, a fork, and CI can all draw on the
-same pool.
+Where cached crates are read from and written to, so your team, forks and CI share one cache.
 
 ### Build engine
 icon: split
@@ -374,8 +353,7 @@ chips:
   - $DOCKER_HOST
   - $BUILDX_BUILDER
 
-Which engine compiles your crates, and where it runs: docker, podman, or Nix, locally or on a
-remote machine.
+Which engine compiles (`docker`, `podman` or Nix) and on which machine.
 
 ### Build environment
 icon: box
@@ -387,8 +365,7 @@ chips:
   - add.apt
   - add.apk
 
-What sits inside the sandbox each crate compiles in: base image, system packages, toolchain
-components, network access.
+What each crate compiles with: base image, system packages, toolchain components, network access.
 
 ### Diagnostics
 icon: scroll-text
@@ -398,8 +375,7 @@ chips:
   - $CARGOGREEN_LOG_PATH
   - supergreen env
 
-Turn on logging when a build surprises you, and see exactly which values cargo-green resolved and
-used.
+Logs, and the exact settings `cargo green` used, for when a build surprises you.
 
 ### Artifacts & provenance
 icon: file-output
@@ -407,63 +383,57 @@ href: https://github.com/fenollp/supergreen#cargogreen_final_path
 chips:
   - final-path
 
-Export the finished build as a single file you can archive, review, or rebuild somewhere else
-entirely.
+Export the build definition as one file to archive, review or rebuild elsewhere. Reuse when building OCI images.
 
 ## enterprise
-eyebrow: Enterprise
-heading: Runs inside your perimeter.
+heading: Your cache stays on your infrastructure.
 cta: Book a security review | #pricing
 
-Nothing about the cache requires our servers. It is ordinary content in a registry or binary
-cache, which means it can live wherever your compliance posture requires: your own cloud account,
-your own VPC, or an air-gapped network with no egress at all.
+The cache needs no [cargo.green](https://cargo.green) servers. It is plain content in your registry or binary cache, so it
+can live in your cloud account, your VPC, or an air-gapped network.
 
-### SOC 2 Type II
+### SOC 2 Type II (planned)
 icon: shield-check
 
-Annual audit, report available under NDA, plus a DPA and standard contractual clauses for EU data.
+Not certified yet. Audit planned; DPA and standard contractual clauses for EU data on request.
 
 ### SSO, SCIM & scoped tokens
 icon: key-round
 
-SAML and OIDC single sign-on, directory-synced groups, per-project read/write tokens with
-rotation.
+SAML and OIDC sign-on, directory-synced groups, per-project read/write tokens with rotation.
 
 ### BYOC & air-gapped
 icon: cloud-cog
 
-Bring your own cloud account and registry, run single-tenant, or sync a cache into a network with
-no egress.
+Use your own cloud account and registry, run single-tenant, or sync the cache into a network with
+no internet access.
 
-### 99.9% uptime SLA
+### Uptime SLA & direct support (planned)
 icon: activity
 
-Written availability commitment, a named support engineer, and a shared Slack channel with the
-maintainers.
+Written uptime commitment, a named support engineer and a shared Slack channel are on the roadmap.
+Today, talk to the maintainers directly.
 
 ### Audit logs & attribution
 icon: file-search
 
-See who built what, when, and from which revision and which teams are driving build spend,
-before finance asks.
+Who built what, when, from which revision, and which teams drive build spend.
 
 ### Open source core
 icon: scale
 
-The CLI is AGPL-3.0 and auditable line by line. Self-hosted control plane and commercial licensing
-available where the AGPL doesn't fit.
+The CLI is AGPL-3.0, so you can audit every line. Self-hosted control plane and commercial license
+available if AGPL doesn't fit.
 
 ## pricing
-eyebrow: Pricing
 heading: The CLI is free, forever.
-note: Your CI jobs and your coding agents build too. Charging by headcount stopped making sense.
+note: Priced per organization, not per seat: CI jobs and coding agents build too.
 discount: −20%
-footnote: Soft limits, not hard walls. A burst month won't break your build: we'll get in touch if it becomes the new normal.
+footnote: Limits are soft. A busy month won't break your build; we'll reach out if it becomes the norm.
 
-Use our free planet-wide cache or point cargo-green at an OCI registry you already run and pay nothing, ever. The hosted cache is for
-teams who would rather not operate one, priced on what you actually use, per organization rather
-than per developer.
+Our planet-wide public cache is free: anyone can read from it, and signed-in users can write to it.
+Your own OCI registry costs nothing either. You pay only for a private cache, hosted by us or
+on-premise, priced on usage per organization.
 
 ### Developer
 blurb: Individuals, side projects, open source.
@@ -471,12 +441,12 @@ price: $0
 period: free forever
 cta: Install the CLI | #use-install
 features:
-  - Unlimited local builds
+  - Planet-wide cache: free reads, no account
+  - Free writes when signed in
   - {20 GB} cache storage
   - {500K} requests / month
   - Unlimited projects and seats
-  - Prewarmed cache for popular crates
-  - 1 project, 7-day retention
+  - 7-day retention
   - Build analytics: what's slow, what missed
   - Community support on GitHub
 
@@ -496,6 +466,7 @@ features:
   - 200 core-hours of remote builds
   - Overage at $0.15/GB, $0.10/core-hour
   - Private cache for private code
+  - 30-day retention
   - Priority email support, 1 business day
 
 ### Scale
@@ -513,22 +484,22 @@ features:
   - Warm runners: pull requests never cold-start
   - Spend attribution per team and repo
   - 90-day retention, configurable per project
-  - Shared Slack channel
+  - Shared Slack channel (planned)
 
 ### Enterprise
-blurb: Platform and security orgs with their own rules.
+blurb: Platform and security teams with their own rules.
 price: Custom
 sub: Annual contract, invoice billing
 cta: Contact us | mailto:sales@cargo.green
 features:
   - Everything in Scale, plus:
-  - Custom cache requests, storage and compute
+  - Custom requests, storage and compute
   - Self-hosted control plane, BYOC, or air-gapped
   - SSO/SAML, SCIM, audit log export
-  - SOC 2 Type II report, DPA, security review
-  - 99.9% uptime SLA
-  - Dedicated support engineer
-  - Commercial licensing & roadmap input
+  - DPA and security review
+  - SOC 2 Type II and 99.9% SLA (planned)
+  - Dedicated support engineer (planned)
+  - Commercial license & roadmap input
 
 ## table
 heading: Compare plans
@@ -551,73 +522,77 @@ rows:
   - Spend attribution | no | no | yes | yes
   - SSO/SAML & SCIM | no | no | no | yes
   - Self-hosted / air-gapped | no | no | no | yes
-  - Uptime SLA | no | no | no | 99.9%
-  - Support | Community | Priority email | Shared Slack | Dedicated engineer
+  - Uptime SLA | no | no | no | Planned
+  - Support | Community | Priority email | Email + Slack (planned) | Dedicated engineer (planned)
 
 ## faq
-eyebrow: FAQ
-heading: Before you install
+heading: Common questions
 
 ### Do I have to change my workflow?
 
-One `cargo clean` when you switch over, then `cargo green build` behaves like `cargo build` and
-produces the same files. Plain `cargo build` keeps working afterwards, so you can back out at any
-time.
+No. Run `cargo clean` once, then use `cargo green build` like `cargo build`. It produces the same
+files. Plain `cargo build` still works, so you can stop any time.
 
 ### Does this lock us in?
 
-No. The CLI is AGPL-3.0 open source, and the cache is ordinary content in a registry or binary
-cache you choose. Swap in your own with one line of config and everything keeps working.
+No. The CLI is open source (AGPL-3.0) and the cache is plain content in a registry you choose.
+Switch registries with one line of config.
 
 ### Do we need Docker on every developer machine?
 
-No. You don't even need an engine (a `docker` or `podman` client, or Nix) if you want to use the
-global public cache read-only. And the machine that actually compiles doesn't have to be your laptop.
-Point cargo-green at a shared build machine and laptops just orchestrate.
+No. To read from the public cache, you need no engine at all. To build, you need a `docker` or
+`podman` client, or Nix, and the compiling can happen on a shared remote machine instead of the
+laptop.
 
 ### How is this different from sccache or cargo-chef?
 
-`sccache` caches compiler output but expects matching paths and environments across machines, can't
-cache linking, struggles with proc-macros, and gets chatty enough with a remote backend that
-checking the cache can cost more than compiling. `cargo-chef` caches your dependency tree as Docker
-layers, so one dependency bump rebuilds all of them. `cargo-green` compiles inside sealed, pinned
-build steps: keys match across machines, granularity is per crate, and a partial match still
-helps. A survey of the whole landscape lives in the
-[alternatives section](https://github.com/fenollp/supergreen#alternatives) of the README.
+`sccache` needs matching paths and environments across machines, can't cache linking, struggles
+with proc-macros, and with a remote backend checking the cache can take longer than compiling.
+`cargo-chef` caches all dependencies as one Docker layer, so one bump rebuilds them all.
+cargo-green builds each crate in a pinned, isolated step: keys match across machines, caching is
+per crate, and a partial match still saves work. See the full
+[comparison](https://github.com/fenollp/supergreen#alternatives) in the README.
 
-### BuildKit or Nix, which should we pick?
+### BuildKit or Nix?
 
-Whichever your team already runs. Most teams have a docker or podman client on hand, so that is
-the default. If you are already on Nix, use Nix and keep your existing binary cache. The commands,
-the configuration, and the cached results are the same either way, and both engines can share
-hits.
+The one you already use. Most teams have docker or podman, so that's the default. On Nix, use Nix
+and keep your binary cache. Commands, config and results are the same, and both can share hits.
 
-### How long before CI gets faster?
+### How soon does CI get faster?
 
-The first job. Cached crates are pulled in progressively while compilation is running,
-instead of waiting to fetch gigabytes of build artifacts before builds.
-A branch that bumps a dependency still reuses everything else.
+On the first job. Cached crates download during the build instead of in a restore step first. A
+branch that bumps a dependency still reuses everything else.
 
-### Can it run with no network access?
+### Can it build without network access?
 
-Yes. `cargo green supergreen sync` pulls every image and crate you need up front. Builds
-then require no network. Air-gapped environments are a supported Enterprise deployment.
+Yes. `cargo green supergreen sync` downloads every image and crate up front; builds then need no
+network. Air-gapped setups are supported on Enterprise.
+
+### What is free?
+
+Reading the planet-wide public cache: no account needed. Writing to it: free once signed in.
+Using your own registry: always free. Paid plans cover a private cache, hosted by us or on-premise.
 
 ### What counts as a cache request?
 
-One read or write of a cached build step. A warm build of a 400-crate workspace is roughly 400
-requests, so 10 million covers a busy team's laptops and CI with room to spare. Usage is visible
-in the dashboard before it ever appears on an invoice.
+One read or write of one cached crate. A warm build of a 400-crate workspace is about 400 requests,
+so 10 million covers a busy team's laptops and CI. Usage shows in the dashboard before it shows on
+an invoice.
+
+### Where is the source code?
+
+On [GitHub](https://github.com/fenollp/supergreen), under AGPL-3.0. Issues and pull requests are
+welcome.
 
 ## cta
 heading: Stop paying for the same build twice.
 command: cargo install cargo-green
 button: Talk to sales | mailto:sales@cargo.green
 
-Install the CLI and `cargo green install` anything in seconds.
+Install the CLI, then add `green` to your next cargo command.
 
 ## footer
-tagline: A cached, remote-ready builder for Rust projects. Part of the [supergreen](https://github.com/fenollp/supergreen) project.
+tagline: A cached, remote-ready builder for Rust. Part of the [supergreen](https://github.com/fenollp/supergreen) project.
 status: All systems operational
 disclaimer: cargo green is an independent project. It is not affiliated with, endorsed by, or sponsored by the Rust Foundation or the Rust Project. Rust and Cargo are trademarks of the Rust Foundation, used here only to describe compatibility.
 legal:

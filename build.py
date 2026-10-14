@@ -230,7 +230,7 @@ def icon(name: str, cls: str) -> str:
 
 def feature(text: str, text_cls: str = "") -> str:
     """One check-marked list item, used by the answer panel and the pricing tiers."""
-    body = f'<span class="{text_cls}">{text}</span>' if text_cls else text
+    body = f'<span class="{text_cls}">{text}</span>' if text_cls else f"<span>{text}</span>"
     return (f'<li class="flex gap-3">{icon("check", "mt-0.5 h-[18px] w-[18px] shrink-0 text-moss-400")}'
             f"{body}</li>")
 
@@ -249,14 +249,15 @@ def button(spec: str, style: str) -> str:
     return f'<a href="{href}" class="{styles[style]}">{esc(label)} {arrow}</a>'
 
 
-def section_head(block: Block, extra_link: bool = True) -> str:
-    eyebrow = block.get("eyebrow")
+def anchor(target: str, inner: str) -> str:
+    """Make a heading link to its own section without changing how it looks."""
+    return f'<a href="#{target}" class="heading-link">{inner}</a>'
+
+
+def section_head(block: Block, target: str, extra_link: bool = True) -> str:
     link = block.get("link")
-    head = ""
-    if eyebrow:
-        head += f'<p class="eyebrow text-moss-400">{esc(eyebrow)}</p>\n'
-    head += (f'<h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] '
-             f'text-white sm:text-[2.75rem]">{inline(block.get("heading"), "grad")}</h2>\n')
+    head = (f'<h2 class="font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] '
+            f'text-white sm:text-[2.75rem]">{anchor(target, inline(block.get("heading"), "grad"))}</h2>\n')
     head += prose(block, "mt-5 text-[16.5px] leading-relaxed text-slate-400")
 
     if link and extra_link:
@@ -406,21 +407,19 @@ def render_problem(problem: Block, answer: Block, ci: Block) -> str:
             {prose(c, 'mt-2 text-[13.5px] leading-relaxed text-slate-400')}
           </div>""" for c in ci.items)
 
-    return f"""<section id="problem" class="py-24 sm:py-32">
+    return f"""<section id="problem" class="scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal max-w-3xl">
-      <p class="eyebrow text-moss-400">{esc(problem.get('eyebrow'))}</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">{inline(problem.get('heading'))}</h2>
+      <h2 class="font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-5xl">{anchor('problem', inline(problem.get('heading')))}</h2>
       {prose(problem, 'mt-6 text-[17px] leading-relaxed text-slate-400')}
     </div>
 
     <div class="mt-14 grid gap-5 md:grid-cols-3">{cards}</div>
 
-    <div class="reveal glass edge-lit mt-8 overflow-hidden rounded-2xl">
+    <div id="fix" class="reveal glass edge-lit mt-8 scroll-mt-24 overflow-hidden rounded-2xl">
       <div class="grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.15fr_1fr] lg:items-center">
         <div>
-          <p class="eyebrow text-moss-400">{esc(answer.get('eyebrow'))}</p>
-          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">{inline(answer.get('heading'))}</h3>
+          <h3 class="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">{anchor('fix', inline(answer.get('heading')))}</h3>
           {prose(answer, 'mt-4 text-[15.5px] leading-relaxed text-slate-400')}
           <p class="mt-5 font-display text-lg font-medium text-white">{esc(answer.get('kicker'))}</p>
         </div>
@@ -428,11 +427,10 @@ def render_problem(problem: Block, answer: Block, ci: Block) -> str:
       </div>
     </div>
 
-    <div class="reveal glass mt-5 overflow-hidden rounded-2xl">
+    <div id="ci" class="reveal glass mt-5 scroll-mt-24 overflow-hidden rounded-2xl">
       <div class="grid gap-10 p-8 sm:p-10 lg:grid-cols-[1fr_1.25fr]">
         <div>
-          <p class="eyebrow text-moss-400">{esc(ci.get('eyebrow'))}</p>
-          <h3 class="mt-3.5 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">{inline(ci.get('heading'))}</h3>
+          <h3 class="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">{anchor('ci', inline(ci.get('heading')))}</h3>
           {prose(ci, 'mt-4 text-[15.5px] leading-relaxed text-slate-400')}
         </div>
         <div class="grid gap-5 sm:grid-cols-3">{ci_cards}</div>
@@ -469,9 +467,9 @@ def render_install(install: Block, commands: Block) -> str:
             <dd class="text-[13.5px] text-slate-400">{esc(cmd.get('desc'))}</dd>
           </div>""")
 
-    return f"""<section id="use" class="scroll-mt-24 py-24 sm:py-32">
+    return f"""<section id="use" class="scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
-    {section_head(install)}
+    {section_head(install, "use")}
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl p-1.5">
         <div class="theme-dark h-full rounded-[13px] bg-[#070A0E]/90">
@@ -505,7 +503,7 @@ def render_how(how: Block, hits: Block, engines: Block) -> str:
       </li>""" for i, s in enumerate(how.items))
 
     bullets = "".join(f'<li class="flex gap-3 text-[14px] text-slate-400">'
-                      f'{icon("dot", "h-[18px] w-[18px] shrink-0 text-moss-400")}{inline(p)}</li>'
+                      f'{icon("dot", "h-[18px] w-[18px] shrink-0 text-moss-400")}<span>{inline(p)}</span></li>'
                       for p in hits.list("points"))
 
     engine_cards = "".join(f"""<div class="rounded-xl border border-white/[0.08] bg-white/[.02] p-5">
@@ -517,9 +515,9 @@ def render_how(how: Block, hits: Block, engines: Block) -> str:
             <p class="mt-3 font-mono text-[11.5px] text-slate-500">{esc(e.get('config'))}</p>
           </div>""" for e in engines.items)
 
-    return f"""<section id="how" class="border-y border-white/[0.08] bg-white/[.012] py-24 sm:py-32">
+    return f"""<section id="how" class="border-y border-white/[0.08] bg-white/[.012] scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
-    {section_head(how)}
+    {section_head(how, "how")}
     <ol class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{steps}</ol>
     <div class="mt-8 grid gap-5 lg:grid-cols-[1fr_1fr]">
       <div class="reveal glass rounded-2xl p-8">
@@ -570,9 +568,9 @@ def render_config(config: Block) -> str:
         <span class="mt-6 inline-flex items-center gap-2 text-[13.5px] font-medium text-moss-400">{esc(config.get('reference_cta'))} {icon('arrow-right', 'h-4 w-4')}</span>
       </a>""")
 
-    return f"""<section id="config" class="py-24 sm:py-32">
+    return f"""<section id="config" class="scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
-    {section_head(config)}
+    {section_head(config, "config")}
     <div class="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{''.join(cards)}</div>
   </div>
 </section>"""
@@ -585,12 +583,11 @@ def render_enterprise(block: Block) -> str:
           {prose(c, 'mt-2 text-[13.5px] leading-relaxed text-slate-400')}
         </div>""" for c in block.items)
 
-    return f"""<section id="enterprise" class="border-y border-white/[0.08] bg-white/[.012] py-24 sm:py-32">
+    return f"""<section id="enterprise" class="border-y border-white/[0.08] bg-white/[.012] scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
       <div class="reveal">
-        <p class="eyebrow text-moss-400">{esc(block.get('eyebrow'))}</p>
-        <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">{inline(block.get('heading'))}</h2>
+        <h2 class="font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">{anchor('enterprise', inline(block.get('heading')))}</h2>
         {prose(block, 'mt-5 text-[16.5px] leading-relaxed text-slate-400')}
         <div class="mt-8">{button(block.get('cta'), 'ghost')}</div>
       </div>
@@ -656,11 +653,10 @@ def render_pricing(pricing: Block, table: Block) -> str:
         body.append(f'<tr><th scope="row" class="px-6 py-3.5 font-normal text-slate-300">'
                     f"{inline(cells[0])}</th>{''.join(tds)}</tr>")
 
-    return f"""<section id="pricing" class="py-24 sm:py-32">
+    return f"""<section id="pricing" class="scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
     <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="eyebrow text-moss-400">{esc(pricing.get('eyebrow'))}</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">{inline(pricing.get('heading'))}</h2>
+      <h2 class="font-display text-4xl font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[2.75rem]">{anchor('pricing', inline(pricing.get('heading')))}</h2>
       {prose(pricing, 'mt-5 text-[16.5px] leading-relaxed text-slate-400')}
       <p class="mt-4 text-[14px] text-slate-500">{inline(pricing.get('note'))}</p>
     </div>
@@ -701,11 +697,10 @@ def render_faq(block: Block) -> str:
         {prose(q, 'mt-4 text-[14.5px] leading-relaxed text-slate-400')}
       </details>""" for q in block.items)
 
-    return f"""<section id="faq" class="border-t border-white/[0.08] py-24 sm:py-32">
+    return f"""<section id="faq" class="border-t border-white/[0.08] scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
   <div class="mx-auto max-w-3xl px-6">
     <div class="reveal text-center">
-      <p class="eyebrow text-moss-400">{esc(block.get('eyebrow'))}</p>
-      <h2 class="mt-4 font-display text-4xl font-semibold tracking-[-0.025em] text-white">{esc(block.get('heading'))}</h2>
+      <h2 class="font-display text-4xl font-semibold tracking-[-0.025em] text-white">{anchor('faq', esc(block.get('heading')))}</h2>
     </div>
     <div class="mt-12 space-y-3">{items}</div>
   </div>
