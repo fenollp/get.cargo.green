@@ -3,8 +3,8 @@ OUT ?= ./index.html
 .DEFAULT_GOAL := all
 .PHONY: all debug record clean help
 
-## all: build ./index.html from content.md (default)
-all: Makefile content.md build.py assets/theme.css assets/app.js assets/tailwind.config.js assets/replay.json
+## all: build ./index.html from content.md and content.fr.md (default)
+all: Makefile content.md content.fr.md build.py assets/theme.css assets/app.js assets/tailwind.config.js assets/replay.json
 	./build.py --out $(OUT)
 
 ## record: re-record the hero terminal replay by running the build for real

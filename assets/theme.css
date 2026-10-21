@@ -190,4 +190,5 @@
   .theme-toggle .i-moon { display: none; }
   [data-theme="light"] .theme-toggle .i-moon { display: block; }
   [data-theme="light"] .theme-toggle .i-sun { display: none; }
+  .lang-select option { background-color: rgb(var(--page)); color: rgb(var(--c-slate-200)); }
 
