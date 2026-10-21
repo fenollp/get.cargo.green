@@ -404,7 +404,7 @@ privé, hébergé par nous ou sur site, facturé à l'usage par organisation.
 
 ### Développeur
 blurb: Particuliers, projets perso, open source.
-price: 0 $
+price: 0 €
 period: gratuit pour toujours
 cta: Installer la CLI | #use-install
 features:
@@ -419,8 +419,8 @@ features:
 
 ### Équipe
 blurb: Startups qui livrent du Rust tous les jours.
-price: 49 $
-price_annual: 39 $
+price: 49 €
+price_annual: 39 €
 period: / mois
 sub: Par organisation
 badge: Le plus populaire
@@ -431,15 +431,15 @@ features:
   - {500 Go} de stockage de cache
   - {10 millions} de requêtes / mois
   - 200 heures-cœur de builds distants
-  - Dépassement à 0,15 $/Go, 0,10 $/heure-cœur
+  - Dépassement à 0,15 €/Go, 0,10 €/heure-cœur
   - Cache privé pour le code privé
   - Rétention de 30 jours
   - Support prioritaire par e-mail, sous 1 jour ouvré
 
 ### Scale
 blurb: Organisations de 20 à 100 développeurs.
-price: 400 $
-price_annual: 320 $
+price: 400 €
+price_annual: 320 €
 period: / mois
 sub: Par organisation
 cta: Essai gratuit de 14 jours | #
