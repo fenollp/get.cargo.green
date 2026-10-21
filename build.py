@@ -21,6 +21,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content.md"
+# One page, every language: English renders as is, the others ride along in <template>s
+# that the page swaps in before first paint, so URLs and #anchors are the same in all of them.
+LANGS = {"en": CONTENT, "fr": ROOT / "content.fr.md"}
 ASSETS = ROOT / "assets"
 REPLAY = ASSETS / "replay.json"
 DEFAULT_OUT = ROOT / "index.html"
@@ -35,7 +38,7 @@ _COLOR = sys.stderr.isatty()
 def bold(text: str) -> str:
     """Bold red when a human is watching, plain text in pipes and CI logs."""
     return f"\033[1;31m{text}\033[0m" if _COLOR else text
-SOURCES = [CONTENT, ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js",
+SOURCES = [*LANGS.values(), ASSETS / "theme.css", ASSETS / "app.js", ASSETS / "tailwind.config.js",
            ASSETS / "icons.json", REPLAY, Path(__file__)]
 
 
@@ -272,7 +275,16 @@ def section_head(block: Block, target: str, extra_link: bool = True) -> str:
 
 # ─────────────────────────────  sections  ─────────────────────────────
 
-def render_nav(nav: Block, meta: Block) -> str:
+def lang_select(ui: Block, lang: str) -> str:
+    options = "".join(f'<option value="{code}"{" selected" if code == lang else ""}>{code.upper()}</option>'
+                      for code in LANGS)
+    return (f'<select id="lang-select" class="lang-select h-8 cursor-pointer rounded-lg border border-white/10 '
+            f'bg-transparent px-1.5 font-mono text-[12px] font-medium text-slate-300 transition '
+            f'hover:border-white/20 hover:text-white" aria-label="{html.escape(ui.get("language"), quote=True)}" '
+            f'title="{html.escape(ui.get("language"), quote=True)}">{options}</select>')
+
+
+def render_nav(nav: Block, meta: Block, ui: Block, lang: str) -> str:
     links = "".join(
         f'<a href="{href}" class="text-[13.5px] font-medium text-slate-400 transition hover:text-white">'
         f"{esc(label)}</a>"
@@ -288,17 +300,18 @@ def render_nav(nav: Block, meta: Block) -> str:
           <path d="M4.6 9.6 16 16m0 0 11.4-6.4M16 16v12.8" stroke="#34D399" stroke-width="1.6" stroke-opacity=".45" stroke-linejoin="round"/>
           <circle cx="16" cy="16" r="2.6" fill="#34D399"/>
         </svg>
-        <span class="font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400"> green</span></span>
+        <span class="whitespace-nowrap font-display text-[15px] font-semibold tracking-tight text-white">cargo<span class="text-moss-400"> green</span></span>
       </a>
-      <div class="hidden items-center gap-8 lg:flex">{links}</div>
+      <div class="hidden items-center gap-4 lg:flex xl:gap-8">{links}</div>
       <div class="flex items-center gap-2">
-        <button type="button" id="theme-toggle" class="theme-toggle flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition hover:border-white/20 hover:text-white" aria-label="Toggle light and dark theme" title="Toggle theme">
+        <button type="button" id="theme-toggle" class="theme-toggle flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-300 transition hover:border-white/20 hover:text-white" aria-label="{html.escape(ui.get('theme_label'), quote=True)}" title="{html.escape(ui.get('theme_title'), quote=True)}">
           {icon('sun', 'i-sun h-4 w-4')}{icon('moon', 'i-moon h-4 w-4')}
         </button>
+        {lang_select(ui, lang)}
         <a href="{meta.get('repo')}" class="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-[13px] font-medium text-slate-300 transition hover:border-white/20 hover:text-white sm:flex">
           {icon('github', 'h-4 w-4')} GitHub
         </a>
-        <a href="{href}" class="rounded-lg bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink-950 transition hover:bg-moss-400">{esc(label)}</a>
+        <a href="{href}" class="hidden whitespace-nowrap rounded-lg bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink-950 transition hover:bg-moss-400 sm:block">{esc(label)}</a>
       </div>
     </nav>
   </div>
@@ -312,11 +325,11 @@ def duration(seconds: float) -> str:
     return f"{int(seconds) // 60}m {int(seconds) % 60}s"
 
 
-def render_hero(hero: Block, replay: dict) -> str:
+def render_hero(hero: Block, ui: Block, replay: dict) -> str:
     badge_label, badge_href = split_pipe(hero.get("badge"))
     # Everything measurable comes off the recording, so the copy cannot drift from it.
     caption = (f"{hero.get('caption')}, "
-               f"plain cargo install: {duration(replay['baseline_wall'])}")
+               f"{ui.get('baseline')} {duration(replay['baseline_wall'])}")
     stats = "".join(
         f'<div><dt class="eyebrow text-slate-600">{esc(s.name)}</dt>'
         f'<dd class="mt-1.5 font-display text-xl font-semibold text-white">{esc(s.get("value"))}</dd></div>'
@@ -359,15 +372,15 @@ def render_hero(hero: Block, replay: dict) -> str:
             <div id="term" class="h-[356px] overflow-hidden px-4 py-4 font-mono text-[12.5px] leading-[1.75] sm:text-[13px]"></div>
             <div class="grid grid-cols-3 divide-x divide-white/[0.08] border-t border-white/[0.08]">
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
-                <div class="eyebrow text-slate-600">Restored</div>
+                <div class="eyebrow text-slate-600">{esc(ui.get('restored'))}</div>
                 <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-hits">0</span> / {replay['crates']}</div>
               </div>
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
-                <div class="eyebrow text-slate-600">Hit rate</div>
+                <div class="eyebrow text-slate-600">{esc(ui.get('hit_rate'))}</div>
                 <div class="mt-1 font-mono text-[13px] font-medium text-moss-400 sm:text-[15px]"><span id="stat-rate">0.0</span>%</div>
               </div>
               <div class="flex flex-col justify-between px-3 py-3 sm:px-4">
-                <div class="eyebrow text-slate-600">Wall clock</div>
+                <div class="eyebrow text-slate-600">{esc(ui.get('wall_clock'))}</div>
                 <div class="mt-1 font-mono text-[13px] font-medium text-white sm:text-[15px]"><span id="stat-time">0.0</span>s</div>
               </div>
             </div>
@@ -444,7 +457,7 @@ def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
 
-def render_install(install: Block, commands: Block) -> str:
+def render_install(install: Block, commands: Block, ui: Block) -> str:
     default = install.get("default_tab", install.items[0].name if install.items else "")
     tabs, panels = [], []
     for tab in install.items:
@@ -473,10 +486,10 @@ def render_install(install: Block, commands: Block) -> str:
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
       <div class="reveal glass rounded-2xl p-1.5">
         <div class="theme-dark h-full rounded-[13px] bg-[#070A0E]/90">
-          <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="Using cargo-green">{''.join(tabs)}</div>
+          <div class="flex flex-wrap gap-1 border-b border-white/[0.08] p-2" role="tablist" aria-label="{html.escape(ui.get('tabs_label'), quote=True)}">{''.join(tabs)}</div>
           <div class="relative">
-            <button class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
-              {icon('copy', 'h-3.5 w-3.5')}<span>Copy</span>
+            <button data-copied="{html.escape(ui.get('copied'), quote=True)}" class="copy absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.04] px-2.5 py-1.5 font-mono text-[11px] text-slate-400 backdrop-blur transition hover:border-white/25 hover:text-white">
+              {icon('copy', 'h-3.5 w-3.5')}<span>{esc(ui.get('copy'))}</span>
             </button>
             {''.join(panels)}
           </div>
@@ -597,7 +610,7 @@ def render_enterprise(block: Block) -> str:
 </section>"""
 
 
-def render_pricing(pricing: Block, table: Block) -> str:
+def render_pricing(pricing: Block, table: Block, ui: Block) -> str:
     tiers = []
     for t in pricing.items:
         featured = t.flag("featured")
@@ -605,7 +618,7 @@ def render_pricing(pricing: Block, table: Block) -> str:
         amount = (f'<span data-price-monthly="{html.escape(monthly, quote=True)}" data-price-annual="{html.escape(annual, quote=True)}">'
                   f"{esc(monthly)}</span>")
         period = f'<span class="text-[13.5px] text-slate-500">{esc(t.get("period"))}</span>' if t.get("period") else ""
-        note = '<span class="annual-note hidden">, billed yearly</span>' if annual != monthly else ""
+        note = f'<span class="annual-note hidden">{esc(ui.get("billed_yearly"))}</span>' if annual != monthly else ""
         sub = (f'<p class="mt-1.5 text-[12.5px] text-slate-500">{esc(t.get("sub"))}'
                f'{note}</p>') if t.get("sub") else ""
         badge = (f'<div class="absolute -top-3 left-7 rounded-full border border-moss-400/30 bg-ink-950 px-3 py-1 '
@@ -662,11 +675,11 @@ def render_pricing(pricing: Block, table: Block) -> str:
     </div>
 
     <div class="reveal mt-9 flex items-center justify-center gap-3">
-      <span id="lbl-monthly" class="text-[13.5px] font-medium text-white">Monthly</span>
-      <button id="billing-toggle" role="switch" aria-checked="false" aria-label="Switch to annual billing" class="switch relative h-6 w-11 rounded-full border border-white/[0.12] bg-white/[.06] transition-colors">
+      <span id="lbl-monthly" class="text-[13.5px] font-medium text-white">{esc(ui.get('monthly'))}</span>
+      <button id="billing-toggle" role="switch" aria-checked="false" aria-label="{html.escape(ui.get('annual_label'), quote=True)}" class="switch relative h-6 w-11 rounded-full border border-white/[0.12] bg-white/[.06] transition-colors">
         <span class="knob absolute left-0.5 top-0.5 h-[18px] w-[18px] rounded-full bg-slate-300 transition-transform duration-200"></span>
       </button>
-      <span id="lbl-annual" class="dim text-[13.5px] font-medium">Annual</span>
+      <span id="lbl-annual" class="dim text-[13.5px] font-medium">{esc(ui.get('annual'))}</span>
       <span class="rounded-full border border-moss-400/25 bg-moss-500/10 px-2.5 py-0.5 font-mono text-[11px] text-moss-400">{esc(pricing.get('discount'))}</span>
     </div>
 
@@ -707,7 +720,7 @@ def render_faq(block: Block) -> str:
 </section>"""
 
 
-def render_cta(block: Block) -> str:
+def render_cta(block: Block, ui: Block) -> str:
     cmd = block.get("command")
     return f"""<section class="pb-24 sm:pb-32">
   <div class="mx-auto max-w-screen px-6">
@@ -719,7 +732,7 @@ def render_cta(block: Block) -> str:
         <div class="theme-dark group flex max-w-full items-center gap-2.5 rounded-xl border border-white/10 bg-[#070A0E]/80 px-4 py-3 font-mono text-[13px] sm:gap-3 sm:px-5 sm:text-[14px]">
           <span class="shrink-0 text-slate-600">$</span>
           <span class="text-slate-200">{esc(cmd)}</span>
-          <button class="copy-inline ml-1 shrink-0 text-slate-500 transition hover:text-moss-400" data-copy="{html.escape(cmd, quote=True)}" aria-label="Copy install command">{icon('copy', 'h-4 w-4')}</button>
+          <button class="copy-inline ml-1 shrink-0 text-slate-500 transition hover:text-moss-400" data-copy="{html.escape(cmd, quote=True)}" data-copied="{html.escape(ui.get('copied'), quote=True)}" aria-label="{html.escape(ui.get('copy_command'), quote=True)}">{icon('copy', 'h-4 w-4')}</button>
         </div>
         {button(block.get('button'), 'solid')}
       </div>
@@ -768,18 +781,46 @@ def render_footer(footer: Block, meta: Block) -> str:
 
 # ─────────────────────────────  assembly  ─────────────────────────────
 
-def build(out_path: Path) -> Path:
-    sections = parse(CONTENT.read_text(encoding="utf-8"))
+def content(lang: str) -> dict[str, Block]:
+    source = LANGS[lang]
+    sections = parse(source.read_text(encoding="utf-8"))
 
     required = ["meta", "nav", "hero", "registries", "problem", "answer", "ci",
                 "install", "commands", "how", "hits", "engines", "config", "enterprise",
-                "pricing", "table", "faq", "cta", "footer"]
+                "pricing", "table", "faq", "cta", "footer", "ui"]
     missing = [name for name in required if name not in sections]
     if missing:
-        raise SystemExit(f"content.md is missing section(s): {', '.join('## ' + m for m in missing)}")
+        raise SystemExit(f"{source.name} is missing section(s): {', '.join('## ' + m for m in missing)}")
+    return sections
 
-    S = sections
-    meta, hero = S["meta"], S["hero"]
+
+def render_body(lang: str, S: dict[str, Block], replay: dict) -> str:
+    """Everything a language changes, wrapped in #page so the whole thing swaps in one go."""
+    meta, ui = S["meta"], S["ui"]
+    return "\n\n".join([
+        '<div id="page">',
+        f'<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-moss-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950">{esc(ui.get("skip"))}</a>',
+        render_nav(S["nav"], meta, ui, lang),
+        '<main id="main">',
+        render_hero(S["hero"], ui, replay),
+        render_registries(S["registries"]),
+        render_problem(S["problem"], S["answer"], S["ci"]),
+        render_install(S["install"], S["commands"], ui),
+        render_how(S["how"], S["hits"], S["engines"]),
+        render_config(S["config"]),
+        render_enterprise(S["enterprise"]),
+        render_pricing(S["pricing"], S["table"], ui),
+        render_faq(S["faq"]),
+        render_cta(S["cta"], ui),
+        "</main>",
+        render_footer(S["footer"], meta),
+        "</div>",
+    ])
+
+
+def build(out_path: Path) -> Path:
+    langs = {lang: content(lang) for lang in LANGS}
+    meta = langs["en"]["meta"]
 
     replay = json.loads(REPLAY.read_text(encoding="utf-8"))
     # The command is line zero of the replay; the recording only holds the output.
@@ -794,22 +835,12 @@ def build(out_path: Path) -> Path:
     wall: {replay['wall']}
   }};"""
 
-    body = "\n\n".join([
-        render_nav(S["nav"], meta),
-        '<main id="main">',
-        render_hero(hero, replay),
-        render_registries(S["registries"]),
-        render_problem(S["problem"], S["answer"], S["ci"]),
-        render_install(S["install"], S["commands"]),
-        render_how(S["how"], S["hits"], S["engines"]),
-        render_config(S["config"]),
-        render_enterprise(S["enterprise"]),
-        render_pricing(S["pricing"], S["table"]),
-        render_faq(S["faq"]),
-        render_cta(S["cta"]),
-        "</main>",
-        render_footer(S["footer"], meta),
-    ])
+    # Template contents are inert: their ids, links and images don't exist until swapped in.
+    templates = "\n".join(
+        f'<template id="lang-{lang}" data-title="{html.escape(S["meta"].get("title"), quote=True)}" '
+        f'data-description="{html.escape(S["meta"].get("description"), quote=True)}">\n'
+        f"{render_body(lang, S, replay)}\n</template>"
+        for lang, S in langs.items() if lang != "en")
 
     doc = f"""<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
@@ -821,14 +852,26 @@ def build(out_path: Path) -> Path:
 <meta name="theme-color" content="#05070A" media="(prefers-color-scheme: dark)" />
 <meta name="theme-color" content="#F6F8F7" media="(prefers-color-scheme: light)" />
 <script>
-  /* Before first paint: stored choice, else the OS preference. */
+  /* Before first paint: stored choice, else the OS preference. Same for the language,
+     whose page body is swapped in at the end of <body>; #page stays hidden until then. */
   (function () {{
-    var t;
-    try {{ t = localStorage.getItem('theme'); }} catch (e) {{}}
+    var t, l, langs = {json.dumps(list(LANGS))};
+    try {{ t = localStorage.getItem('theme'); l = localStorage.getItem('lang'); }} catch (e) {{}}
     if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     document.documentElement.dataset.theme = t;
+    if (langs.indexOf(l) < 0) {{
+      var wanted = navigator.languages || [navigator.language || ''];
+      l = 'en';
+      for (var i = 0; i < wanted.length; i++) {{
+        var code = String(wanted[i]).slice(0, 2).toLowerCase();
+        if (langs.indexOf(code) >= 0) {{ l = code; break; }}
+      }}
+    }}
+    document.documentElement.lang = l;
+    if (l !== 'en') document.documentElement.dataset.swapping = '';
   }})();
 </script>
+<style>[data-swapping] #page {{ visibility: hidden; }}</style>
 
 <meta property="og:title" content="{html.escape(meta.get('og_title'), quote=True)}" />
 <meta property="og:description" content="{html.escape(meta.get('og_description'), quote=True)}" />
@@ -852,10 +895,22 @@ def build(out_path: Path) -> Path:
 <div class="bg-grid"></div>
 <div class="bg-grain"></div>
 
-<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-moss-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950">Skip to content</a>
+{render_body("en", langs["en"], replay)}
 
-{body}
+{templates}
 
+<script>
+  /* Swap in the language picked in <head>, before app.js wires anything up. */
+  (function () {{
+    var root = document.documentElement, t = document.getElementById('lang-' + root.lang);
+    if (t) {{
+      document.getElementById('page').replaceWith(t.content.cloneNode(true));
+      document.title = t.dataset.title;
+      document.querySelector('meta[name="description"]').content = t.dataset.description;
+    }}
+    delete root.dataset.swapping;
+  }})();
+</script>
 <script>
   {config_js}
 </script>
@@ -975,12 +1030,13 @@ def check(path: Path) -> tuple[list[str], str]:
 def report(path: Path) -> bool:
     """Check and print the result. True when the page is clean."""
     problems, summary = check(path)
+    name = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
     if problems:
-        print(bold(f"check failed — {len(problems)} problem(s) in {path.name}"), file=sys.stderr)
+        print(bold(f"check failed — {len(problems)} problem(s) in {name}"), file=sys.stderr)
         for problem in problems:
             print(bold(f"  ! {problem}"), file=sys.stderr)
         return False
-    print(f"check passed — {summary}")
+    print(f"check passed — {name}: {summary}")
     return True
 
 

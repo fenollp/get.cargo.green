@@ -16,6 +16,13 @@
     try { localStorage.setItem('theme', next); } catch (e) { /* private mode: session-only */ }
   });
 
+  /* ---------- Language picker (the inline scripts pick the stored or OS language on load) ---------- */
+  const langSelect = document.getElementById('lang-select');
+  langSelect.addEventListener('change', () => {
+    try { localStorage.setItem('lang', langSelect.value); } catch (e) { /* private mode: session-only */ }
+    location.reload();   // same URL, same #anchor: only the words change
+  });
+
   /* ---------- Scroll reveal ---------- */
   const items = document.querySelectorAll('.reveal');
   if (reduced || !('IntersectionObserver' in window)) {
@@ -94,12 +101,12 @@
     btn.addEventListener('click', () => {
       const panel = btn.parentElement.querySelector('.panel:not(.hidden)');
       if (!panel) return;
-      navigator.clipboard.writeText(panel.innerText.trim()).then(() => flash(btn, 'Copied'));
+      navigator.clipboard.writeText(panel.innerText.trim()).then(() => flash(btn, btn.dataset.copied));
     });
   });
   document.querySelectorAll('.copy-inline').forEach(btn => {
     btn.addEventListener('click', () => {
-      navigator.clipboard.writeText(btn.dataset.copy).then(() => flash(btn, 'Copied'));
+      navigator.clipboard.writeText(btn.dataset.copy).then(() => flash(btn, btn.dataset.copied));
     });
   });
 
@@ -166,11 +173,14 @@
     return d;
   };
 
+  // One decimal, with the page language's decimal separator (12.5 or 12,5).
+  const oneDecimal = new Intl.NumberFormat(document.documentElement.lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const setStats = (crates, elapsed) => {
     hits.textContent = String(crates);
-    rate.textContent = CG.crates > 0 ? (crates / CG.crates * 100).toFixed(1) : '0.0';
-    time.textContent = elapsed.toFixed(1);
+    rate.textContent = oneDecimal.format(CG.crates > 0 ? crates / CG.crates * 100 : 0);
+    time.textContent = oneDecimal.format(elapsed);
   };
+  setStats(0, 0);
 
   function renderAll() {
     term.innerHTML = '';
