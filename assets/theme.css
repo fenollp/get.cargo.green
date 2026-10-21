@@ -165,7 +165,6 @@
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
     .reveal, .term-line { opacity: 1 !important; transform: none !important; }
-    html { scroll-behavior: auto; }
   }
 
   [data-lucide] { stroke-width: 1.6; }
