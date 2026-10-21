@@ -17,11 +17,36 @@
   });
 
   /* ---------- Language picker (the inline scripts pick the stored or OS language on load) ---------- */
+  // The other language has different heights, so a reload restoring the same pixel offset lands
+  // elsewhere. Remember the section on screen and how far into it the reader is instead.
   const langSelect = document.getElementById('lang-select');
+  const landmarks = () => Array.from(document.querySelectorAll('main > section, footer'));
   langSelect.addEventListener('change', () => {
     try { localStorage.setItem('lang', langSelect.value); } catch (e) { /* private mode: session-only */ }
+    const top = nav.offsetHeight;
+    const marks = landmarks();
+    const at = marks.find(el => el.getBoundingClientRect().bottom > top);
+    if (at) {
+      const r = at.getBoundingClientRect();
+      try { sessionStorage.setItem('lang-at', JSON.stringify([marks.indexOf(at), (top - r.top) / r.height])); } catch (e) {}
+      history.scrollRestoration = 'manual';
+    }
     location.reload();   // same URL, same #anchor: only the words change
   });
+
+  let langAt = null;
+  try { langAt = JSON.parse(sessionStorage.getItem('lang-at')); sessionStorage.removeItem('lang-at'); } catch (e) {}
+  if (langAt) {
+    window.addEventListener('load', () => { history.scrollRestoration = 'auto'; });
+    const at = landmarks()[langAt[0]];
+    const restore = () => window.scrollTo(0, at.getBoundingClientRect().top + window.scrollY
+                                             - nav.offsetHeight + langAt[1] * at.offsetHeight);
+    if (at) {
+      restore();
+      // The web fonts change line heights once they arrive.
+      if (document.fonts) document.fonts.ready.then(restore);
+    }
+  }
 
   /* ---------- Scroll reveal ---------- */
   const items = document.querySelectorAll('.reveal');
@@ -41,7 +66,6 @@
   /* ---------- Code tabs (each tab is an anchor target: #use-remote & co) ---------- */
   const tabs = Array.from(document.querySelectorAll('.tab'));
   const panels = Array.from(document.querySelectorAll('.panel'));
-  const section = document.getElementById('use');
 
   const activate = (id, updateHash) => {
     const tab = tabs.find(t => t.id === id);
@@ -72,23 +96,18 @@
     next.focus();
   }));
 
-  const openFromHash = (smooth) => {
+  // Scrolling to the tab is the browser's own anchor jump; this only opens it.
+  const openFromHash = () => {
     let id = '';
     try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
-    if (!activate(id)) return false;
-    if (section) {
-      section.scrollIntoView({ block: 'start', behavior: (smooth && !reduced) ? 'smooth' : 'auto' });
-    }
-    return true;
+    return activate(id);
   };
 
-  // On load the browser has already jumped to the tab button, so scroll instantly to avoid
-  // animating out of that jump. Later hash changes get the smooth treatment.
-  if (!openFromHash(false)) {
+  if (!openFromHash()) {
     const initial = tabs.find(t => t.classList.contains('active')) || tabs[0];
     if (initial) activate(initial.id);
   }
-  window.addEventListener('hashchange', () => openFromHash(true));
+  window.addEventListener('hashchange', openFromHash);
 
   /* ---------- Copy buttons ---------- */
   const flash = (btn, label) => {

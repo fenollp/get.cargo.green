@@ -843,7 +843,7 @@ def build(out_path: Path) -> Path:
         for lang, S in langs.items() if lang != "en")
 
     doc = f"""<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
