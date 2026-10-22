@@ -63,12 +63,12 @@
     items.forEach(el => io.observe(el));
   }
 
-  /* ---------- Code tabs (each tab is an anchor target: #use-remote & co) ---------- */
+  /* ---------- Code tabs (each tab has an anchor at the section top: #use-remote & co) ---------- */
   const tabs = Array.from(document.querySelectorAll('.tab'));
   const panels = Array.from(document.querySelectorAll('.panel'));
 
   const activate = (id, updateHash) => {
-    const tab = tabs.find(t => t.id === id);
+    const tab = tabs.find(t => t.dataset.anchor === id);
     if (!tab) return false;
     tabs.forEach(t => {
       const on = t === tab;
@@ -79,12 +79,12 @@
     panels.forEach(p => p.classList.toggle('hidden', p.id !== tab.dataset.panel));
     if (updateHash && history.replaceState) {
       // replaceState, not location.hash: no scroll jump and no history spam per tab click.
-      history.replaceState(null, '', '#' + id);
+      history.replaceState(null, '', '#' + tab.dataset.anchor);
     }
     return true;
   };
 
-  tabs.forEach(t => t.addEventListener('click', () => activate(t.id, true)));
+  tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.anchor, true)));
 
   // Arrow keys move between tabs, per the ARIA tabs pattern.
   tabs.forEach((t, i) => t.addEventListener('keydown', (e) => {
@@ -92,11 +92,11 @@
     if (!step) return;
     e.preventDefault();
     const next = tabs[(i + step + tabs.length) % tabs.length];
-    activate(next.id, true);
+    activate(next.dataset.anchor, true);
     next.focus();
   }));
 
-  // Scrolling to the tab is the browser's own anchor jump; this only opens it.
+  // Scrolling to the section is the browser's own anchor jump; this only opens it.
   const openFromHash = () => {
     let id = '';
     try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { return false; }
@@ -105,7 +105,7 @@
 
   if (!openFromHash()) {
     const initial = tabs.find(t => t.classList.contains('active')) || tabs[0];
-    if (initial) activate(initial.id);
+    if (initial) activate(initial.dataset.anchor);
   }
   window.addEventListener('hashchange', openFromHash);
 

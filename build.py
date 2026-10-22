@@ -459,13 +459,15 @@ def slug(text: str) -> str:
 
 def render_install(install: Block, commands: Block, ui: Block) -> str:
     default = install.get("default_tab", install.items[0].name if install.items else "")
-    tabs, panels = [], []
+    tabs, panels, anchors = [], [], []
     for tab in install.items:
-        tid = "use-" + slug(tab.name)
-        pid = "panel-" + tid
+        anchor = "use-" + slug(tab.name)
+        tid, pid = "tab-" + anchor, "panel-" + anchor
         active = tab.name == default
-        tabs.append(f'<button class="tab scroll-mt-28 rounded-lg px-3.5 py-2 font-mono text-[12.5px] '
-                    f'text-slate-400 transition{" active" if active else ""}" id="{tid}" data-panel="{pid}" '
+        # The anchor sits at the section top so #use-* lands on the title, like other sections.
+        anchors.append(f'<span id="{anchor}" class="absolute top-0 scroll-mt-8" aria-hidden="true"></span>')
+        tabs.append(f'<button class="tab rounded-lg px-3.5 py-2 font-mono text-[12.5px] '
+                    f'text-slate-400 transition{" active" if active else ""}" id="{tid}" data-anchor="{anchor}" data-panel="{pid}" '
                     f'role="tab" aria-controls="{pid}" aria-selected="{"true" if active else "false"}" '
                     f'tabindex="{"0" if active else "-1"}">{esc(tab.name)}</button>')
         panels.append(f'<pre id="{pid}" class="panel{"" if active else " hidden"} overflow-x-auto px-6 pb-6 pt-12 sm:pt-6 '
@@ -480,7 +482,8 @@ def render_install(install: Block, commands: Block, ui: Block) -> str:
             <dd class="text-[13.5px] text-slate-400">{esc(cmd.get('desc'))}</dd>
           </div>""")
 
-    return f"""<section id="use" class="scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
+    return f"""<section id="use" class="relative scroll-mt-8 pt-16 pb-24 sm:pt-20 sm:pb-32">
+  {''.join(anchors)}
   <div class="mx-auto max-w-screen px-6">
     {section_head(install, "use")}
     <div class="mt-12 grid gap-5 lg:grid-cols-[1.05fr_1fr]">
